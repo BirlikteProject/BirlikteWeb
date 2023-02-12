@@ -8,7 +8,7 @@ export default function({$axios, store}, inject) {
         baseURL: 'http://142.93.106.148:5000/api/v1',
     })
     const url = ''
-    const token = store.state.auth.token
+    const token = store.state.auth?.token
 
     api.onRequest((config) => {
         config.headers.Authorization = 'Bearer ' + token

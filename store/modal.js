@@ -1,6 +1,8 @@
 const state = () => ({
   loginModal: false,
   registerModal: false,
+  kvkkModal: false,
+  privacyPolicy: false,
 })
 
 const mutations = {
@@ -10,6 +12,12 @@ const mutations = {
   SET_REGISTER_MODAL(state, payload) {
     state.registerModal = payload
   },
+  SET_KVKK_MODAL(state, payload) {
+    state.kvkkModal = payload
+  },
+  SET_PRIVACY_POLICY(state, payload) {
+    state.privacyPolicy = payload
+  }
 }
 
 const actions = {
@@ -19,6 +27,12 @@ const actions = {
   setRegisterModal(context, payload) {
     context.commit('SET_REGISTER_MODAL', payload)
   },
+  setKvkkModal(context, payload) {
+    context.commit('SET_KVKK_MODAL', payload)
+  },
+  setPrivacyPolicy(context, payload) {
+    context.commit('SET_PRIVACY_POLICY', payload)
+  }
 }
 
 export default {

@@ -1,22 +1,16 @@
 <template>
   <div class="top-bar-wrapper">
     <div class="content top-bar-content">
-      <!-- <div class="contact-section">
-        <div v-for="(item, index) in items" :key="index" class="contact-item">
-          <i class="afet-icons" :class="item.icon"></i>
-          <span class="contact-text"> {{ item.text }} </span>
-        </div>
-      </div> -->
       <div class="logo-section">
         <img :src="require('~/assets/img/logo-white.png')" alt="">
       </div>
       <div class="auth-section">
-        <button class="login-button" @click="$router.push('/giris-yap')">
+        <nuxt-link to="/giris-yap" class="login-button">
           Giriş Yap
-        </button>
-        <button class="register-button" @click="$router.push('/kayit-ol')">
+        </nuxt-link>
+        <nuxt-link class="register-button" to="/kayit-ol">
           Kayıt Ol
-        </button>
+        </nuxt-link>
       </div>
       <!-- <div class="contact-section">
         <i class="afet-icons afet-facebook tooltip">

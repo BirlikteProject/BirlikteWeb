@@ -1,11 +1,15 @@
 <template>
   <div class="register-page-container">
     <KVKK v-if="kvkkModal" />
+    <PrivacyPolicy v-if="privacyPolicyModal" />
     <div class="image-side-section">
       <image-side />
     </div>
     <div class="register-form-seciton">
       <div class="register-form">
+        <div class="logo-section">
+          <img src="~/assets/img/logo-2.png" />
+        </div>
         <span class="form-name">Kayıt Ol</span>
         <div class="register-types">
           <div
@@ -23,13 +27,20 @@
             Destekçi Girişi
           </div>
         </div>
+        <div v-if="registerType == types.DEMANDER " class="warning-info">
+          Afetzede girişini kullanan değerli vatandaşımız, devletimizin afet
+          bölgesi ilan ettiği 10 İlde ikamet ettiğinizi ve paylaşmış olduğunuz
+          T.C Kimlik numaranızın doğruluğunu beyan ve taahhüt etmiş
+          bulunmaktasınız. Afet Bölgesinde yaşamıyorsanız lütfen bu girişi
+          kullanmayın.
+        </div>
 
         <div class="form-inputs">
           <div class="input-wrapper">
-            <input type="email" placeholder="E-Posta" />
+            <input v-model="email" type="email" placeholder="E-Posta" />
           </div>
           <div class="input-wrapper">
-            <input type="password" placeholder="Şifre" />
+            <input v-model="password" type="password" placeholder="Şifre" />
           </div>
           <div class="confirm-checkbox">
             <span
@@ -40,11 +51,26 @@
               <span />
             </span>
             <input v-model="isKvkkAccepted" type="checkbox" />
-            <span class="kvkk-accept-text" @click="setKvkkModal()">
-              <span class="underline">Aydınlatma Metni</span>'ni okudum ve kabul ediyorum.
+            <span class="kvkk-accept-text">
+              <span class="underline" @click="setKvkkModal()"
+                >KVKK Metni'ni</span
+              >
+              ve
+              <span class="underline" @click="setPrivacyPolicy()"
+                >Gizlilik Sözleşmesi'ni</span
+              >
+              okudum ve kabul ediyorum.
             </span>
           </div>
-          <button class="primary-button">Kayıt Ol</button>
+          <button class="primary-button" @click="register()">Kayıt Ol</button>
+          <div v-if="submitted" class="error-messages">
+            <span v-if="errors" class="error-message"
+              >Lütfen tüm alanları doldurunuz!</span
+            >
+            <span v-if="!errors && !isKvkkAccepted" class="error-message"
+              >Lütfen aydınlatma metnini onaylayınız!</span
+            >
+          </div>
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
@@ -67,26 +93,45 @@
 <script>
 import ImageSide from '~/components/Auth/ImageSide.vue'
 import KVKK from '~/components/Auth/Modals/KVKK.vue'
+import PrivacyPolicy from '~/components/Auth/Modals/PrivacyPolicy.vue'
 import types from '~/data/types.json'
 export default {
   name: 'LoginPage',
-  components: { ImageSide, KVKK },
+  components: { ImageSide, KVKK, PrivacyPolicy },
   layout: 'empty',
   data() {
     return {
       types,
       registerType: null,
       isKvkkAccepted: false,
+      email: '',
+      password: '',
+      submitted: false,
     }
   },
   computed: {
     kvkkModal() {
       return this.$store.state.modal.kvkkModal
     },
+    privacyPolicyModal() {
+      return this.$store.state.modal.privacyPolicy
+    },
+    errors() {
+      return !this.email || !this.password
+    },
   },
   methods: {
     setKvkkModal() {
       this.$store.dispatch('modal/setKvkkModal', true)
+    },
+    setPrivacyPolicy() {
+      this.$store.dispatch('modal/setPrivacyPolicy', true)
+    },
+    register() {
+      this.submitted = true
+      if (this.isKvkkAccepted && !this.errors) {
+        this.$router.push('/kayit-tamamla')
+      }
     },
   },
 }
@@ -115,6 +160,16 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+    .logo-section {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      img {
+        width: 200px;
+      }
     }
     .form-name {
       padding: 1rem;
@@ -205,6 +260,11 @@ export default {
         }
       }
     }
+    .warning-info {
+      text-align: center;
+      font-size: 0.825rem;
+      margin: 0.5rem 0;
+    }
     .form-inputs {
       display: flex;
       flex-direction: column;
@@ -237,6 +297,20 @@ export default {
       }
       .primary-button {
         width: 100%;
+      }
+      .error-messages {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0.5rem 0;
+        .error-message {
+          color: #ff0000;
+          font-size: 0.8rem;
+          font-weight: 500;
+          text-align: center;
+        }
       }
       .or-sign-with-google {
         margin: 2rem 0;

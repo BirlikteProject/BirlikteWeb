@@ -2,46 +2,140 @@
   <div class="kvkk-modal-wrapper">
     <div class="kvkk-modal">
       <div class="modal-header">
-        <span>Aydınlatma Metni</span>
+        <span>KVKK Metni</span>
         <span class="close-icon" @click="setDisplay()">
           <i class="afet-icons afet-close"></i>
         </span>
       </div>
       <div class="modal-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-        voluptate neque impedit voluptatum aperiam. Deleniti modi magnam
-        molestiae? Explicabo dignissimos facere nesciunt minus at vero dolorum
-        provident laboriosam dolor quae. Saepe minus consequuntur cumque a
-        possimus deleniti officiis in laborum voluptatum placeat eius esse cum
-        rem temporibus eligendi reprehenderit dolore quidem perferendis,
-        consequatur non aliquid ipsa ipsum? Iure, est sequi? Id ratione cum
-        tenetur, sint cupiditate magni quis libero laboriosam maiores architecto
-        eveniet maxime, facere neque commodi pariatur excepturi rerum,
-        voluptatum voluptate fugiat voluptates labore consequuntur. Hic sequi
-        repudiandae dicta. Sint debitis eius, nemo iure accusantium dicta,
-        accusamus consequuntur rerum quasi tenetur ullam ipsam alias. Ratione
-        id, illo doloribus ex aliquid neque quos esse omnis error explicabo
-        laudantium minus accusamus? Iusto debitis facere neque assumenda omnis
-        labore molestiae quidem hic tenetur, porro iure aspernatur repudiandae
-        quasi? Inventore quas eos dignissimos nihil, corporis deserunt quam. Cum
-        est dolores tenetur animi dolorem. Reiciendis praesentium ipsa
-        consectetur quaerat, magni aut assumenda fuga nam, nihil dignissimos
-        aliquid minus cumque expedita minima perferendis suscipit illum veniam
-        adipisci a voluptatibus perspiciatis accusamus officia obcaecati nulla!
-        Aut. Quae, laborum velit? Incidunt exercitationem sunt molestias culpa,
-        voluptates, voluptate quis reprehenderit sapiente totam ipsum molestiae
-        error magnam eveniet aspernatur sequi illo dolores. Culpa, beatae
-        dolore. Voluptatem id sequi et. Sapiente officia quasi porro maiores
-        facere sit dolorem, explicabo ducimus magnam eum omnis atque consequatur
-        illo id quas voluptatem corrupti error amet? Optio quidem libero
-        consequatur! Eius voluptas quis recusandae? Quidem dolorum pariatur
-        cumque aspernatur enim tempora nobis, asperiores necessitatibus
-        consequuntur fuga! Dolorum maxime ab aliquam deserunt aut modi eveniet,
-        quae illo officiis molestiae aliquid mollitia vero labore earum
-        voluptate. Mollitia quidem dolorem reprehenderit alias delectus libero
-        aperiam corrupti laudantium, tempora voluptatibus voluptatum laborum
-        repellat voluptatem sapiente magni sed. Inventore, suscipit quis neque
-        nostrum necessitatibus hic obcaecati quae quaerat odio?
+        <b>
+          BİRLİKTE ADLI WEB SİTESİNİN KİŞİSEL VERİLERİN İŞLENMESİ HAKKINDA
+          AYDINLATMA METNİ
+        </b>
+        <br />
+        <br />
+        <p>
+          6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“KVKK”) 10.
+          maddesi “Veri Sorumlusunun Aydınlatma Yükümlülüğü” madde başlığı
+          altında veri sorumlusu olan T.C. İçişleri Bakanlığı Afet ve Acil Durum
+          Yönetimi Başkanlığı, adres ve bilgileri, kişisel verilerin hangi
+          amaçla işleneceği, işlenen kişisel verilerin kimlere ve hangi amaçla
+          aktarılabileceği, kişisel veri toplamanın yöntemi ve hukuki sebebi,
+          kişisel veri sahibinin veri sorumlusuna yöneltebileceği ve KVKK’nın
+          11. maddesinde yer verilen hakları konusunda bilgilendirme yükümlülüğü
+          getirmiştir.
+        </p>
+        <!-- <br />
+        <b>VERİ SORUMLUSU</b>
+        <p>
+          Veri sorumlusu …………… olup, tarafımıza aşağıda yer verilen iletişim
+          bilgileri aracılığıyla ulaşmanız mümkündür.
+        </p> -->
+        <br />
+        <b>İŞLENEN KİŞİSEL VERİLER </b>
+        <br />
+        <br />
+        <p>
+          • Kimlik Bilgileriniz: Kimlik numarası, ad soyadı, doğum yeri, doğum
+          tarihi, cinsiyet,
+          <br />
+          • İletişim Bilgileriniz: e-posta, cep telefonu, Adres Kayıt Sistemi
+          kaydı (il-ilçe)
+          <br />
+          • Diğer Bilgiler: Engellilik durumu, öğrenim durumu, kurum ve unvan
+          bilgileri
+        </p>
+        <br />
+        <b>KİŞİSEL VERİLERİN İŞLENME AMAÇLARI </b>
+        <br />
+        <br />
+        <p>
+          Kişisel verileriniz aşağıda yer verilen amaçlarla işlenebilecektir.
+          <br />
+
+          • Tarafımızdan eğitim alan kişilerin kayıtlarının oluşturulması ve
+          yönetilmesi,
+          <br />
+
+          • Eğitim alan kişi ile ilgili olarak yasal sınırlar içerisinde
+          değerlendirme, analiz çalışmalarının yapılması,
+          <br />
+
+          • Tarafımızdan sunulan eğitim hizmetlerinden vatandaşlarımızı
+          faydalandırmak için gerekli çalışmaların birimlerimiz tarafından
+          yapılması,
+          <br />
+
+          • Platformumuz eğitim stratejilerinin belirlenmesi ve uygulanması,
+          <br />
+
+          • Eğitim faaliyet ortaklarımızla yürütülen işlerin planlanması,
+          <br />
+
+          • Eğitim alan kişilere sunulan hizmetten memnuniyetlerini ölçmek
+          amaçlı olan anketler de dahil olmak üzere araştırma çalışmaları ve
+          analizinin yürütülmesi,
+          <br />
+
+          • Eğitim alan kişilere sunulan hizmete ilişkin şikâyetlerinin
+          çözülmesi ve veri erişim veya düzeltme taleplerinin işleme alınması,
+          <br />
+
+          • Peşru menfaati.
+          <br />
+        </p>
+        <br />
+        <b>İŞLENEN KİŞİSEL VERİLERİN AKTARIMI</b>
+        <br />
+        <br />
+        <p>
+          Kişisel verileriniz; Kanun’un kişisel verilerin aktarılması ve
+          yurtdışına aktarılmasına ilişkin hükümleri kapsamında işbu Aydınlatma
+          Metni’nde yer alan amaçlarla; yurt içindeki kanunen yetkili kamu kurum
+          ve kuruluşları ile paylaşılabilecektir.
+        </p>
+        <br />
+        <br />
+        <b>KİŞİSEL VERİLERİN TOPLANMA YÖNTEMLERİ VE HUKUKİ SEBEPLERİ</b>
+        <br />
+        <br />
+        <p>
+          Kişisel verileriniz katıldığınız eğitimlerde tarafınızca doldurulan
+          eğitim katılım formları ile toplanmakta ve Veri Sorumlusu adına
+          işlenmektedir.
+          <br />
+          Kişisel verileriniz T.C. İçişleri Bakanlığı Afet ve Acil Durum
+          Yönetimi Başkanlığı tarafından; KVKK ve ilgili mevzuat tarafından
+          öngörülen esas ve usuller doğrultusunda işbu Aydınlatma Metni’nde
+          belirtilen amaçların sağlanması ve hukuki yükümlülüklerimizi yerine
+          getirmeye yönelik olarak hukuki sebeplerle işlenmektedir.
+        </p>
+        <br />
+        <b>KİŞİSEL VERİSİ İŞLENEN İLGİLİ KİŞİNİN HAKLARI</b>
+        <br />
+        <br />
+        <p>
+          Kişisel verilerinize ilişkin olarak aşağıdaki haklarınız
+          bulunmaktadır:
+          <br />
+          • Kişisel verinin işlenip işlenmediğini öğrenme, <br />
+          • Kişisel verileri işlenmişse; buna ilişkin bilgi talep etme, <br />
+          • Kişisel verilerin işlenme amacını ve bunların amacına uygun
+          kullanılıp kullanılmadığını öğrenme, <br />
+          • Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü
+          kişileri bilme, <br />
+          • Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların
+          düzeltilmesini isteme <br />
+          • Kişisel verilerin silinmesini veya yok edilmesini isteme, <br />
+          • Kişisel verilerin düzeltilmesi, silinmesi ya da yok edilmesi halinde
+          bu işlemlerin kişisel verilerin aktarıldığı üçüncü kişilere
+          bildirilmesini isteme, <br />
+          • İşlenen kişisel verilerin münhasıran otomatik sistemler vasıtasıyla
+          analiz edilmesi suretiyle veri sahibinin aleyhine bir sonucun ortaya
+          çıkmasına itiraz etme, <br />
+          • Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara
+          uğraması hâlinde zararın giderilmesini talep etme. <br />
+        </p>
       </div>
     </div>
   </div>
@@ -83,6 +177,12 @@ export default {
     align-items: center;
     padding: 1rem;
     overflow-y: auto;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+    }
+    &::-webkit-scrollbar-thumb {
+      color: $primary-color;
+    }
     .modal-header {
       width: 100%;
       height: 3rem;
@@ -112,6 +212,10 @@ export default {
       height: calc(100% - 3rem);
       width: 100%;
       padding: 1rem 0;
+      font-size: 0.825rem;
+      b {
+        font-weight: 600;
+      }
       .input-group {
         display: flex;
         flex-direction: column;
