@@ -1,0 +1,18 @@
+[
+    { 
+        "_id": "63e7c856752984d395d3dcee",
+        "name": "Eğitim"
+    },
+    {
+        "_id": "63e7c86d752984d395d3dcf1",
+        "name": "İstihdam"
+    },
+    {
+        "name": "Barınma",
+        "_id": "63e8ebb91f42670b82d7d8d3"
+    },
+    {
+        "_id": "63e8ebcb1f42670b82d7d8d5",
+        "name": "Psikolojik Destek"
+    }
+]

@@ -1,0 +1,35 @@
+
+
+@font-face {
+    font-family: 'Campton';
+    src: url('~/assets/font-family/campton/Campton-Thin.otf') format('truetype');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Campton';
+    src: url('~/assets/font-family/campton/Campton-Light.otf') format('truetype');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Campton';
+    src: url('~/assets/font-family/campton/Campton-Book.otf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Campton';
+    src: url('~/assets/font-family/campton/Campton-SemiBold.otf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Campton';
+    src: url('~/assets/font-family/campton/Campton-Bold.otf') format('truetype');
+    font-weight: 700;
+}
+
+input {
+    background-color: transparent !important;
+}
+
+
