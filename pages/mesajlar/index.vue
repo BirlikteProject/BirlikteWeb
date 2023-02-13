@@ -23,15 +23,19 @@
           <MessageUserItem v-for="i in 5" :key="i" />
         </div>
       </div>
-      <div class="contact-section section">
+      <div class="contact-section section" ref="contactSection">
         <AdvertInMessage />
-        <MessageItem v-for="i in 100" :key="i" />
-        <div class="message-box"  ref="messageBox">
+        <MessageItem v-for="i in 10" :key="i" />
+        <div class="message-box">
           <textarea
             class="message-input"
             placeholder="Mesajınızı buraya yazınız..."
+            @keydown="autosize"
+            ref="messageBox"
           ></textarea>
-          <div class="message-send-button">Gönder</div>
+          <div class="message-send-button">
+            <i class="afet-icons afet-send"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -50,11 +54,21 @@ export default {
       activeCategory: 0,
     }
   },
-  created() {
-
+  mounted() {
+    this.scrollBottom()
   },
   methods: {
-
+    autosize() {
+      const el = this.$refs.messageBox
+      setTimeout(function () {
+        el.style.cssText = 'height:auto; padding:5px'
+        el.style.cssText = 'height:' + el.scrollHeight + 'px'
+      }, 0)
+    },
+    scrollBottom() {
+      const el = document.querySelector('.contact-section')
+      el.scrollTop = el.scrollHeight
+    },
   },
 }
 </script>
@@ -64,6 +78,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+  max-height: calc(100vh - 10rem);
 
   .messages-page-content {
     width: 100%;
@@ -111,15 +126,15 @@ export default {
       }
     }
     .contact-section {
-      max-height: calc(100vh - 15rem);
       overflow-y: auto;
       .message-box {
         width: 100%;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
+        padding: 0 0.5rem;
+        margin-top: 1rem;
         justify-content: center;
-        padding: 1rem;
         .message-input {
           width: 100%;
           min-height: 2.5rem;
@@ -127,12 +142,15 @@ export default {
           border: 1px solid #dedede;
           border-radius: 10px;
           font-family: 'Campton';
+          font-weight: 400;
+          color: #4a4a4a;
+          letter-spacing: 0.5px;
           padding: 5px;
           outline: none;
           resize: none;
         }
         .message-send-button {
-          width: 100px;
+          width: 2.5rem;
           height: 2.5rem;
           border: 1px solid #dedede;
           border-radius: 10px;
@@ -151,7 +169,7 @@ export default {
     }
     .section {
       width: 50%;
-      height: 100vh;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: flex-start;

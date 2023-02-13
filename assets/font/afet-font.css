@@ -2,9 +2,9 @@
   font-family: 'afet-font';
   font-style: normal;
   font-weight: 400;
-  src: url("afet-font.eot?48efae43e3fadecd08882fbea868a06a?#iefix") format("embedded-opentype"),
-url("afet-font.woff2?48efae43e3fadecd08882fbea868a06a") format("woff2"),
-url("afet-font.woff?48efae43e3fadecd08882fbea868a06a") format("woff");
+  src: url("afet-font.eot?e967643f57f229c8e9c5473fd44f6d09?#iefix") format("embedded-opentype"),
+url("afet-font.woff2?e967643f57f229c8e9c5473fd44f6d09") format("woff2"),
+url("afet-font.woff?e967643f57f229c8e9c5473fd44f6d09") format("woff");
 }
 
 .afet-icons, .afet-icons {
@@ -64,7 +64,8 @@ url("afet-font.woff?48efae43e3fadecd08882fbea868a06a") format("woff");
 .afet-psycho:before { content: "\f10d"; }
 .afet-report:before { content: "\f10e"; }
 .afet-search:before { content: "\f10f"; }
-.afet-share:before { content: "\f110"; }
-.afet-shelter:before { content: "\f111"; }
-.afet-twitter:before { content: "\f112"; }
-.afet-youtube:before { content: "\f113"; }
+.afet-send:before { content: "\f110"; }
+.afet-share:before { content: "\f111"; }
+.afet-shelter:before { content: "\f112"; }
+.afet-twitter:before { content: "\f113"; }
+.afet-youtube:before { content: "\f114"; }

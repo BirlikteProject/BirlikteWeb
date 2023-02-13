@@ -66,7 +66,7 @@ a {
   align-items: center;
   width: 100%;
   .page-feed {
-    min-height: 100vh;
+    min-height: calc(100vh - 6rem);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
