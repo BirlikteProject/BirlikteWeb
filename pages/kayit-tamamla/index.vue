@@ -17,6 +17,14 @@
           kullanmayın.
         </p>
       </div>
+      <div class="tckno-wrapper">
+        <div class="tckno-input">
+          <input type="text" placeholder="T.C Kimlik Numarası" />
+        </div>
+        <div class="tckno-button">
+          <button class="btn btn-primary">Onayla</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
