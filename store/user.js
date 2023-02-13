@@ -103,7 +103,7 @@ const actions = {
     this.$cookiz.remove('token', { path: '/' })
     context.commit('SET_TOKEN', '')
     context.commit('SET_USER', {})
-    this.$router.push('/login')
+    this.$router.push('/giris-yap')
   },
 
   // Sync Login action
