@@ -13,7 +13,7 @@
               :key="i._id"
               class="category-item"
               :class="selectedCategory === i.name ? 'selected' : ''"
-              @click="selectedCategory = i.name"
+              @click="selectCategory(i)"
             >
               {{ i.name }}
             </span>
@@ -27,15 +27,15 @@
               placeholder="Şehir Giriniz"
             />
           </div>
-          <div class="search-results">
+          <div v-if="locationKeyword" class="search-results">
             <span
-              v-for="city in filteredLocation"
-              :key="city"
+              v-for="[id, name] in filteredLocation"
+              :key="id"
               class="search-result-item"
-              :class="locationKeyword === city ? 'selected' : ''"
-              @click="locationKeyword = city"
+              :class="locationKeyword === name ? 'selected' : ''"
+              @click="selectCity({ id, name })"
             >
-              {{ city }}
+              {{ name }}
             </span>
           </div>
         </div>
@@ -46,43 +46,98 @@
             placeholder="Başlık Giriniz"
           />
         </div>
+        <div class="advert-description-input">
+          <textarea
+            v-model="newAdvert.description"
+            placeholder="Açıklama"
+            rows="8"
+          />
+        </div>
       </div>
+      <buton class="advert-submit-btn" @click="createAdvert()">Paylaş</buton>
     </div>
+    <AdvertSuccessModal v-if="isAdvertSuccessModalOpen" />
   </div>
 </template>
 
 <script>
+import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
+import types from '~/data/types.json'
+
 export default {
   name: 'CreateAdvertPage',
+  components: { AdvertSuccessModal },
   layout: 'default',
   data() {
     return {
+      types,
       categorySelection: false,
       locationKeyword: '',
       selectedCategory: 'Kategori Seçiniz',
       newAdvert: {
         title: '',
         description: '',
-        city: '',
-        category: '',
+        city_id: '',
+        category_id: '',
+        postingType: '',
+        type: types.DEMANDER,
       },
     }
   },
   computed: {
+    isAdvertSuccessModalOpen() {
+      return this.$store.state.modal.advertSuccessModal
+    },
     categories() {
       return this.$store.state.advert.categoryList
     },
     locations() {
-      return this.$store.state.advert.citiesList
+      return {
+        [this.types.ONLINE]: 'Online',
+        ...this.$store.state.advert.citiesList,
+      }
     },
     filteredLocation() {
       if (this.locationKeyword.length > 0) {
-        return Object.values(this.locations).filter((city) => {
-          return city.toLowerCase().includes(this.locationKeyword.toLowerCase())
+        return Object.entries(this.locations).filter(([id, name]) => {
+          return (
+            id === this.types.ONLINE ||
+            name.toLowerCase().includes(this.locationKeyword.toLowerCase())
+          )
         })
       } else {
         return []
       }
+    },
+  },
+  watch: {
+    locationKeyword(val) {
+      if (val === '') {
+        this.newAdvert.city_id = val
+      }
+    },
+    'newAdvert.city_id'(val) {
+      if (val === this.types.ONLINE) {
+        this.newAdvert.city_id = ''
+      }
+
+      this.newAdvert.postingType =
+        !val || val === this.types.ONLINE
+          ? this.types.ONLINE
+          : this.types.FACETOFACE
+    },
+  },
+  methods: {
+    createAdvert() {
+      this.$store.dispatch('advert/createAdvert', this.newAdvert)
+    },
+    selectCategory(category) {
+      this.selectedCategory = category.name
+      this.newAdvert.category_id = category._id
+    },
+    selectCity(city) {
+      this.locationKeyword = city.name
+      this.newAdvert.city_id = city.id
     },
   },
 }
@@ -100,6 +155,7 @@ export default {
     font-weight: 500;
   }
   .page-content {
+    padding-bottom: 3rem;
     .page-title {
       padding: 1rem;
       font-size: 1.5rem;
@@ -110,7 +166,9 @@ export default {
       display: flex;
       width: 100%;
       flex-direction: column;
+      margin-bottom: 4rem;
       border-top: 1px solid #dedede;
+      border-bottom: 1px solid #dedede;
       padding: 1rem;
       .category-selection {
         display: flex;
@@ -150,6 +208,7 @@ export default {
         }
       }
       .location-selection {
+        margin-bottom: 1rem;
         .search-input-box {
           display: flex;
           align-items: center;
@@ -162,7 +221,7 @@ export default {
             border: none;
             outline: none;
             width: 100%;
-            padding: 0.5rem;
+            padding: 1rem;
             font-size: 1rem;
             font-weight: 500;
           }
@@ -195,6 +254,42 @@ export default {
           }
         }
       }
+      .advert-title-input {
+        background: #f2f5f9;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        input {
+          padding: 1rem;
+        }
+      }
+      .advert-description-input {
+        background: #f2f5f9;
+        border-radius: 10px;
+        padding: 1rem;
+        textarea {
+          color: #828282;
+          font-size: 1rem;
+          font-weight: 500;
+          font-family: 'Campton', sans-serif;
+          background: transparent;
+          min-width: 100%;
+          max-width: 100%;
+          border: none !important;
+        }
+        textarea:focus {
+          outline: none;
+        }
+      }
+    }
+    .advert-submit-btn {
+      background: #27ae60;
+      border-radius: 7px;
+      color: white;
+      width: max-content;
+      padding: 1rem 10rem;
+      display: block;
+      margin: auto;
+      cursor: pointer;
     }
   }
 }
