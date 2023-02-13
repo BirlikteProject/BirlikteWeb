@@ -23,15 +23,15 @@
           <MessageUserItem v-for="i in 5" :key="i" />
         </div>
       </div>
-      <div class="contact-section section" ref="contactSection">
+      <div ref="contactSection" class="contact-section section">
         <AdvertInMessage />
-        <MessageItem v-for="i in 10" :key="i" />
+        <MessageItem v-for="i in 10" :key="i" :is-mine="i%2 == 0 ? true : false"/>
         <div class="message-box">
           <textarea
+            ref="messageBox"
             class="message-input"
             placeholder="Mesajınızı buraya yazınız..."
             @keydown="autosize"
-            ref="messageBox"
           ></textarea>
           <div class="message-send-button">
             <i class="afet-icons afet-send"></i>
@@ -127,12 +127,12 @@ export default {
     }
     .contact-section {
       overflow-y: auto;
+      padding: 1rem;
       .message-box {
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        padding: 0 0.5rem;
         margin-top: 1rem;
         justify-content: center;
         .message-input {

@@ -1,6 +1,7 @@
 <template>
   <div class="advert-in-message-wrapper">
-    <div class="advert-in-message-image">
+    <div class="advert-in-message">
+      <div class="advert-in-message-image">
       <img src="https://picsum.photos/200/300" alt="" />
     </div>
     <div class="advert-in-message-info">
@@ -11,6 +12,7 @@
       </div>
       <div class="advert-in-message-title">Advert Title</div>
       <div class="go-to-advert">İçeriğe Git</div>
+    </div>
     </div>
   </div>
 </template>
@@ -23,6 +25,12 @@ export default {
 
 <style lang="scss">
 .advert-in-message-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.advert-in-message {
   width: 80%;
   display: flex;
   flex-direction: column;
