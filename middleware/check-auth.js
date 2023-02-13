@@ -1,26 +1,19 @@
-import decoder from 'jwt-decode'
-import cookie from 'js-cookie'
+import jwtDecode from "jwt-decode";
 
-export default function checkAuth({ app, redirect, store }) {
-  const token = cookie.get('token')
-  const login = '/user/login'
-  const storeToken = store.state.auth.token
-  
-
+export default function ({ app, redirect, store }) {
   try {
-    const decoded = decoder(token)
-    if (decoded.exp < Date.now() / 1000) {
-      redirect(login)
+    const token = app.$cookies.get("token");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp < Math.floor(Date.now() / 1000)) {
+        app.$cookies.set("token", '', { exp: '-9999' }) // remove token from cookies
+      } else if (!store.getters["user/isAuthenticated"]) {
+        store.dispatch("user/setToken", token); // set store token state
+      }
+    } else {
+      // redirect('')
     }
-
-    if (!token) {
-      redirect(login)
-    } 
-
-    if (!storeToken) {
-        store.dispatch('auth/setToken', token)
-    }
-  } catch {
-    redirect(login)
+  } catch (error) {
+    // options
   }
 }

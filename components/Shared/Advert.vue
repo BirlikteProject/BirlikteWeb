@@ -57,11 +57,14 @@
 <script>
 export default {
   name: 'Advert',
+  props: {
+    advert: Object()
+  },
   data() {
     return {
       dropdown: false,
     }
-  },
+  }
 }
 </script>
 

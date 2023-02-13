@@ -77,9 +77,9 @@
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
-          <button class="primary-button google-button">
+          <button class="primary-button google-button" @click="signWithGoogle()">
             <i class="afet-icons afet-google"></i>
-            <span @click="signWithGoogle()">Google ile devam et</span>
+            <span>Google ile devam et</span>
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       types,
-      registerType: null,
+      registerType: types.DEMANDER,
       isKvkkAccepted: false,
       fullName: '',
       email: '',
@@ -143,7 +143,7 @@ export default {
       }
     },
     signWithGoogle () {
-      this.$store.dispatch('auth/signWithGoogle')
+      this.$store.dispatch('user/signWithGoogle', { type: this.registerType })
     }
   },
 }

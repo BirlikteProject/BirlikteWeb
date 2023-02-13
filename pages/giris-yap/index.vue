@@ -34,7 +34,7 @@
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
-          <button class="primary-button google-button">
+          <button class="primary-button google-button" @click="signWithGoogle()">
             <i class="afet-icons afet-google"></i>
             <span>Google ile devam et</span>
           </button>
@@ -60,9 +60,14 @@ export default {
   data() {
     return {
       types,
-      loginType: null,
+      loginType: types.DEMANDER,
     }
   },
+  methods: {
+    signWithGoogle () {
+      this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
+    }
+  }
 }
 </script>
 

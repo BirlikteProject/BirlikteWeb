@@ -24,7 +24,7 @@ export default {
     ScrollTop,
     SideBar,
   },
-  async created() {
+  async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
     // await this.$store.dispatch('profile/getOwnProfile')
   },
