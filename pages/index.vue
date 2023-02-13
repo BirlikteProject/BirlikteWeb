@@ -1,9 +1,10 @@
-
 <template>
   <div class="index-page">
     <div class="greeting-title">
       <span>Neye İhtiyacın Var?</span>
-      <span><b>Birlik<em>te</em></b> Bulalım</span>
+      <span
+        ><b>Birlik<em>te</em></b> Bulalım</span
+      >
     </div>
     <div class="category-buttons">
       <category-button
@@ -12,8 +13,8 @@
         :category="category"
       />
     </div>
-    <div class="content">
-      <advert />
+    <div v-if="!!adverts && !!cities" class="content">
+      <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
     </div>
     <login-modal v-if="loginModal" />
   </div>
@@ -26,7 +27,7 @@ import Advert from '~/components/Shared/Advert.vue'
 export default {
   name: 'IndexPage',
   components: { LoginModal, CategoryButton, Advert },
-  data () {
+  data() {
     return {
       categories: [
         {
@@ -44,13 +45,19 @@ export default {
         {
           img: 'psycho',
           name: 'Psikolojik Destek',
-        }
-      ]
+        },
+      ],
     }
   },
   computed: {
     loginModal() {
       return this.$store.state.modal.loginModal
+    },
+    adverts() {
+      return this.$store.state.advert.advertList
+    },
+    cities() {
+      return this.$store.state.advert.citiesList
     },
   },
 }

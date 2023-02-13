@@ -1,9 +1,9 @@
 import APIBaseServices from '../APIBaseServices'
 export default class AdvertServices extends APIBaseServices {
-  async getAdvertPage(data, page=1, limit=10) {
+  async getAdvertPage(page = 1, limit = 10) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}`
+      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}`,
     })
     return response.data
   }
@@ -11,7 +11,7 @@ export default class AdvertServices extends APIBaseServices {
   async getAdvertById(id) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/${id}`
+      url: this.url + `/advert/${id}`,
     })
     return response.data
   }
@@ -20,7 +20,7 @@ export default class AdvertServices extends APIBaseServices {
     const response = await this.http({
       method: 'POST',
       url: this.url + '/advert',
-      data
+      data,
     })
     return response.data
   }
@@ -29,7 +29,7 @@ export default class AdvertServices extends APIBaseServices {
     const response = await this.http({
       method: 'PUT',
       url: this.url + `/advert/${id}`,
-      data
+      data,
     })
     return response.data
   }
@@ -37,7 +37,7 @@ export default class AdvertServices extends APIBaseServices {
   async deleteAdvertById(id) {
     const response = await this.http({
       method: 'DELETE',
-      url: this.url + `/advert/${id}`
+      url: this.url + `/advert/${id}`,
     })
     return response.data
   }
@@ -45,7 +45,7 @@ export default class AdvertServices extends APIBaseServices {
   async searchAdverts(city, title) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/search?city=${city}&title=${title}`
+      url: this.url + `/advert/search?city=${city}&title=${title}`,
     })
     return response.data
   }
@@ -53,7 +53,7 @@ export default class AdvertServices extends APIBaseServices {
   async getCities() {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/cities`
+      url: `http://142.93.106.148:5000/cities`,
     })
     return response.data
   }

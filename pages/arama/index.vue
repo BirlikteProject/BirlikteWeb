@@ -26,9 +26,9 @@
             v-for="l in locations"
             :key="l"
             class="city-item"
-            @click=";(location = l), (results = false)"
+            @click=";(location.name = l), (results = false)"
           >
-            {{ l.name.toLowerCase() }}
+            {{ l.toLowerCase() }}
           </div>
         </div>
       </div>
@@ -57,13 +57,11 @@
 
 <script>
 import Advert from '~/components/Shared/Advert.vue'
-import locations from '~/data/location.json'
 export default {
   name: 'SearchPage',
   components: { Advert },
   data() {
     return {
-      locations,
       location: {
         name: null,
       },
@@ -73,6 +71,9 @@ export default {
     }
   },
   computed: {
+    locations() {
+      return Object.values(this.$store.state.advert.citiesList)
+    },
     advertList() {
       return this.$store.state.advertList
     },

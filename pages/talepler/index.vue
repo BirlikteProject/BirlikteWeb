@@ -4,6 +4,9 @@
       <div class="page-title">Talepler</div>
       <div class="request-list">
         <request-item
+          v-for="advert in adverts"
+          :key="advert._id"
+          :advert="advert"
         />
       </div>
     </div>
@@ -16,6 +19,11 @@ export default {
   name: 'RequestsPage',
   components: { RequestItem },
   layout: 'default',
+  computed: {
+    adverts() {
+      return this.$store.state.advert.advertList
+    },
+  },
 }
 </script>
 

@@ -29,18 +29,22 @@
           </div>
           <div class="search-results">
             <span
-              v-for="i in filteredLocation"
-              :key="i.name"
+              v-for="city in filteredLocation"
+              :key="city"
               class="search-result-item"
-              :class="locationKeyword === i.name ? 'selected' : ''"
-              @click="locationKeyword = i.name"
+              :class="locationKeyword === city ? 'selected' : ''"
+              @click="locationKeyword = city"
             >
-              {{ i.name }}
+              {{ city }}
             </span>
           </div>
         </div>
         <div class="advert-title-input">
-          <input type="text" placeholder="Başlık Giriniz" />
+          <input
+            v-model="newAdvert.title"
+            type="text"
+            placeholder="Başlık Giriniz"
+          />
         </div>
       </div>
     </div>
@@ -48,27 +52,33 @@
 </template>
 
 <script>
-import categories from '~/data/categories.json'
-import location from '~/data/location.json'
 export default {
   name: 'CreateAdvertPage',
   layout: 'default',
   data() {
     return {
-      categories,
-      location,
       categorySelection: false,
       locationKeyword: '',
       selectedCategory: 'Kategori Seçiniz',
+      newAdvert: {
+        title: '',
+        description: '',
+        city: '',
+        category: '',
+      },
     }
   },
   computed: {
+    categories() {
+      return this.$store.state.advert.categoryList
+    },
+    locations() {
+      return this.$store.state.advert.citiesList
+    },
     filteredLocation() {
       if (this.locationKeyword.length > 0) {
-        return this.location.filter((i) => {
-          return i.name
-            .toLowerCase()
-            .includes(this.locationKeyword.toLowerCase())
+        return Object.values(this.locations).filter((city) => {
+          return city.toLowerCase().includes(this.locationKeyword.toLowerCase())
         })
       } else {
         return []

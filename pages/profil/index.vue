@@ -8,10 +8,10 @@
             <img src="https://i.pravatar.cc/300" alt="user-avatar" />
           </div>
           <div class="user-name">
-            <span>John Doe</span>
+            <span>{{ profile.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@johndoe</span>
+            <span>@{{ profile.username }}</span>
           </div>
         </div>
         <div class="content-tab-items">
@@ -32,7 +32,11 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <advert />
+            <advert
+              v-for="advert in adverts"
+              :key="advert._id"
+              :advert="advert"
+            />
           </div>
           <div v-if="activeTab == 1" class="content about">
             <textarea>
@@ -55,6 +59,17 @@ export default {
     return {
       activeTab: 0,
     }
+  },
+  computed: {
+    profile() {
+      return {
+        username: 'johndoe',
+        fullName: 'John Doe',
+      }
+    },
+    adverts() {
+      return this.$store.state.advert.advertList
+    },
   },
 }
 </script>
@@ -136,9 +151,9 @@ export default {
       }
       .tab-contents {
         .content {
-            &.about {
-                padding: 1rem;
-            }
+          &.about {
+            padding: 1rem;
+          }
           textarea {
             width: 100%;
             height: 100%;

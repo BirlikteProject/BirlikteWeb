@@ -8,7 +8,7 @@ export default class ProfileServices extends APIBaseServices {
     return response.data
   }
 
-  async getProfiles() {
+  async getProfile() {
     const response = await this.http({
       method: 'GET',
       url: this.url + '/profile',

@@ -24,6 +24,10 @@ export default {
     ScrollTop,
     SideBar,
   },
+  async created() {
+    await this.$store.dispatch('advert/fetchAdverts')
+    // await this.$store.dispatch('profile/getOwnProfile')
+  },
 }
 </script>
 

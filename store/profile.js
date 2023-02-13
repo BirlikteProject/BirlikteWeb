@@ -1,5 +1,5 @@
 const state = () => ({
-  profiles: []
+  profile: {},
 })
 const actions = {
   async getProfileById(context, id) {
@@ -9,8 +9,8 @@ const actions = {
     }
   },
 
-  async getProfiles(context) {
-    const response = await this.$api.profileServices.getProfiles()
+  async getOwnProfile(context) {
+    const response = await this.$api.profileServices.getProfile()
     if (response.data.status) {
       context.commit('SET_PROFILES', response.data)
     }

@@ -2,27 +2,24 @@
   <div class="request-item-wrapper">
     <div class="request-header">
       <div class="left-side">
-        <span class="header-info">Eğitim</span>
+        <span class="header-info">{{ advert.category_id.name }}</span>
         <span class="middot" />
-        <span class="header-info">İstanbul</span>
+        <span class="header-info">{{ advert.city_id }}</span>
       </div>
       <div class="right-side">
         <div class="request-actions">
           <i class="afet-icons afet-plus tooltip">
-            <tool-tip text="Destek ol" type="bottom"/>
+            <tool-tip text="Destek ol" type="bottom" />
           </i>
         </div>
       </div>
     </div>
     <div class="request-body">
       <div class="request-title">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        {{ advert.title }}
       </div>
       <div class="request-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod,
-        nunc vel ultricies lacinia, nisl nisl aliquam nunc, vitae ultricies nisl
-        nunc vel nisl. Sed euismod, nunc vel ultricies lacinia, nisl nisl
-        aliquam nunc, vitae ultricies nisl nunc vel nisl.
+        {{ advert.description }}
       </div>
     </div>
   </div>
@@ -31,6 +28,9 @@
 <script>
 export default {
   name: 'RequestItem',
+  props: {
+    advert: Object(),
+  },
 }
 </script>
 
