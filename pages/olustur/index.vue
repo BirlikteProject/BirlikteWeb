@@ -68,6 +68,7 @@ export default {
   name: 'CreateAdvertPage',
   components: { AdvertSuccessModal },
   layout: 'default',
+  middleware: ['auth'],
   data() {
     return {
       types,

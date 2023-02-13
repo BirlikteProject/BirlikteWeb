@@ -3,15 +3,15 @@
     <div class="profile-page">
       <div class="page-title">Profil</div>
       <div class="profile-page-content">
-        <div class="profile-info">
+        <div v-if="profile" class="profile-info">
           <div class="user-avatar">
-            <img src="https://i.pravatar.cc/300" alt="user-avatar" />
+            <img :src="profile.image_url ? profile.image_url : 'https://i.pravatar.cc/300'" alt="user-avatar" />
           </div>
           <div class="user-name">
             <span>{{ profile.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@{{ profile.username }}</span>
+            <span>@{{ profile.email ? profile.email.split('@')[0] : 'johndoe' }}</span>
           </div>
         </div>
         <div class="content-tab-items">
@@ -32,15 +32,14 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <advert
+            <RequestItem
               v-for="advert in adverts"
               :key="advert._id"
               :advert="advert"
             />
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis dolorem dignissimos vero tempora accusantium fuga iusto tempore quae necessitatibus rerum laborum, magnam quos debitis officia nemo natus obcaecati minima id.
+            <textarea v-model="profile.description">
             </textarea>
           </div>
         </div>
@@ -50,11 +49,12 @@
 </template>
 
 <script>
-import Advert from '~/components/Shared/Advert.vue'
+import RequestItem from '~/components/Request/RequestItem.vue'
 export default {
   name: 'ProfilePage',
-  components: { Advert },
+  components: { RequestItem },
   layout: 'default',
+  middleware: ['auth'],
   data() {
     return {
       activeTab: 0,
@@ -62,10 +62,7 @@ export default {
   },
   computed: {
     profile() {
-      return {
-        username: 'johndoe',
-        fullName: 'John Doe',
-      }
+      return this.$store.state.user.user
     },
     adverts() {
       return this.$store.state.advert.advertList

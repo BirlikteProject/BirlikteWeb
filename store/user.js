@@ -17,9 +17,9 @@ const actions = {
           fullName: firebaseResponse.user.displayName,
         })
         if (response.status) {
-          Cookies.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser')
+          Cookies.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
           this.$router.push('/')
         }
       } catch (error) {
@@ -31,9 +31,9 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          Cookies.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser')
+          Cookies.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
           this.$router.push('/')
         }
       } catch (error) {
@@ -42,9 +42,9 @@ const actions = {
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
         })
-        Cookies.set('token', _response.data, { exp: '7d' })
-        context.commit('SET_TOKEN', _response.data)
-        await context.dispatch('fetchUser')
+        Cookies.set('token', _response.data.token, { exp: '7d' })
+        context.commit('SET_TOKEN', _response.data.token)
+        context.commit('SET_USER', _response.data.user)
         this.$router.push('/')
       }
     }
@@ -60,9 +60,9 @@ const actions = {
         fullName: payload.fullName,
       })
       if (response.status) {
-        Cookies.set('token', response.data, { exp: '7d' })
+        Cookies.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
-        await context.dispatch('fetchUser')
+        context.commit('SET_USER', response.data.user)
         this.$router.push('/')
       }
     } catch (error) {}
@@ -78,10 +78,10 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          this.$cookiz.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser', response.data)
-          window.redirect('/')
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
+          this.$router.push('/')
         }
       } else {
         alert('Login Failed')
@@ -95,7 +95,7 @@ const actions = {
         const response = await this.$api.profileServices.getOwnProfile()
         context.commit('SET_USER', response.data)
       } catch (error) {
-        console.error(error)
+        // console.error(error)
       }
     }
   },
@@ -110,6 +110,10 @@ const actions = {
   // Sync Login action
   setToken(context, payload) {
     context.commit('SET_TOKEN', payload)
+  },
+
+  setUser(context, payload) {
+    context.commit('SET_USER', payload)
   },
 
   isAuthenticated(context) {

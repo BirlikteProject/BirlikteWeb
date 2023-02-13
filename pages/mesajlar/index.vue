@@ -49,6 +49,7 @@ import AdvertInMessage from '~/components/Shared/AdvertInMessage.vue'
 export default {
   name: 'MessagesPage',
   components: { MessageUserItem, AdvertInMessage, MessageItem },
+  middleware: ['auth'],
   data() {
     return {
       activeCategory: 0,

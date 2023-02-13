@@ -19,7 +19,6 @@ const mutations = {
 const actions = {
   async fetchAdverts(context) {
     const advResponse = await this.$api.advertServices.getAdvertPage()
-    console.log(advResponse)
     if (advResponse.status) {
       context.commit('SET_ADVERT_LIST', advResponse.data)
     }

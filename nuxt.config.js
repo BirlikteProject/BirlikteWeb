@@ -83,5 +83,6 @@ export default {
     },
   },
   router: {
+    middleware: ['global']
   }
 }

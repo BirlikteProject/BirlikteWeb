@@ -30,12 +30,9 @@ export default {
       return this.$store.state.user.token
     }
   },
-  async mounted() {
-    await this.$store.dispatch('advert/fetchAdverts')
-    await this.$store.dispatch('user/fetchUser')
-    if(this.$store.state.user.isAuthenticated) {
-      this.$router.push('/')
-    }
+  created() {
+    // await this.$store.dispatch('advert/fetchAdverts')
+    // await this.$store.dispatch('user/fetchUser')
   },
 }
 </script>

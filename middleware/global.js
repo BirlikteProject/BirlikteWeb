@@ -9,8 +9,15 @@ export default async function ({ app, store }) {
         store.dispatch('user/setToken', '')
       } else {
         store.dispatch('user/setToken', token)
-        console.log('token is here')
-        await store.dispatch('user/fetchUser')
+        // await store.dispatch('user/fetchUser')
+        const response = await app.$axios({
+          method: 'GET',
+          url: 'http://142.93.106.148:5000/api/v1' + '/profile',
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+        store.dispatch('user/setUser', response.data.data)
       }
     }
 }
