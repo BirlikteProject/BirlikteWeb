@@ -43,13 +43,13 @@
           <input
             v-model="newAdvert.title"
             type="text"
-            placeholder="Başlık Giriniz"
+            placeholder="* Başlık Giriniz"
           />
         </div>
         <div class="advert-description-input">
           <textarea
             v-model="newAdvert.description"
-            placeholder="Açıklama"
+            placeholder="* Açıklama"
             rows="8"
           />
         </div>
@@ -57,16 +57,18 @@
       <buton class="advert-submit-btn" @click="createAdvert()">Paylaş</buton>
     </div>
     <AdvertSuccessModal v-if="isAdvertSuccessModalOpen" />
+    <AdvertErrorModal v-if="isAdvertErrorModalOpen" />
   </div>
 </template>
 
 <script>
 import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
+import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
 import types from '~/data/types.json'
 
 export default {
   name: 'CreateAdvertPage',
-  components: { AdvertSuccessModal },
+  components: { AdvertSuccessModal, AdvertErrorModal },
   layout: 'default',
   middleware: ['auth'],
   data() {
@@ -74,12 +76,12 @@ export default {
       types,
       categorySelection: false,
       locationKeyword: '',
-      selectedCategory: 'Kategori Seçiniz',
+      selectedCategory: '* Kategori Seçiniz',
       newAdvert: {
         title: '',
         description: '',
-        city_id: '',
         category_id: '',
+        city_id: '',
         postingType: '',
         type: types.DEMANDER,
       },
@@ -88,6 +90,9 @@ export default {
   computed: {
     isAdvertSuccessModalOpen() {
       return this.$store.state.modal.advertSuccessModal
+    },
+    isAdvertErrorModalOpen() {
+      return this.$store.state.modal.advertErrorModal
     },
     categories() {
       return this.$store.state.advert.categoryList
@@ -130,6 +135,13 @@ export default {
   },
   methods: {
     createAdvert() {
+      const { title, description, category_id: categoryId } = this.newAdvert
+
+      if (title === '' || description === '' || categoryId === '') {
+        this.$store.dispatch('modal/setAdvertErrorModal', true)
+        return
+      }
+
       this.$store.dispatch('advert/createAdvert', this.newAdvert)
     },
     selectCategory(category) {

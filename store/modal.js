@@ -4,6 +4,7 @@ const state = () => ({
   kvkkModal: false,
   privacyPolicy: false,
   advertSuccessModal: false,
+  advertErrorModal: false,
 })
 
 const mutations = {
@@ -18,6 +19,9 @@ const mutations = {
   },
   SET_PRIVACY_POLICY(state, payload) {
     state.privacyPolicy = payload
+  },
+  SET_ADVERT_ERROR_MODAL(state, payload) {
+    state.advertErrorModal = payload
   },
   SET_ADVERT_SUCCESS_MODAL(state, payload) {
     state.advertSuccessModal = payload
@@ -39,6 +43,9 @@ const actions = {
   },
   setAdvertSuccessModal(context, payload) {
     context.commit('SET_ADVERT_SUCCESS_MODAL', payload)
+  },
+  setAdvertErrorModal(context, payload) {
+    context.commit('SET_ADVERT_ERROR_MODAL', payload)
   },
 }
 
