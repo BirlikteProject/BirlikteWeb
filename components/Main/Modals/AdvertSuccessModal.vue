@@ -22,12 +22,9 @@ export default {
       .getElementById('advert-success-modal-overlay')
       .addEventListener('click', this.onModalOverlayClick)
   },
-  destroyed() {
+  destroy() {
     clearTimeout(this.timeout)
     window.removeEventListener('keydown', this.onKeyDown)
-    document
-      .getElementById('advert-success-modal-overlay')
-      .removeEventListener('click', this.onModalOverlayClick)
   },
   methods: {
     close() {
