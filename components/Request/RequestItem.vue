@@ -4,7 +4,7 @@
       <div class="left-side">
         <span class="header-info">{{ advert.category_id.name }}</span>
         <span class="middot" />
-        <span class="header-info">{{ advert.city_id }}</span>
+        <span class="header-info">{{ time }}</span>
       </div>
       <div class="right-side">
         <div class="request-actions">
@@ -31,6 +31,37 @@ export default {
   props: {
     advert: Object(),
   },
+  computed:{
+    time(){
+      const now = new Date();
+      const date = new Date(this.advert.createdAt)
+
+      let time = (now-date)/1000; // saniye bilgisi alınıyor
+      let text = " saniye önce"
+      if(time >= 60 ){
+        time /= 60;// dakika bilgisi alınıyor
+        text = " dakika önce"
+      } 
+      if(time >= 60){
+        time /= 60;// saat bilgisi alınıyor
+        text = " saat önce"
+      } 
+      if(time >= 24) {
+        time /= 24;// gün bilgisi alınıyor
+        text = " gün önce"
+      } 
+      if(time >= 30){
+        time /= 30;// ay bilgisi alınıyor
+        text = " ay önce"
+      } 
+      if(time >= 12){
+        time /= 12;// ay bilgisi alınıyor
+        text = " yıl önce"
+      } 
+      
+      return Math.floor(time)+text
+    }
+  }
 }
 </script>
 
