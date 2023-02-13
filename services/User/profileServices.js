@@ -9,11 +9,15 @@ export default class ProfileServices extends APIBaseServices {
   }
 
   async getOwnProfile() {
-    const response = await this.http({
-      method: 'GET',
-      url: this.url + '/profile',
-    })
-    return response.data
+    try {
+      const response = await this.http({
+        method: 'GET',
+        url: this.url + '/profile',
+      })
+      return response.data
+    } catch (error) {
+
+    }
   }
 
   async updateProfileById(id) {

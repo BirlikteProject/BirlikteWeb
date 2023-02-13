@@ -2,8 +2,8 @@
   <div class="sidebar-wrapper">
     <nuxt-link to="/" class="link-item"> Anasayfa </nuxt-link>
     <nuxt-link to="/talepler" class="link-item"> Talepler </nuxt-link>
-    <nuxt-link to="/mesajlar" class="link-item"> Mesajlar </nuxt-link>
-    <nuxt-link to="/profil" class="link-item"> Profil </nuxt-link>
+    <nuxt-link v-if="isAuthenticated" to="/mesajlar" class="link-item"> Mesajlar </nuxt-link>
+    <nuxt-link v-if="isAuthenticated" to="/profil" class="link-item"> Profil </nuxt-link>
     <nuxt-link to="/arama" class="link-item"> Arama </nuxt-link>
 
     <nuxt-link to="/olustur" class="link-item">
@@ -20,6 +20,11 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user.isAuthenticated
+    }
+  }
 }
 </script>
 

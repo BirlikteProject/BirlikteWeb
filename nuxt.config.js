@@ -33,6 +33,7 @@ export default {
     { src: '~/plugins/icons.js', mode: 'client' },
     { src: '~/plugins/api.js', mode: 'client' },
     { src: '~/plugins/firebase.js', mode: 'client', ssr: false },
+    { src: '~/plugins/boot.js', mode: 'client' },
   ],
 
   components: true,
@@ -57,6 +58,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -80,4 +82,6 @@ export default {
       },
     },
   },
+  router: {
+  }
 }

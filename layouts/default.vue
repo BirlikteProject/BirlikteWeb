@@ -24,9 +24,18 @@ export default {
     ScrollTop,
     SideBar,
   },
+  // middleware: ['auth'],
+  computed: {
+    token() {
+      return this.$store.state.user.token
+    }
+  },
   async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
-    // await this.$store.dispatch('profile/getOwnProfile')
+    await this.$store.dispatch('user/fetchUser')
+    if(this.$store.state.user.isAuthenticated) {
+      this.$router.push('/')
+    }
   },
 }
 </script>

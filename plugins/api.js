@@ -4,7 +4,7 @@ import ProfileServices from '~/services/User/profileServices'
 import AdvertServices from '~/services/Advert/advertServices'
 import CategoryServices from '~/services/Category/categoryServices'
 
-export default function ({ $axios, store }, inject) {
+export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
     baseURL: 'http://142.93.106.148:5000/api/v1',
   })

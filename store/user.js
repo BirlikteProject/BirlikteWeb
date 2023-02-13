@@ -3,30 +3,49 @@ import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
   user: {},
+  isAuthenticated: false,
 })
 
 const actions = {
   async signWithGoogle(context, payload) {
     const firebaseResponse = await auth.signInWithPopup(googleProvider)
-    if(firebaseResponse.additionalUserInfo.isNewUser) {
-      const response = await this.$api.authServices.register({
-        firebase_token: firebaseResponse.user._delegate.accessToken,
-        type: payload.type,
-        fullName: firebaseResponse.user.displayName,
-      })
-      if (response.status) {
-        Cookies.set('token', response.data, { exp: '7d' })
-        context.commit('SET_TOKEN', response.data)
-        await context.dispatch('fetchUser')
+    if (firebaseResponse.additionalUserInfo.isNewUser) {
+      try {
+        const response = await this.$api.authServices.register({
+          firebase_token: firebaseResponse.user._delegate.accessToken,
+          type: payload.type,
+          fullName: firebaseResponse.user.displayName,
+        })
+        if (response.status) {
+          Cookies.set('token', response.data, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data)
+          await context.dispatch('fetchUser')
+          this.$router.push('/')
+        }
+      } catch (error) {
+        // user could not be registered
       }
     } else {
-      const response = await this.$api.authServices.login({
-        firebase_token: firebaseResponse.user._delegate.accessToken,
-      })
-      if (response.status) {
-        Cookies.set('token', response.data, { exp: '7d' })
-        context.commit('SET_TOKEN', response.data)
+      try {
+        const response = await this.$api.authServices.login({
+          firebase_token: firebaseResponse.user._delegate.accessToken,
+        })
+        if (response.status) {
+          Cookies.set('token', response.data, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data)
+          await context.dispatch('fetchUser')
+          this.$router.push('/')
+        }
+      } catch (error) {
+        const _response = await this.$api.authServices.register({
+          firebase_token: firebaseResponse.user._delegate.accessToken,
+          type: payload.type,
+          fullName: firebaseResponse.user.displayName,
+        })
+        Cookies.set('token', _response.data, { exp: '7d' })
+        context.commit('SET_TOKEN', _response.data)
         await context.dispatch('fetchUser')
+        this.$router.push('/')
       }
     }
   },
@@ -44,10 +63,9 @@ const actions = {
         Cookies.set('token', response.data, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
         await context.dispatch('fetchUser')
-        alert('User created')
+        this.$router.push('/')
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   },
 
   // Async login action
@@ -60,9 +78,10 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          Cookies.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data.token)
-          await context.dispatch('fetchUser')
+          this.$cookiz.set('token', response.data, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data)
+          await context.dispatch('fetchUser', response.data)
+          window.redirect('/')
         }
       } else {
         alert('Login Failed')
@@ -70,19 +89,32 @@ const actions = {
     } catch (error) {}
   },
 
-  async fetchUser(context) {
-    try {
-      const response = await this.$api.profileServices.getOwnProfile()
-      context.commit('SET_USER', response.data)
-      console.log(response.data)
-    } catch (error) {
+  async fetchUser(context, payload) {
+    if (context.state.token && !Object.keys(context.state.user).includes('fullName')) {
+      try {
+        const response = await this.$api.profileServices.getOwnProfile()
+        context.commit('SET_USER', response.data)
+      } catch (error) {
+        console.error(error)
+      }
     }
+  },
+
+  logout(context) {
+    this.$cookiz.set('token', '', { maxAge: '-1' })
+    context.commit('SET_TOKEN', '')
+    context.commit('SET_USER', {})
+    this.$router.push('/login')
   },
 
   // Sync Login action
   setToken(context, payload) {
     context.commit('SET_TOKEN', payload)
   },
+
+  isAuthenticated(context) {
+    return !!context.state.user.fullName
+  }
 }
 
 const mutations = {
@@ -91,12 +123,13 @@ const mutations = {
   },
   SET_USER(state, payload) {
     state.user = payload
+    state.isAuthenticated = !!payload.fullName
   },
 }
 
 const getters = {
   isAuthenticated(state) {
-    return !!Object.keys(state.user)
+    return !!state.user.fullName
   },
 }
 
