@@ -11,9 +11,9 @@
         <nuxt-link v-if="!isAuthenticated" class="register-button" to="/kayit-ol">
           Kayıt Ol
         </nuxt-link>
-        <nuxt-link v-if="isAuthenticated" class="register-button" @click="logout" to="/giris-yap">
+        <button v-if="isAuthenticated" class="register-button" @click="logout">
           Çıkış Yap
-        </nuxt-link>
+        </button>
       </div>
       <!-- <div class="contact-section">
         <i class="afet-icons afet-facebook tooltip">

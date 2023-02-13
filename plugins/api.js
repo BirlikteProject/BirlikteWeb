@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import AuthServices from '~/services/User/authServices'
 import ProfileServices from '~/services/User/profileServices'
 import AdvertServices from '~/services/Advert/advertServices'
@@ -10,8 +9,8 @@ export default function ({ $axios, app, store }, inject) {
   })
   const url = ''
   let token = ''
-  if(Cookies.get('token')) {
-    token = Cookies.get('token')
+  if(app.$cookiz.get('token')) {
+    token = app.$cookiz.get('token')
   } else {
     token = store.state.user?.token
   }

@@ -5,7 +5,7 @@ export default async function ({ app, store }) {
     if (token) {
       const decodedToken = jwtDecode(token)
       if (decodedToken.exp < Math.floor(Date.now() / 1000)) {
-        app.$cookiz.set("token", '') // remove token from cookies
+        app.$cookiz.remove("token") // remove token from cookies
         store.dispatch('user/setToken', '')
       } else {
         store.dispatch('user/setToken', token)

@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
@@ -17,7 +16,7 @@ const actions = {
           fullName: firebaseResponse.user.displayName,
         })
         if (response.status) {
-          Cookies.set('token', response.data.token, { exp: '7d' })
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
           this.$router.push('/')
@@ -31,7 +30,7 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          Cookies.set('token', response.data.token, { exp: '7d' })
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
           this.$router.push('/')
@@ -42,7 +41,7 @@ const actions = {
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
         })
-        Cookies.set('token', _response.data.token, { exp: '7d' })
+        this.$cookiz.set('token', _response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', _response.data.token)
         context.commit('SET_USER', _response.data.user)
         this.$router.push('/')
@@ -60,7 +59,7 @@ const actions = {
         fullName: payload.fullName,
       })
       if (response.status) {
-        Cookies.set('token', response.data.token, { exp: '7d' })
+        this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
         context.commit('SET_USER', response.data.user)
         this.$router.push('/')
@@ -101,7 +100,7 @@ const actions = {
   },
 
   logout(context) {
-    this.$cookiz.set('token', '', { maxAge: '-1' })
+    this.$cookiz.remove('token', { path: '/' })
     context.commit('SET_TOKEN', '')
     context.commit('SET_USER', {})
     this.$router.push('/login')

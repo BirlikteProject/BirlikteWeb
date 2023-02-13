@@ -2,9 +2,9 @@
   font-family: 'afet-font';
   font-style: normal;
   font-weight: 400;
-  src: url("afet-font.eot?e967643f57f229c8e9c5473fd44f6d09?#iefix") format("embedded-opentype"),
-url("afet-font.woff2?e967643f57f229c8e9c5473fd44f6d09") format("woff2"),
-url("afet-font.woff?e967643f57f229c8e9c5473fd44f6d09") format("woff");
+  src: url("afet-font.eot?9da044bcb896af96da19d2a69b268216?#iefix") format("embedded-opentype"),
+url("afet-font.woff2?9da044bcb896af96da19d2a69b268216") format("woff2"),
+url("afet-font.woff?9da044bcb896af96da19d2a69b268216") format("woff");
 }
 
 .afet-icons, .afet-icons {
@@ -51,21 +51,22 @@ url("afet-font.woff?e967643f57f229c8e9c5473fd44f6d09") format("woff");
 
 .afet-caret-up:before { content: "\f101"; }
 .afet-caret:before { content: "\f102"; }
-.afet-close:before { content: "\f103"; }
-.afet-education:before { content: "\f104"; }
-.afet-ellipsis:before { content: "\f105"; }
-.afet-facebook:before { content: "\f106"; }
-.afet-google:before { content: "\f107"; }
-.afet-instagram:before { content: "\f108"; }
-.afet-job:before { content: "\f109"; }
-.afet-mailbox:before { content: "\f10a"; }
-.afet-phone:before { content: "\f10b"; }
-.afet-plus:before { content: "\f10c"; }
-.afet-psycho:before { content: "\f10d"; }
-.afet-report:before { content: "\f10e"; }
-.afet-search:before { content: "\f10f"; }
-.afet-send:before { content: "\f110"; }
-.afet-share:before { content: "\f111"; }
-.afet-shelter:before { content: "\f112"; }
-.afet-twitter:before { content: "\f113"; }
-.afet-youtube:before { content: "\f114"; }
+.afet-check-circle:before { content: "\f103"; }
+.afet-close:before { content: "\f104"; }
+.afet-education:before { content: "\f105"; }
+.afet-ellipsis:before { content: "\f106"; }
+.afet-facebook:before { content: "\f107"; }
+.afet-google:before { content: "\f108"; }
+.afet-instagram:before { content: "\f109"; }
+.afet-job:before { content: "\f10a"; }
+.afet-mailbox:before { content: "\f10b"; }
+.afet-phone:before { content: "\f10c"; }
+.afet-plus:before { content: "\f10d"; }
+.afet-psycho:before { content: "\f10e"; }
+.afet-report:before { content: "\f10f"; }
+.afet-search:before { content: "\f110"; }
+.afet-send:before { content: "\f111"; }
+.afet-share:before { content: "\f112"; }
+.afet-shelter:before { content: "\f113"; }
+.afet-twitter:before { content: "\f114"; }
+.afet-youtube:before { content: "\f115"; }

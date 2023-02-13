@@ -33,7 +33,6 @@ export default {
     { src: '~/plugins/icons.js', mode: 'client' },
     { src: '~/plugins/api.js', mode: 'client' },
     { src: '~/plugins/firebase.js', mode: 'client', ssr: false },
-    { src: '~/plugins/boot.js', mode: 'client' },
   ],
 
   components: true,
