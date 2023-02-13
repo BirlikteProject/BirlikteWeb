@@ -1,9 +1,6 @@
 <template>
   <div class="login-image-side-wrapper">
     <div class="image-side">
-      <span class="main-logo">
-        <img :src="require('~/assets/img/logo-white.png')" alt="" />
-      </span>
       <div class="image-side-main-title">
         <div class="main-title">
           Hep <b>Birlik<i>te</i></b>
