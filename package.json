@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "cookie-universal-nuxt": "^2.2.2",
     "core-js": "^3.25.3",
     "firebase": "^9.17.1",
     "js-cookie": "^3.0.1",

@@ -24,13 +24,13 @@
         </div>
         <div class="form-inputs">
           <div class="input-wrapper">
-            <input type="email" placeholder="E-Posta" />
+            <input v-model="email" type="email" placeholder="E-Posta" />
           </div>
           <div class="input-wrapper">
-            <input type="password" placeholder="Şifre" />
+            <input v-model="password" type="password" placeholder="Şifre" />
           </div>
           <div class="forgot-password">Şifreni mi unuttun?</div>
-          <button class="primary-button">Giriş Yap</button>
+          <button class="primary-button" @click="login">Giriş Yap</button>
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
@@ -61,11 +61,16 @@ export default {
     return {
       types,
       loginType: types.DEMANDER,
+      email: '',
+      password: '',
     }
   },
   methods: {
     signWithGoogle () {
       this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
+    },
+    login () {
+      this.$store.dispatch('user/login', { email: this.email, password: this.password })
     }
   }
 }

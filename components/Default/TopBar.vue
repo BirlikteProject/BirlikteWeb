@@ -5,11 +5,14 @@
         <img :src="require('~/assets/img/logo-white.png')" alt="">
       </div>
       <div class="auth-section">
-        <nuxt-link to="/giris-yap" class="login-button">
+        <nuxt-link v-if="!isAuthenticated" to="/giris-yap" class="login-button">
           Giriş Yap
         </nuxt-link>
-        <nuxt-link class="register-button" to="/kayit-ol">
+        <nuxt-link v-if="!isAuthenticated" class="register-button" to="/kayit-ol">
           Kayıt Ol
+        </nuxt-link>
+        <nuxt-link v-if="isAuthenticated" class="register-button" @click="logout" to="/giris-yap">
+          Çıkış Yap
         </nuxt-link>
       </div>
       <!-- <div class="contact-section">
@@ -37,11 +40,19 @@ export default {
   data() {
     return {}
   },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user.isAuthenticated
+    }
+  },
   methods: {
     setDisplay(modal, value) {
       this.$store.dispatch(`modal/set${modal}Modal`, value)
+    },
+    async logout() {
+      await this.$store.dispatch('user/logout')
     }
-  }
+  },
 }
 </script>
 
@@ -106,7 +117,7 @@ export default {
           margin-right: 1rem;
         }
       }
-      
+
     }
   }
 }

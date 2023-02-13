@@ -24,7 +24,7 @@
     </div>
     <div class="advert-body">
       <div class="adv-title">
-        Matematik Dersi Verebilirim
+        Test title
       </div>
       <div class="user-profile">
         <div class="user-avatar">
