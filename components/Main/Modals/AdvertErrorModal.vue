@@ -1,14 +1,12 @@
 <template>
-  <div id="advert-success-modal-overlay" class="advert-success-modal-wrapper">
-    <div class="advert-success-modal">
-      <img src="~/assets/icon/check-circle.svg" alt="" /> Başarıyla Oluşturuldu
-    </div>
+  <div id="advert-error-modal-overlay" class="advert-error-modal-wrapper">
+    <div class="advert-error-modal">Lütfen zorunlu alanları doldurun.</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AdvertSuccessModal',
+  name: 'AdvertErrorModal',
   data() {
     return {
       timeout: null,
@@ -18,7 +16,7 @@ export default {
     this.timeout = setTimeout(this.close, 5000)
     window.addEventListener('keydown', this.onKeyDown)
     document
-      .getElementById('advert-success-modal-overlay')
+      .getElementById('advert-error-modal-overlay')
       .addEventListener('click', this.onModalOverlayClick)
   },
   destroy() {
@@ -27,7 +25,7 @@ export default {
   },
   methods: {
     close() {
-      this.$store.dispatch('modal/setAdvertSuccessModal', false)
+      this.$store.dispatch('modal/setAdvertErrorModal', false)
     },
     onKeyDown(e) {
       if (e.code === 'Escape') {
@@ -42,7 +40,7 @@ export default {
 </script>
 
 <style lang="scss">
-.advert-success-modal-wrapper {
+.advert-error-modal-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -54,8 +52,8 @@ export default {
   justify-content: center;
   align-items: center;
 
-  .advert-success-modal {
-    background-color: #27ae60;
+  .advert-error-modal {
+    background-color: #dc3545;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
