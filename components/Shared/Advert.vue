@@ -2,9 +2,9 @@
   <div class="advert-component-wrapper">
     <div class="advert-header">
       <div class="left-side">
-        <span class="header-info">Eğitim</span>
+        <span class="header-info">{{ advert.category_id.name }}</span>
         <span class="middot" />
-        <span class="header-info">İstanbul</span>
+        <span class="header-info">{{ citiesList[advert.city_id == Number() ? advert.city_id : 0 ]?.name }}</span>
       </div>
       <div class="right-side">
         <div class="advert-actions" @mouseenter="dropdown = true" @mouseleave="dropdown = false">
@@ -24,46 +24,47 @@
     </div>
     <div class="advert-body">
       <div class="adv-title">
-        Matematik Dersi Verebilirim
+       {{ advert.title }}
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img src="https://via.placeholder.com/150" alt="user-avatar">
+          <img :src="advert.user_id.image_url" alt="user-avatar">
         </div>
         <div class="user-info">
           <div class="user-name">
-            <span>Ali Veli</span>
+            <span>{{ advert.user_id.fullName }}</span>
           </div>
           <div class="user-profile-name">
-            <span>@aliveli</span>
+            <span>@{{ advert.user_id.username }}</span>
           </div>
         </div>
       </div>
       <div class="adv-image">
-        <img src="https://via.placeholder.com/300" alt="advert-image">
+        <img :src="advert.image_url" alt="advert-image">
       </div>
       <div class="adv-description">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa nostrum voluptatem aspernatur porro perspiciatis vero officia, sapiente, in facere distinctio debitis commodi! Unde error quisquam veniam doloribus explicabo reiciendis adipisci!
-        Harum, provident! Fugit quidem nobis, ut molestiae nesciunt nostrum, quas harum ex suscipit deleniti iste quaerat, ipsa maxime consequatur tenetur. Maiores consectetur, aliquam quia voluptatibus accusamus explicabo ut illum provident.
-        Molestias, quaerat illo omnis maiores enim delectus earum ea. Harum recusandae porro nemo fugiat ipsum commodi architecto. Magni distinctio dolor facilis asperiores suscipit obcaecati quaerat a, explicabo corporis. Adipisci, voluptatum?
-        Accusantium quibusdam atque culpa alias. Saepe enim excepturi ea voluptates reprehenderit, error autem laborum, repellat cum in corporis sint nostrum perferendis reiciendis illum cumque modi, commodi voluptate delectus fugiat laudantium.
-        Sit, assumenda. Odit fugiat, nam soluta accusamus eum, vero incidunt doloremque, est dolorum blanditiis quod aperiam perspiciatis adipisci sit? A rerum provident quia ut earum consequatur quae quis officia ipsum.
-
+      {{ advert.description }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import cities from '~/data/location.json'
 export default {
   name: 'Advert',
   props: {
-    advert: Object()
+  advert: Object(),
   },
   data() {
     return {
       dropdown: false,
+      citiesList : {}
     }
+  },
+
+  mounted(){
+   this.citiesList = cities
   }
 }
 </script>
