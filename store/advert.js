@@ -61,6 +61,13 @@ const actions = {
       return response.data
     }
   },
+
+  async createAdvert(context, payload) {
+    const response = await this.$api.advertServices.createAdvert(payload)
+    if (response.status) {
+      context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
+    }
+  },
 }
 
 export default {
