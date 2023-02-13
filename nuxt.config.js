@@ -14,11 +14,11 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  server: {
+    port: 3200,
+  },
 
-  css: [
-    '~/assets/font/afet-font.css',
-    '~/assets/scss/global.scss'
-  ],
+  css: ['~/assets/font/afet-font.css', '~/assets/scss/global.scss'],
   styleResources: {
     scss: [
       '~/assets/scss/global.scss',
@@ -31,22 +31,20 @@ export default {
   plugins: [
     { src: '~/plugins/components.js', mode: 'client' },
     { src: '~/plugins/icons.js', mode: 'client' },
-    { src: '~/plugins/api.js', mode: 'client'}
+    { src: '~/plugins/api.js', mode: 'client' },
+    { src: '~/plugins/firebase.js', mode: 'client', ssr: false },
   ],
 
   components: true,
 
   iconFont: {
-    fontName: "afet-font",
-    style: "css",
+    fontName: 'afet-font',
+    style: 'css',
     classOptions: {
-      baseClass: "afet-icons",
-      classPrefix: "afet",
+      baseClass: 'afet-icons',
+      classPrefix: 'afet',
     },
-    files: [
-      "assets/icon/*.svg"
-    ],
-
+    files: ['assets/icon/*.svg'],
   },
 
   buildModules: [
@@ -70,8 +68,8 @@ export default {
     bundleRenderer: {
       shouldPreload: (file, type) => {
         return ['script', 'style', 'font'].includes(type)
-      }
-    }
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -37,6 +37,9 @@
 
         <div class="form-inputs">
           <div class="input-wrapper">
+            <input v-model="fullName" type="text" placeholder="Ad Soyad" />
+          </div>
+          <div class="input-wrapper">
             <input v-model="email" type="email" placeholder="E-Posta" />
           </div>
           <div class="input-wrapper">
@@ -76,7 +79,7 @@
           </div>
           <button class="primary-button google-button">
             <i class="afet-icons afet-google"></i>
-            <span>Google ile devam et</span>
+            <span @click="signWithGoogle()">Google ile devam et</span>
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
@@ -104,6 +107,7 @@ export default {
       types,
       registerType: null,
       isKvkkAccepted: false,
+      fullName: '',
       email: '',
       password: '',
       submitted: false,
@@ -130,9 +134,17 @@ export default {
     register() {
       this.submitted = true
       if (this.isKvkkAccepted && !this.errors) {
-        this.$router.push('/kayit-tamamla')
+        this.$store.dispatch('user/registerWithEmail', {
+          email: this.email,
+          password: this.password,
+          type: this.registerType,
+          fullName: this.fullName,
+        })
       }
     },
+    signWithGoogle () {
+      this.$store.dispatch('auth/signWithGoogle')
+    }
   },
 }
 </script>

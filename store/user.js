@@ -1,4 +1,5 @@
 import jsCookie from 'js-cookie'
+import { auth, googleProvider } from '~/plugins/firebase'
 
 const state = () => ({
   token: '',
@@ -18,13 +19,37 @@ const actions = {
     }
   },
 
-  async register(context, payload) {
-    const response = await this.$api.userServices.register(payload)
+  async registerWithGoogle(context, payload) {
+    await auth.signInWithPopup(googleProvider).then((response) => {
+      console.log(response)
+    })
+    /* const response = await this.$api.userServices.register(payload)
     if (response.data.status) {
       alert('Email sent')
     } else {
       alert('Something went wrong')
-    }
+    } */
+  },
+
+  async registerWithEmail(context, payload) {
+    await auth
+      .createUserWithEmailAndPassword(payload.email, payload.password)
+      .then( (response) => {
+        console.log(response)
+        /* if (response.user) {
+          await this.$api.authServices
+            .register({
+              firebase_token: response.user._delegate.accessToken,
+              type: payload.type,
+              fullName: payload.fullName,
+            })
+            .then((response) => {
+              if (response.data.status) {
+                alert('User created')
+              }
+            })
+        } */
+      })
   },
 
   // Sync Login action
@@ -44,8 +69,8 @@ const mutations = {
 
 const getters = {
   isAuthenticated(state) {
-    return !!(Object.keys(state.user))
-  }
+    return !!Object.keys(state.user)
+  },
 }
 
 export default {
