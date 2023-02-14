@@ -10,7 +10,6 @@ export default (context, inject) => {
         path: '',
         auth: (cb) => {
           const data = { token: context.app.store.state.user.token }
-          console.log(data)
           cb(data)
         },
         transports: ['websocket'],
