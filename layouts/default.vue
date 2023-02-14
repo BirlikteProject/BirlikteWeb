@@ -28,7 +28,7 @@ export default {
   computed: {
     token() {
       return this.$store.state.user.token
-    }
+    },
   },
   async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
@@ -78,18 +78,37 @@ a {
     width: 100%;
     background-color: #fff;
     border-left: 1px solid #dedede;
+    position: relative;
+    @include media(xs, sm) {
+      flex-direction: column-reverse;
+    }
 
     .side-bar-section {
       width: 250px;
       height: 100%;
       position: relative;
       background-color: #fff;
+      @include media(xs, sm) {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        height: 3rem;
+        box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+
     }
     .content-section {
       width: calc(100% - (250px));
       background-color: #fff;
       border-left: 1px solid #dedede;
       border-right: 1px solid #dedede;
+      @include media(xs, sm) {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+      }
       .content-wrapper {
         height: 100%;
         background-color: #fff;
