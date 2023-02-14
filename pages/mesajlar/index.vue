@@ -94,18 +94,18 @@ export default {
   mounted() {
     this.scrollBottom()
     this.refresh()
-    this.$socket.emit('addUser', {})
+    this.$socket.auth.token = this.$store.state.user.token
+    this.$socket.connect((e) => {
+      this.$socket.emit('addUser', {})
+    })
+  },
+  destroyed() {
+    this.$socket.disconnect()
   },
 
   sockets: {
     getMessage(data) {
       this.$store.commit('conversations/APPEND_MESSAGE', data)
-    },
-    getUser(data) {
-      console.log('user', data)
-    },
-    connect() {
-      console.log('socket connected')
     },
   },
 

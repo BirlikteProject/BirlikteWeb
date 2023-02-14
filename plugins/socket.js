@@ -1,6 +1,6 @@
-import VueSocketIO from 'vue-3-socket.io'
 import Vue from 'vue'
 import { io } from 'socket.io-client'
+import VueSocketIO from './socket-lib'
 
 export default (context, inject) => {
   Vue.use(
@@ -14,6 +14,7 @@ export default (context, inject) => {
           cb(data)
         },
         transports: ['websocket'],
+        autoConnect: false,
       }),
       vuex: {
         store: context.app.store,
