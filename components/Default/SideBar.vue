@@ -1,9 +1,18 @@
 <template>
   <div class="sidebar-wrapper">
-    <div v-for="link, i in links" :key="i" @click="changeSelected(i)">
-      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
-          <i class="afet-icons" :class="`afet-${link.icon}`"></i>
-        {{ link.title }}
+    <div
+      v-for="(link, i) in links"
+      class="links"
+      :key="i"
+      @click="changeSelected(i)"
+    >
+      <nuxt-link
+        :to="link.to"
+        class="link-item"
+        :class="{ 'selected-link': selected === i }"
+      >
+        <i class="afet-icons" :class="`afet-${link.icon}`"></i>
+        <span class="link-title">{{ link.title }}</span>
       </nuxt-link>
     </div>
 
@@ -20,61 +29,73 @@ export default {
   data() {
     return {
       selected: 0,
-      links: [{
-        to: '/',
-        title: 'Anasayfa',
-        icon: 'home'
-      },
-      {
-        to: '/talepler',
-        title: 'Talepler',
-        icon: 'request'
-      },
-      {
-        to: '/mesajlar',
-        title: 'Mesajlar',
-        icon: 'message'
-      },
-      {
-        to: '/profil',
-        title: 'Profil',
-        icon: 'profile'
-      },
-      {
-        to: '/arama',
-        title: 'Arama',
-        icon: 'search-small'
-      },
-      ]
+      links: [
+        {
+          to: '/',
+          title: 'Anasayfa',
+          icon: 'home',
+        },
+        {
+          to: '/talepler',
+          title: 'Talepler',
+          icon: 'request',
+        },
+        {
+          to: '/mesajlar',
+          title: 'Mesajlar',
+          icon: 'message',
+        },
+        {
+          to: '/profil',
+          title: 'Profil',
+          icon: 'profile',
+        },
+        {
+          to: '/arama',
+          title: 'Arama',
+          icon: 'search-small',
+        },
+      ],
     }
   },
   computed: {
     isAuthenticated() {
       return this.$store.state.user.isAuthenticated
-    }
+    },
   },
   methods: {
     changeSelected(i) {
       this.selected = i
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-.afet-icons {
-  margin-right: 10px;
-}
-
 .sidebar-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
   height: 100%;
+  @include media(xs, sm) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .link-title {
+      display: none;
+    }
+  }
 
   .selected-icon {
-    color: blue!important;
+    color: blue !important;
+  }
+  .afet-icons {
+    margin-right: 10px;
+    @include media(xs, sm) {
+      margin-right: 0;
+      font-size: 1.25rem;
+    }
   }
 
   .selected-link {
@@ -93,9 +114,31 @@ export default {
     color: white !important;
     border-radius: 10px;
     font-weight: 400;
+    display: none;
     margin-top: 2rem;
+    @include media(xs, sm) {
+      display: none !important;
+    }
   }
-
+  .links {
+    @include media(xs, sm) {
+      &:nth-child(1) {
+        order: 1;
+      }
+      &:nth-child(2) {
+        order: 3;
+      }
+      &:nth-child(3) {
+        order: 4;
+      }
+      &:nth-child(4) {
+        order: 5;
+      }
+      &:nth-child(5) {
+        order: 2;
+      }
+    }
+  }
   .link-item {
     text-decoration: none;
     color: $primary-text-color;

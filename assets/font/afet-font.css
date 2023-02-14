@@ -2,9 +2,9 @@
   font-family: 'afet-font';
   font-style: normal;
   font-weight: 400;
-  src: url("afet-font.eot?9da044bcb896af96da19d2a69b268216?#iefix") format("embedded-opentype"),
-url("afet-font.woff2?9da044bcb896af96da19d2a69b268216") format("woff2"),
-url("afet-font.woff?9da044bcb896af96da19d2a69b268216") format("woff");
+  src: url("afet-font.eot?7c1415060ce7f55bebb1d8556a0e21c2?#iefix") format("embedded-opentype"),
+url("afet-font.woff2?7c1415060ce7f55bebb1d8556a0e21c2") format("woff2"),
+url("afet-font.woff?7c1415060ce7f55bebb1d8556a0e21c2") format("woff");
 }
 
 .afet-icons, .afet-icons {
@@ -57,16 +57,21 @@ url("afet-font.woff?9da044bcb896af96da19d2a69b268216") format("woff");
 .afet-ellipsis:before { content: "\f106"; }
 .afet-facebook:before { content: "\f107"; }
 .afet-google:before { content: "\f108"; }
-.afet-instagram:before { content: "\f109"; }
-.afet-job:before { content: "\f10a"; }
-.afet-mailbox:before { content: "\f10b"; }
-.afet-phone:before { content: "\f10c"; }
-.afet-plus:before { content: "\f10d"; }
-.afet-psycho:before { content: "\f10e"; }
-.afet-report:before { content: "\f10f"; }
-.afet-search:before { content: "\f110"; }
-.afet-send:before { content: "\f111"; }
-.afet-share:before { content: "\f112"; }
-.afet-shelter:before { content: "\f113"; }
-.afet-twitter:before { content: "\f114"; }
-.afet-youtube:before { content: "\f115"; }
+.afet-home:before { content: "\f109"; }
+.afet-instagram:before { content: "\f10a"; }
+.afet-job:before { content: "\f10b"; }
+.afet-mailbox:before { content: "\f10c"; }
+.afet-message:before { content: "\f10d"; }
+.afet-phone:before { content: "\f10e"; }
+.afet-plus:before { content: "\f10f"; }
+.afet-profile:before { content: "\f110"; }
+.afet-psycho:before { content: "\f111"; }
+.afet-report:before { content: "\f112"; }
+.afet-request:before { content: "\f113"; }
+.afet-search-small:before { content: "\f114"; }
+.afet-search:before { content: "\f115"; }
+.afet-send:before { content: "\f116"; }
+.afet-share:before { content: "\f117"; }
+.afet-shelter:before { content: "\f118"; }
+.afet-twitter:before { content: "\f119"; }
+.afet-youtube:before { content: "\f11a"; }

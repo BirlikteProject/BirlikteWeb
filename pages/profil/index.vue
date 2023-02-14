@@ -7,18 +7,24 @@
           <div class="user-avatar">
             <img :src="user.image_url ? user.image_url : require('~/assets/img/profile.png')" alt="user-avatar" />
           </div>
-          <div class="user-name">
+          <div>
+            <div class="user-name">
             <span>{{ user.fullName }}</span>
           </div>
           <div class="profile-name">
             <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
+          </div>
           </div>
         </div>
         <div class="content-tab-items">
           <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
             {{user.type == types.SUPPORTER ? 'Destek' : 'Talep'}} İçerikleri
           </div>
-          <div class="tab-item" :class="activeTab == 1 ? 'active' : ''" @click="activeTab = 1">
+          <div
+            class="tab-item"
+            :class="activeTab == 1 ? 'active' : ''"
+            @click="activeTab = 1"
+          >
             Hakkında
           </div>
         </div>
@@ -32,7 +38,7 @@
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="user.description">
+            <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
             </textarea>
           </div>
         </div>
@@ -54,7 +60,7 @@ export default {
   data() {
     return {
       activeTab: 0,
-      types
+      types,
     }
   },
   computed: {
@@ -67,7 +73,7 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('user/fetchAdverts')
-  }
+  },
 }
 </script>
 
@@ -79,6 +85,9 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
 
     .profile-page-content {
@@ -93,6 +102,10 @@ export default {
         align-items: center;
         border-top: 1px solid #dedede;
         padding: 1rem;
+        @include media(sm, xs) {
+          flex-direction: row;
+          justify-content: space-between;
+        }
 
         .user-avatar {
           width: 100px;
@@ -100,6 +113,10 @@ export default {
           border-radius: 50%;
           overflow: hidden;
           margin-bottom: 1rem;
+          @include media(sm, xs) {
+            width: 75px;
+            height: 75px;
+          }
 
           img {
             width: 100%;
@@ -112,6 +129,10 @@ export default {
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+          text-align: right;
+          @include media(sm, xs) {
+            font-size: 1rem;
+          }
 
           span {
             color: #4a4a4a;
@@ -121,6 +142,10 @@ export default {
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
+          text-align: right;
+          @include media(sm, xs) {
+            font-size: 0.825rem;
+          }
 
           span {
             color: #828282;
@@ -159,6 +184,13 @@ export default {
       }
 
       .tab-contents {
+        .no-content {
+          font-size: 1rem;
+          font-weight: 400;
+          color: #828282;
+          text-align: center;
+          padding: 1rem;
+        }
         .content {
           &.about {
             padding: 1rem;

@@ -83,7 +83,6 @@ export default {
 <style lang="scss">
 .request-item-wrapper {
   padding: 1rem;
-  margin-bottom: 1rem;
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
   .request-header {

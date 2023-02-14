@@ -200,11 +200,13 @@ export default {
           width: 100%;
           margin-top: 1rem;
           display: flex;
+          flex-wrap: wrap;
           .category-item {
             padding: 0.5rem 1rem;
             background-color: #f2f5f9;
             color: #828282;
             border-radius: 10px;
+            margin-bottom: 5px;
             cursor: pointer;
             &.selected {
               background-color: $primary-color;

@@ -22,6 +22,7 @@ export default {
   computed: {
     demands() {
       return this.$store.state.advert.demandList
+      // return []
     },
   },
 }
@@ -35,6 +36,9 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
   }
 }

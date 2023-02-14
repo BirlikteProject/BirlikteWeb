@@ -1,5 +1,11 @@
 <template>
-  <div class="advert-component-wrapper" :style="{'background-color': highlighted ? 'white' : 'white'}">
+  <div
+    class="advert-component-wrapper"
+    :style="{ 'background-color': highlighted ? 'white' : 'white' }"
+    @mouseover="highlighted = true"
+    @mouseleave="highlighted = false"
+    @click="goto('/ilanlar/' + advert._id)"
+  >
     <div class="advert-header">
       <div class="left-side">
         <span class="header-info">{{ advert.category_id.name }}</span>
@@ -7,14 +13,19 @@
         <span class="header-info">{{ cities[advert.city_id] }}</span>
       </div>
       <div class="right-side">
-        <div class="advert-actions" @mouseenter="dropdown = true" @mouseleave="dropdown = false">
+        <div
+          class="advert-actions"
+          @mouseenter="dropdown = true"
+          @mouseleave="dropdown = false, copied = false"
+        >
           <i class="afet-icons afet-ellipsis"></i>
           <div class="action-dropdown" :class="dropdown ? 'active' : ''">
-            <span class="dropdown-item">
+            <span class="dropdown-item" @click="copyClipBoard()">
               <i class="afet-icons afet-share"></i>
-              <span>Paylaş</span>
+              <span v-if="!copied">Paylaş</span>
+              <span v-if="copied">Kopyalandı</span>
             </span>
-            <span class="dropdown-item">
+            <span v-if="false" class="dropdown-item">
               <i class="afet-icons afet-report"></i>
               <span>Bildir</span>
             </span>
@@ -35,12 +46,21 @@
             <span>{{ advert.user_id.fullName }}</span>
           </div>
           <div class="user-profile-name">
-            <span>@{{ advert.user_id.username ? advert.user_id.username : advert.user_id.email.split('@')[0] }}</span>
+            <span
+              >@{{
+                advert.user_id.username
+                  ? advert.user_id.username
+                  : advert.user_id.email.split('@')[0]
+              }}</span
+            >
           </div>
         </div>
       </div>
-      <div class="adv-image" @mouseover="highlighted = true" @mouseleave="highlighted = false" @click="goto('/ilanlar/' + advert._id)">
-        <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="advert-image">
+      <div class="adv-image">
+        <img
+          :src="require(`~/assets/img/${advert.category_id._id}.png`)"
+          alt="advert-image"
+        />
       </div>
       <div class="adv-description">
         {{ advert.description }}
@@ -60,7 +80,8 @@ export default {
     return {
       dropdown: false,
       cities,
-      highlighted: false
+      highlighted: false,
+      copied: false,
     }
   },
 
@@ -72,6 +93,11 @@ export default {
   methods: {
     goto(to) {
       this.$router.push(to)
+    },
+    copyClipBoard () {
+      const path = window.location.origin + '/ilanlar/' + this.advert._id
+      navigator.clipboard.writeText(path)
+      this.copied = true
     }
   },
 }
@@ -267,6 +293,9 @@ export default {
       border-radius: 10px;
       margin-bottom: 1rem;
       overflow: hidden;
+      @include media(xs, sm) {
+        height: 200px;
+      }
 
       img {
         width: 100%;
@@ -276,7 +305,7 @@ export default {
     }
 
     .adv-description {
-      color: #818EA0;
+      color: #818ea0;
     }
   }
 }
