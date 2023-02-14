@@ -22,7 +22,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/kayit-tamamla')
+          this.$router.push({ path: '/kayit-tamamla' })
         }
       } catch (error) {
         // user could not be registered
@@ -42,11 +42,12 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
+          image_url: firebaseResponse.user.photoURL,
         })
         this.$cookiz.set('token', _response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', _response.data.token)
         context.commit('SET_USER', _response.data.user)
-        this.$router.push({ path: '/kayit-tamamla', query: { id: 'asd' } })
+        this.$router.push({ path: '/kayit-tamamla' })
       }
     }
   },
@@ -64,7 +65,7 @@ const actions = {
         this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
         context.commit('SET_USER', response.data.user)
-        this.$router.push('/kayit-tamamla')
+        this.$router.push({ path: '/kayit-tamamla' })
       }
     } catch (error) {}
   },

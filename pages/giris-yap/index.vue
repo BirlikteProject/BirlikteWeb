@@ -44,7 +44,7 @@
             <span class="register-link" @click="$router.push({path: '/kayit-ol', query: {type: loginType}})"
               >Kayıt Ol</span
             >
-            <span class="register-link" @click="$router.push({ path: '/kayit-tamamla', query: { id: 'asd' } })"
+            <span class="register-link" @click="$router.push({ path: '/kayit-tamamla' })"
               >Kayıt Tamamla</span
             >
           </div>

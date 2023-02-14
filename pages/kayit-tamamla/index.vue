@@ -17,7 +17,8 @@
           kullanmayın.
         </p>
         <p v-if="user.type === types.SUPPORTER">
-          Paylaşmış olduğunuz T.C Kimlik numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş bulunmaktasınız.
+          Paylaşmış olduğunuz T.C Kimlik numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş
+          bulunmaktasınız.
         </p>
       </div>
       <div class="tckno-wrapper">
@@ -50,9 +51,6 @@ export default {
       return this.$store.state.user.user
     }
   },
-  mounted() {
-    console.log(this.$route)
-  },
   methods: {
     async completeRegister() {
       try {
@@ -70,9 +68,11 @@ export default {
 .complete-description {
   margin: 1.5rem;
 }
+
 .tckno-wrapper {
   width: 50%;
 }
+
 .input-wrapper {
   width: 100%;
   margin-bottom: 1rem;
