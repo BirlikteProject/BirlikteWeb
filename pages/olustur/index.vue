@@ -58,18 +58,20 @@
     </div>
     <AdvertSuccessModal v-if="isAdvertSuccessModalOpen" />
     <AdvertErrorModal v-if="isAdvertErrorModalOpen" />
+    <AppWarningModal v-if="isAppWarningModalOpen" />
   </div>
 </template>
 
 <script>
 import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
 import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
+import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import types from '~/data/types.json'
 import locations from '~/data/location.json'
 
 export default {
   name: 'CreateAdvertPage',
-  components: { AdvertSuccessModal, AdvertErrorModal },
+  components: { AdvertSuccessModal, AdvertErrorModal, AppWarningModal },
   layout: 'default',
   middleware: ['auth'],
   data() {
@@ -95,6 +97,9 @@ export default {
     },
     isAdvertErrorModalOpen() {
       return this.$store.state.modal.advertErrorModal
+    },
+    isAppWarningModalOpen() {
+      return this.$store.state.modal.appWarningModal
     },
     categories() {
       return this.$store.state.advert.categoryList
@@ -128,6 +133,9 @@ export default {
           ? this.types.ONLINE
           : this.types.FACETOFACE
     },
+  },
+  mounted() {
+    this.$store.dispatch('modal/setAppWarningModal', true)
   },
   methods: {
     createAdvert() {

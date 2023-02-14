@@ -32,6 +32,10 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
+    await this.$store.dispatch('user/fetchUser')
+    if (this.$store.state.user.isAuthenticated) {
+      this.$router.push('/')
+    }
   },
 }
 </script>
@@ -70,7 +74,7 @@ a {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  @include media (xs, sm) {
+  @include media(xs, sm) {
     overflow-x: hidden;
     margin-bottom: 4rem;
   }
@@ -101,7 +105,6 @@ a {
         height: 4rem;
         box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
       }
-
     }
     .content-section {
       width: calc(100% - (250px));
@@ -115,7 +118,6 @@ a {
         display: flex;
         flex-direction: column;
         height: calc(100vh - 6rem);
-        
       }
       .content-wrapper {
         height: 100%;

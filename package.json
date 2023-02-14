@@ -26,7 +26,6 @@
     "nuxt": "^2.15.8",
     "socket.io-client": "^4.6.0",
     "vue": "^2.7.10",
-    "vue-3-socket.io": "github:kil0ba/Vue-3-Socket.io#pull/7/head",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
   },

@@ -27,17 +27,25 @@
         v-for="advert in adverts" :key="advert._id" :advert="advert" />
     </div>
     <login-modal v-if="loginModal" />
+    <app-warning-modal v-if="appWarningModal" />
+    <app-info-modal v-if="appInfoModal" />
   </div>
 </template>
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
+import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
 import CategoryButton from '~/components/Main/CategoryButton.vue'
 import Advert from '~/components/Shared/Advert.vue'
 import categories from '~/data/categories.json'
 
 export default {
   name: 'IndexPage',
-  components: { LoginModal, CategoryButton, Advert },
+  components: {
+    LoginModal,
+    CategoryButton,
+    Advert,
+    AppInfoModal,
+  },
   data() {
     return {
       categories,
@@ -49,6 +57,10 @@ export default {
   computed: {
     loginModal() {
       return this.$store.state.modal.loginModal
+    },
+
+    appInfoModal() {
+      return this.$store.state.modal.appInfoModal
     },
     adverts() {
       return this.$store.state.advert.advertList
@@ -66,6 +78,11 @@ export default {
     connect: function () {
       console.log('socket connected')
     },
+  },
+  mounted() {
+    if (!JSON.parse(localStorage.getItem('isAppInfoModalDisplayed'))) {
+      this.$store.dispatch('modal/setAppInfoModal', true)
+    }
   },
 }
 </script>
