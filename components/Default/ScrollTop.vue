@@ -38,6 +38,9 @@ export default {
   cursor: pointer;
   z-index: 100;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  @include media(xs, sm) {
+    display: none;
+  }
   .tooltip-wrapper {
     &.left {
       margin-right: 1rem;

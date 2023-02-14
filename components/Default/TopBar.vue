@@ -2,34 +2,32 @@
   <div class="top-bar-wrapper">
     <div class="content top-bar-content">
       <div class="logo-section">
-        <img :src="require('~/assets/img/logo-white.png')" alt="">
+        <img
+          :src="require('~/assets/img/logo-white.png')"
+          alt=""
+          class="desktop"
+        />
+        <img
+          :src="require('~/assets/img/logo-main.png')"
+          alt=""
+          class="mobile"
+        />
       </div>
       <div class="auth-section">
         <nuxt-link v-if="!isAuthenticated" to="/giris-yap" class="login-button">
           Giriş Yap
         </nuxt-link>
-        <nuxt-link v-if="!isAuthenticated" class="register-button" to="/kayit-ol">
+        <nuxt-link
+          v-if="!isAuthenticated"
+          class="register-button"
+          to="/kayit-ol"
+        >
           Kayıt Ol
         </nuxt-link>
         <button v-if="isAuthenticated" class="register-button" @click="logout">
           Çıkış Yap
         </button>
       </div>
-      <!-- <div class="contact-section">
-        <i class="afet-icons afet-facebook tooltip">
-          <tool-tip text="Facebook" />
-        </i>
-        <i class="afet-icons afet-twitter tooltip">
-          <tool-tip text="Twitter" />
-        </i>
-        <i class="afet-icons afet-instagram tooltip">
-          <tool-tip text="Instagram" />
-        </i>
-        <i class="afet-icons afet-youtube tooltip">
-          <tool-tip text="Youtube" />
-        </i>
-
-      </div> -->
     </div>
   </div>
 </template>
@@ -43,7 +41,7 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.state.user.isAuthenticated
-    }
+    },
   },
   methods: {
     setDisplay(modal, value) {
@@ -51,7 +49,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-    }
+    },
   },
 }
 </script>
@@ -63,6 +61,13 @@ export default {
   height: 5rem;
   display: flex;
   justify-content: center;
+  z-index: 100;
+  @include media(xs, sm) {
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding:  1rem;
+    height: auto;
+  }
   .top-bar-content {
     color: white;
     display: flex;
@@ -70,6 +75,16 @@ export default {
     align-items: center;
     font-size: 0.825rem;
     .logo-section {
+      @include media(xs, sm) {
+        .desktop {
+          display: none;
+        }
+        .mobile {
+          display: block;
+            width: 75px;
+          
+        }
+      }
       img {
         width: 100px;
       }
@@ -92,6 +107,10 @@ export default {
         color: $primary-color;
         padding: 0.5rem;
         border-radius: 5px;
+        @include media(xs, sm) {
+          background-color: $primary-color;
+          color: #fff;
+        }
       }
     }
     .contact-section {
@@ -117,7 +136,6 @@ export default {
           margin-right: 1rem;
         }
       }
-
     }
   }
 }
