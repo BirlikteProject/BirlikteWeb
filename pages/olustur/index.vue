@@ -65,6 +65,7 @@
 import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
 import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
 import types from '~/data/types.json'
+import cities from '~/data/location.json'
 
 export default {
   name: 'CreateAdvertPage',
@@ -100,7 +101,7 @@ export default {
     locations() {
       return {
         [this.types.ONLINE]: 'Online',
-        ...this.$store.state.advert.citiesList,
+        cities,
       }
     },
     filteredLocation() {

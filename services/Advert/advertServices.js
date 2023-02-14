@@ -1,9 +1,25 @@
 import APIBaseServices from '../APIBaseServices'
 export default class AdvertServices extends APIBaseServices {
-  async getAdvertPage(page = 1, limit = 10) {
+  async getAdvertPage(page = 1, limit = 15) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}`,
+      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}&type=4ad62f30-4294-4e07-b578-ba22627ed59f`,
+    })
+    return response.data
+  }
+
+  async getAdvertsByUserId(userId) {
+    const response = await this.http({
+      method: 'GET',
+      url: this.url + `/advert/profile/${userId}`,
+    })
+    return response.data
+  }
+
+  async getDemandPage(page = 1, limit = 15) {
+    const response = await this.http({
+      method: 'GET',
+      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}&type=bdb6656f-bb06-43e7-a33d-0fd9a50a893d`,
     })
     return response.data
   }

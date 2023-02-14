@@ -55,6 +55,8 @@
 
 <script>
 import Advert from '~/components/Shared/Advert.vue'
+import cities from '~/data/location.json'
+
 export default {
   name: 'SearchPage',
   components: { Advert },
@@ -72,7 +74,7 @@ export default {
   },
   computed: {
     locations() {
-      return Object.values(this.$store.state.advert.citiesList)
+      return Object.values(cities)
     },
     advertList() {
       return this.$store.state.advertList

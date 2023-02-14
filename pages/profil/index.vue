@@ -11,7 +11,7 @@
             <span>{{ profile.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@{{ profile.email ? "profile.email.split('@')[0]" : 'johndoe' }}</span>
+            <span>@{{ profile.email ? profile.email.split('@')[0] : 'johndoe' }}</span>
           </div>
         </div>
         <div class="content-tab-items">
@@ -24,10 +24,10 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <div v-if="profile.type === 'bdb6656f-bb06-43e7-a33d-0fd9a50a893d'">
-              <RequestItem v-for="advert in adverts" :key="advert._id" :advert="advert" />
+            <div v-if="profile.type === types.DEMANDER">
+              <RequestItem v-for="request in adverts" :key="request._id" :advert="request" />
             </div>
-            <div v-if="profile.type === '4ad62f30-4294-4e07-b578-ba22627ed59f'">
+            <div v-if="profile.type === types.SUPPORTER">
               <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
             </div>
           </div>
@@ -44,6 +44,8 @@
 <script>
 import RequestItem from '~/components/Request/RequestItem.vue'
 import Advert from '~/components/Shared/Advert.vue'
+import types from '~/data/types.json'
+
 export default {
   name: 'ProfilePage',
   components: { RequestItem, Advert },
@@ -52,6 +54,7 @@ export default {
   data() {
     return {
       activeTab: 0,
+      types
     }
   },
   computed: {
@@ -59,9 +62,12 @@ export default {
       return this.$store.state.user.user
     },
     adverts() {
-      return this.$store.state.advert.advertList
+      return this.$store.state.user.advertList
     },
   },
+  async mounted() {
+    await this.$store.dispatch('user/fetchAdverts')
+  }
 }
 </script>
 

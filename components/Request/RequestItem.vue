@@ -7,7 +7,7 @@
         <span class="header-info">{{ time }}</span>
       </div>
       <div class="right-side">
-        <div class="request-actions">
+        <div v-if="user.type === types.SUPPORTER" class="request-actions" @click="goto('/olustur')">
           <i class="afet-icons afet-plus tooltip">
             <tool-tip text="Destek ol" type="bottom" />
           </i>
@@ -26,10 +26,17 @@
 </template>
 
 <script>
+import types from '~/data/types.json'
+
 export default {
   name: 'RequestItem',
   props: {
     advert: Object(),
+  },
+  data() {
+    return {
+      types
+    }
   },
   computed:{
     time(){
@@ -41,25 +48,33 @@ export default {
       if(time >= 60 ){
         time /= 60;// dakika bilgisi alınıyor
         text = " dakika önce"
-      } 
+      }
       if(time >= 60){
         time /= 60;// saat bilgisi alınıyor
         text = " saat önce"
-      } 
+      }
       if(time >= 24) {
         time /= 24;// gün bilgisi alınıyor
         text = " gün önce"
-      } 
+      }
       if(time >= 30){
         time /= 30;// ay bilgisi alınıyor
         text = " ay önce"
-      } 
+      }
       if(time >= 12){
         time /= 12;// ay bilgisi alınıyor
         text = " yıl önce"
-      } 
-      
+      }
+
       return Math.floor(time)+text
+    },
+    user() {
+      return this.$store.state.user
+    }
+  },
+  methods: {
+    goto(to) {
+      this.$router.push(to)
     }
   }
 }

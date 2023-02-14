@@ -50,6 +50,9 @@ export default {
       return this.$store.state.user.user
     }
   },
+  mounted() {
+    console.log(this.$route)
+  },
   methods: {
     async completeRegister() {
       try {

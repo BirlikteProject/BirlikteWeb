@@ -2,6 +2,7 @@ import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
   user: {},
+  advertList: [],
   isAuthenticated: false,
 })
 
@@ -15,7 +16,7 @@ const actions = {
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
           image_url: firebaseResponse.user.photoURL,
-          username: firebaseResponse.user.email.split('@')[0]
+          username: firebaseResponse.user.email.split('@')[0],
         })
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
@@ -35,7 +36,6 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/kayit-tamamla')
         }
       } catch (error) {
         const _response = await this.$api.authServices.register({
@@ -46,7 +46,7 @@ const actions = {
         this.$cookiz.set('token', _response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', _response.data.token)
         context.commit('SET_USER', _response.data.user)
-        this.$router.push('/kayit-tamamla')
+        this.$router.push({ path: '/kayit-tamamla', query: { id: 'asd' } })
       }
     }
   },
@@ -82,7 +82,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/kayit-tamamla')
+          this.$router.push('/')
         }
       } else {
         alert('Login Failed')
@@ -101,6 +101,17 @@ const actions = {
       } catch (error) {
         // console.error(error)
       }
+    }
+  },
+
+  async fetchAdverts(context) {
+    try {
+      const response = await this.$api.advertServices.getAdvertsByUserId(
+        context.state.user._id
+      )
+      context.commit('SET_ADVERT_LIST', response.data)
+    } catch (error) {
+      // console.error(error)
     }
   },
 
@@ -147,8 +158,11 @@ const mutations = {
   SET_TOKEN(state, payload) {
     state.token = payload
   },
+  SET_ADVERT_LIST(state, payload) {
+    state.advertList = payload
+  },
   SET_USER(state, payload) {
-    state.user = {...payload}
+    state.user = { ...payload }
     state.isAuthenticated = !!payload.fullName
   },
 }

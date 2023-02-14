@@ -9,8 +9,9 @@
         <category-button :class="{ 'selected-category': selectedCategory === i }" :category="category" />
       </div>
     </div>
-    <div v-if="!!adverts && !!cities" class="content">
-      <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+    <div v-if="adverts" class="content">
+      <advert
+        v-for="advert in adverts" :key="advert._id" :advert="advert" />
     </div>
     <login-modal v-if="loginModal" />
   </div>
@@ -27,7 +28,8 @@ export default {
   data() {
     return {
       categories,
-      selectedCategory: -1
+      selectedCategory: -1,
+      highlightedAdvert: -1
     }
   },
   computed: {
@@ -36,10 +38,7 @@ export default {
     },
     adverts() {
       return this.$store.state.advert.advertList
-    },
-    cities() {
-      return this.$store.state.advert.citiesList
-    },
+    }
   },
   methods: {
     filterAdverts(categoryId, categoryIdx) {

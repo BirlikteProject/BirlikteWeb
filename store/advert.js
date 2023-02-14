@@ -2,18 +2,25 @@ const state = () => ({
   advertList: [],
   demandList: [],
   categoryList: [],
-  citiesList: {}
+  citiesList: {},
+  selectedAdvert: {}
 })
 
 const mutations = {
   SET_ADVERT_LIST(state, payload) {
     state.advertList = payload
   },
+  SET_DEMAND_LIST(state, payload) {
+    state.demandList = payload
+  },
   SET_CATEGORY_LIST(state, payload) {
     state.categoryList = payload
   },
   SET_CITIES_LIST(state, payload) {
     state.citiesList = payload
+  },
+  SET_SELECTED_ADVERT(state, payload) {
+    state.selectedAdvert = payload
   },
 }
 
@@ -23,8 +30,16 @@ const actions = {
     if (advResponse.status) {
       context.commit('SET_ADVERT_LIST', advResponse.data)
     }
+    context.dispatch('fetchDemands')
     context.dispatch('fetchCategories')
     context.dispatch('fetchCities')
+  },
+
+  async fetchDemands(context) {
+    const demandResponse = await this.$api.advertServices.getDemandPage()
+    if (demandResponse.status) {
+      context.commit('SET_DEMAND_LIST', demandResponse.data)
+    }
   },
 
   async fetchAdvertsByCategory(context, payload) {
@@ -56,10 +71,10 @@ const actions = {
     const filteredList = context.state.advertList.filter(
       (adv) => adv._id === id
     )
-    if (filteredList.length) return filteredList[0]
+    if (filteredList.length) return context.commit('SET_SELECTED_ADVERT', filteredList[0])
     const response = await this.$api.advertServices.getAdvertById(id)
     if (response.status) {
-      return response.data
+      context.commit('SET_SELECTED_ADVERT', response.data)
     }
   },
 
