@@ -7,11 +7,13 @@
           <div class="user-avatar">
             <img :src="user.image_url" alt="user-avatar" />
           </div>
-          <div class="user-name">
+          <div>
+            <div class="user-name">
             <span>{{ user.fullName }}</span>
           </div>
           <div class="profile-name">
             <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
+          </div>
           </div>
         </div>
         <div class="content-tab-items">
@@ -36,7 +38,7 @@
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="user.description">
+            <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
             </textarea>
           </div>
         </div>
