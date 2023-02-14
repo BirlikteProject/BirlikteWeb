@@ -1,9 +1,24 @@
 import APIBaseServices from '../APIBaseServices'
+import types from '~/data/types.json'
+
 export default class AdvertServices extends APIBaseServices {
-  async getAdvertPage(page = 1, limit = 10) {
+  async getAdverts(opts) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}`,
+      url: this.url + `/advert/list/filter`,
+      params: {
+        ...opts,
+        page: opts.page ? opts.page : 1,
+        limit: opts.limit ? opts.limit : 15
+      }
+    })
+    return response.data
+  }
+
+  async getAdvertsByUserId(userId) {
+    const response = await this.http({
+      method: 'GET',
+      url: this.url + `/advert/profile/${userId}`,
     })
     return response.data
   }
@@ -12,6 +27,19 @@ export default class AdvertServices extends APIBaseServices {
     const response = await this.http({
       method: 'GET',
       url: this.url + `/advert/${id}`,
+    })
+    return response.data
+  }
+
+  async getAdvertByCategory(categoryId, type=types.SUPPORTER, page=1, limit=15) {
+    const response = await this.http({
+      method: 'GET',
+      url: this.url + `/advert/category/${categoryId}`,
+      params: {
+        type,
+        page,
+        limit
+      }
     })
     return response.data
   }
@@ -38,14 +66,6 @@ export default class AdvertServices extends APIBaseServices {
     const response = await this.http({
       method: 'DELETE',
       url: this.url + `/advert/${id}`,
-    })
-    return response.data
-  }
-
-  async searchAdverts(city, title) {
-    const response = await this.http({
-      method: 'GET',
-      url: this.url + `/advert/search?city=${city}&title=${title}`,
     })
     return response.data
   }

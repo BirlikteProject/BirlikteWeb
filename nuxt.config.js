@@ -18,7 +18,7 @@ export default {
     port: 3200,
   },
 
-  css: ['~/assets/font/afet-font.css', '~/assets/scss/global.scss'],
+  css: ['./assets/font/afet-font.css', '~/assets/scss/global.scss'],
   styleResources: {
     scss: [
       '~/assets/scss/global.scss',
@@ -32,8 +32,8 @@ export default {
     { src: '~/plugins/components.js', mode: 'client' },
     { src: '~/plugins/icons.js', mode: 'client' },
     { src: '~/plugins/api.js', mode: 'client' },
+    { src: '~/plugins/socket.js', mode: 'client' },
     { src: '~/plugins/firebase.js', mode: 'client', ssr: false },
-    { src: '~/plugins/boot.js', mode: 'client' },
   ],
 
   components: true,
@@ -83,5 +83,6 @@ export default {
     },
   },
   router: {
+    middleware: ['global']
   }
 }

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="register-page-container">
     <KVKK v-if="kvkkModal" />
@@ -12,27 +13,14 @@
         </div>
         <span class="form-name">Kayıt Ol</span>
         <div class="register-types">
-          <div
-            class="register-type"
-            :class="registerType == types.DEMANDER ? 'selected' : ''"
-            @click="registerType = types.DEMANDER"
-          >
+          <div class="register-type" :class="registerType == types.DEMANDER ? 'selected' : ''"
+            @click="registerType = types.DEMANDER">
             Afetzede Girişi
           </div>
-          <div
-            class="register-type"
-            :class="registerType == types.SUPPORTER ? 'selected' : ''"
-            @click="registerType = types.SUPPORTER"
-          >
+          <div class="register-type" :class="registerType == types.SUPPORTER ? 'selected' : ''"
+            @click="registerType = types.SUPPORTER">
             Destekçi Girişi
           </div>
-        </div>
-        <div v-if="registerType == types.DEMANDER " class="warning-info">
-          Afetzede girişini kullanan değerli vatandaşımız, devletimizin afet
-          bölgesi ilan ettiği 10 İlde ikamet ettiğinizi ve paylaşmış olduğunuz
-          T.C Kimlik numaranızın doğruluğunu beyan ve taahhüt etmiş
-          bulunmaktasınız. Afet Bölgesinde yaşamıyorsanız lütfen bu girişi
-          kullanmayın.
         </div>
 
         <div class="form-inputs">
@@ -46,33 +34,22 @@
             <input v-model="password" type="password" placeholder="Şifre" />
           </div>
           <div class="confirm-checkbox">
-            <span
-              class="custom-checkbox"
-              :class="isKvkkAccepted ? 'checked' : ''"
-              @click="isKvkkAccepted = !isKvkkAccepted"
-            >
+            <span class="custom-checkbox" :class="isKvkkAccepted ? 'checked' : ''"
+              @click="isKvkkAccepted = !isKvkkAccepted">
               <span />
             </span>
             <input v-model="isKvkkAccepted" type="checkbox" />
             <span class="kvkk-accept-text">
-              <span class="underline" @click="setKvkkModal()"
-                >KVKK Metni'ni</span
-              >
+              <span class="underline" @click="setKvkkModal()">KVKK Metni'ni</span>
               ve
-              <span class="underline" @click="setPrivacyPolicy()"
-                >Gizlilik Sözleşmesi'ni</span
-              >
+              <span class="underline" @click="setPrivacyPolicy()">Gizlilik Sözleşmesi'ni</span>
               okudum ve kabul ediyorum.
             </span>
           </div>
           <button class="primary-button" @click="register()">Kayıt Ol</button>
           <div v-if="submitted" class="error-messages">
-            <span v-if="errors" class="error-message"
-              >Lütfen tüm alanları doldurunuz!</span
-            >
-            <span v-if="!errors && !isKvkkAccepted" class="error-message"
-              >Lütfen aydınlatma metnini onaylayınız!</span
-            >
+            <span v-if="errors" class="error-message">Lütfen tüm alanları doldurunuz!</span>
+            <span v-if="!errors && !isKvkkAccepted" class="error-message">Lütfen aydınlatma metnini onaylayınız!</span>
           </div>
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
@@ -83,9 +60,7 @@
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
-            <span class="register-link" @click="$router.push('/giris-yap')"
-              >Giriş Yap</span
-            >
+            <span class="register-link" @click="$router.push({path: '/giris-yap', query: {type: registerType}})">Giriş Yap</span>
           </div>
         </div>
       </div>
@@ -105,7 +80,7 @@ export default {
   data() {
     return {
       types,
-      registerType: types.DEMANDER,
+      registerType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
       isKvkkAccepted: false,
       fullName: '',
       email: '',
@@ -142,7 +117,7 @@ export default {
         })
       }
     },
-    signWithGoogle () {
+    signWithGoogle() {
       this.$store.dispatch('user/signWithGoogle', { type: this.registerType })
     }
   },
@@ -154,10 +129,15 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+
   .image-side-section {
     width: 50%;
     height: 100vh;
+    @include media(xs, sm) {
+      display: none;
+    }
   }
+
   .register-form-seciton {
     width: 50%;
     height: 100vh;
@@ -165,6 +145,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @include media(xs, sm) {
+      width: 100%;
+    }
 
     .register-form {
       width: 416px;
@@ -172,23 +155,31 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      @include media(xs, sm) {
+        padding: 1rem;
+        width: 100%;
+      }
     }
+
     .logo-section {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 1rem;
+
       img {
         width: 200px;
       }
     }
+
     .form-name {
       padding: 1rem;
       font-size: 1.5rem;
       font-weight: 600;
       color: #828282;
     }
+
     .confirm-checkbox {
       display: flex;
       flex-direction: row;
@@ -196,6 +187,7 @@ export default {
       justify-content: flex-start;
       width: 100%;
       margin-bottom: 1rem;
+
       .custom-checkbox {
         width: 20px;
         height: 20px;
@@ -206,9 +198,11 @@ export default {
         align-items: center;
         margin-right: 0.5rem;
         cursor: pointer;
+
         &.checked {
           background-color: $primary-color;
           border: 1px solid $primary-color;
+
           span {
             width: 10px;
             height: 10px;
@@ -216,6 +210,7 @@ export default {
             background-color: #fff;
           }
         }
+
         span {
           width: 0px;
           height: 0px;
@@ -224,19 +219,23 @@ export default {
           transition: all 0.3s ease;
         }
       }
+
       .kvkk-accept-text {
         font-size: 0.8rem;
         font-weight: 500;
         color: #828282;
         cursor: pointer;
         padding-top: 2px;
+
         .underline {
           text-decoration: underline;
         }
       }
+
       input {
         display: none;
       }
+
       span {
         font-size: 0.8rem;
         font-weight: 500;
@@ -244,12 +243,14 @@ export default {
         cursor: pointer;
       }
     }
+
     .register-types {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
+      width: 100%;
       .register-type {
         width: 200px;
         height: 75px;
@@ -263,29 +264,38 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+        @include media(xs, sm) {
+          width: 50%;
+        }
+
         &.selected {
           background-color: $primary-color;
           color: #fff;
         }
+
         &:first-child {
           margin-right: 1rem;
         }
       }
     }
+
     .warning-info {
       text-align: center;
       font-size: 0.825rem;
       margin: 0.5rem 0;
     }
+
     .form-inputs {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 100%;
+
       .input-wrapper {
         width: 100%;
         margin-bottom: 1rem;
+
         input {
           color: #828282;
           border: 1px solid #dedede;
@@ -298,6 +308,7 @@ export default {
           font-weight: 500;
         }
       }
+
       .forgot-password {
         margin-bottom: 1rem;
         color: #828282;
@@ -307,9 +318,11 @@ export default {
         width: 100%;
         text-align: right;
       }
+
       .primary-button {
         width: 100%;
       }
+
       .error-messages {
         width: 100%;
         display: flex;
@@ -317,6 +330,7 @@ export default {
         align-items: flex-start;
         justify-content: center;
         margin: 0.5rem 0;
+
         .error-message {
           color: #ff0000;
           font-size: 0.8rem;
@@ -324,6 +338,7 @@ export default {
           text-align: center;
         }
       }
+
       .or-sign-with-google {
         margin: 2rem 0;
         border-bottom: 1px solid #dedede;
@@ -344,6 +359,7 @@ export default {
           background-color: white;
         }
       }
+
       .google-button {
         background-color: white !important;
         width: 100%;
@@ -353,16 +369,19 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+
         i {
           margin-right: 0.5rem;
         }
       }
+
       .no-account {
         margin-top: 1rem;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         .register-link {
           margin-left: 0.5rem;
           color: $primary-color;

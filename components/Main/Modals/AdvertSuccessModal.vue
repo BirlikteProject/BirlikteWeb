@@ -15,15 +15,18 @@ export default {
     }
   },
   mounted() {
-    this.timeout = setTimeout(this.close, 5000)
+    this.timeout = setTimeout(this.close, 3000)
     window.addEventListener('keydown', this.onKeyDown)
     document
       .getElementById('advert-success-modal-overlay')
       .addEventListener('click', this.onModalOverlayClick)
   },
-  destroy() {
+  destroyed() {
     clearTimeout(this.timeout)
-    window.removeEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keydown', this.onKeyDown)
+    document
+      .getElementById('advert-success-modal-overlay')
+      .removeEventListener('click', this.onModalOverlayClick)
   },
   methods: {
     close() {

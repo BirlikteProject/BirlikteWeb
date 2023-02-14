@@ -5,12 +5,20 @@ export default async function ({ app, store }) {
     if (token) {
       const decodedToken = jwtDecode(token)
       if (decodedToken.exp < Math.floor(Date.now() / 1000)) {
-        app.$cookiz.set("token", '') // remove token from cookies
+        app.$cookiz.remove("token") // remove token from cookies
         store.dispatch('user/setToken', '')
       } else {
         store.dispatch('user/setToken', token)
-        console.log('token is here')
-        await store.dispatch('user/fetchUser')
+        // await store.dispatch('user/fetchUser')
+        if(store.state.user.isAuthenticated) return
+        const response = await app.$axios({
+          method: 'GET',
+          url: 'http://142.93.106.148:5000/api/v1' + '/profile',
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+        store.dispatch('user/setUser', response.data.data)
       }
     }
 }

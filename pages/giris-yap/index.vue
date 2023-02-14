@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="login-page-container">
     <div class="image-side-section">
@@ -19,7 +20,7 @@
             :class="loginType == types.SUPPORTER ? 'selected' : ''"
             @click="loginType = types.SUPPORTER"
           >
-            Depremzede Girişi
+            Destekçi Girişi
           </div>
         </div>
         <div class="form-inputs">
@@ -40,7 +41,7 @@
           </button>
           <div class="no-account">
             <span>Hesabın yok mu?</span>
-            <span class="register-link" @click="$router.push('/kayit-ol')"
+            <span class="register-link" @click="$router.push({path: '/kayit-ol', query: {type: loginType}})"
               >Kayıt Ol</span
             >
           </div>
@@ -60,7 +61,7 @@ export default {
   data() {
     return {
       types,
-      loginType: types.DEMANDER,
+      loginType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
       email: '',
       password: '',
     }
@@ -84,6 +85,9 @@ export default {
   .image-side-section {
     width: 50%;
     height: 100vh;
+    @include media(xs, sm) {
+      display: none;
+    }
   }
   .login-form-seciton {
     width: 50%;
@@ -92,6 +96,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @include media(xs, sm) {
+      width: 100%;
+    }
 
     .login-form {
       width: 416px;
@@ -99,6 +106,9 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      @include media(xs, sm) {
+        padding: 1rem;
+      }
     }
     .form-name {
       padding: 1rem;
@@ -112,6 +122,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
+      width: 100%;
       .login-type {
         width: 200px;
         height: 75px;

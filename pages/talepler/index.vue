@@ -4,7 +4,7 @@
       <div class="page-title">Talepler</div>
       <div class="request-list">
         <request-item
-          v-for="advert in adverts"
+          v-for="advert in demands"
           :key="advert._id"
           :advert="advert"
         />
@@ -20,8 +20,9 @@ export default {
   components: { RequestItem },
   layout: 'default',
   computed: {
-    adverts() {
-      return this.$store.state.advert.advertList
+    demands() {
+      return this.$store.state.advert.demandList
+      // return []
     },
   },
 }
@@ -35,6 +36,9 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
   }
 }

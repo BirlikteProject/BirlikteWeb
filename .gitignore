@@ -86,3 +86,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# assets auto generated afet font
+assets/font/

@@ -67,14 +67,17 @@ import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
 import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
 import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import types from '~/data/types.json'
+import locations from '~/data/location.json'
 
 export default {
   name: 'CreateAdvertPage',
   components: { AdvertSuccessModal, AdvertErrorModal, AppWarningModal },
   layout: 'default',
+  middleware: ['auth'],
   data() {
     return {
       types,
+      locations,
       categorySelection: false,
       locationKeyword: '',
       selectedCategory: '* Kategori Seçiniz',
@@ -100,12 +103,6 @@ export default {
     },
     categories() {
       return this.$store.state.advert.categoryList
-    },
-    locations() {
-      return {
-        [this.types.ONLINE]: 'Online',
-        ...this.$store.state.advert.citiesList,
-      }
     },
     filteredLocation() {
       if (this.locationKeyword.length > 0) {
@@ -149,7 +146,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('advert/createAdvert', this.newAdvert)
+      this.$store.dispatch('advert/createAdvert', { ...this.newAdvert, type: this.$store.state.user.user.type })
     },
     selectCategory(category) {
       this.selectedCategory = category.name
@@ -211,11 +208,13 @@ export default {
           width: 100%;
           margin-top: 1rem;
           display: flex;
+          flex-wrap: wrap;
           .category-item {
             padding: 0.5rem 1rem;
             background-color: #f2f5f9;
             color: #828282;
             border-radius: 10px;
+            margin-bottom: 5px;
             cursor: pointer;
             &.selected {
               background-color: $primary-color;

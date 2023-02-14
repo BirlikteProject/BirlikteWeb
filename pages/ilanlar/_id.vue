@@ -1,110 +1,148 @@
 <template>
-  <div
-    class="advert-component-wrapper"
-    :style="{ 'background-color': highlighted ? 'white' : 'white' }"
-    @mouseover="highlighted = true"
-    @mouseleave="highlighted = false"
-    @click="goto('/ilanlar/' + advert._id)"
-  >
-    <div class="advert-header">
-      <div class="left-side">
-        <span class="header-info">{{ advert.category_id.name }}</span>
-        <span class="middot" />
-        <span class="header-info">{{ cities[advert.city_id] }}</span>
-      </div>
-      <div class="right-side">
-        <div
-          class="advert-actions"
-          @mouseenter="dropdown = true"
-          @mouseleave="dropdown = false, copied = false"
-        >
-          <i class="afet-icons afet-ellipsis"></i>
-          <div class="action-dropdown" :class="dropdown ? 'active' : ''">
-            <span class="dropdown-item" @click="copyClipBoard()">
-              <i class="afet-icons afet-share"></i>
-              <span v-if="!copied">Paylaş</span>
-              <span v-if="copied">Kopyalandı</span>
-            </span>
-            <span v-if="false" class="dropdown-item">
-              <i class="afet-icons afet-report"></i>
-              <span>Bildir</span>
-            </span>
+  <div v-if="advert.title" class="requests-page-container">
+    <!-- <div class="advert-component-wrapper">
+      <div class="advert-header">
+        <div class="left-side">
+          <span class="header-info">{{ advert.category_id.name }}</span>
+          <span class="middot" />
+          <span class="header-info">{{ advert.city_id.name }}</span>
+        </div>
+        <div class="right-side">
+          <div
+            class="advert-actions"
+            @mouseenter="dropdown = true"
+            @mouseleave="dropdown = false"
+          >
+            <i class="afet-icons afet-ellipsis"></i>
+            <div class="action-dropdown" :class="dropdown ? 'active' : ''">
+              <span class="dropdown-item">
+                <i class="afet-icons afet-share"></i>
+                <span>Paylaş</span>
+              </span>
+              <span class="dropdown-item">
+                <i class="afet-icons afet-report"></i>
+                <span>Bildir</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="advert-body">
-      <div class="adv-title">
-        {{ advert.title }}
-      </div>
-      <div class="user-profile">
-        <div class="user-avatar">
-          <img :src="advert.user_id.image_url ? advert.user_id.image_url : require('~/assets/img/profile.png')">
+      <div class="advert-body">
+        <div class="adv-title">
+          {{ advert.title }}
         </div>
-        <div class="user-info">
-          <div class="user-name">
-            <span>{{ advert.user_id.fullName }}</span>
+        <div class="user-profile">
+          <div class="user-avatar">
+            <img
+              :src="advert.user_id.image_url ? advert.user_id.image_url : require('~/assets/img/profile.png')"
+              alt="user-avatar">
           </div>
-          <div class="user-profile-name">
-            <span
-              >@{{
-                advert.user_id.username
-                  ? advert.user_id.username
-                  : advert.user_id.email.split('@')[0]
-              }}</span
-            >
+          <div class="user-info">
+            <div class="user-name">
+              <span>{{ advert.user_id.fullName }}</span>
+            </div>
+            <div class="user-profile-name">
+              <span
+                >@{{
+                  advert.user_id.username
+                    ? advert.user_id.username
+                    : advert.user_id.email.split('@')[0]
+                }}</span
+              >
+            </div>
           </div>
         </div>
+        <div class="adv-image">
+          <img
+            :src="require(`~/assets/img/${advert.category_id._id}.png`)"
+            alt="advert-image"
+          />
+        </div>
+        <div class="adv-description">
+          {{ advert.description }}
+        </div>
       </div>
-      <div class="adv-image">
-        <img
-          :src="require(`~/assets/img/${advert.category_id._id}.png`)"
-          alt="advert-image"
-        />
-      </div>
-      <div class="adv-description">
-        {{ advert.description }}
-      </div>
+    </div> -->
+    <Advert :advert="advert"/>
+    <div class="contact-button-wrapper">
+      <button class="primary-button contact-button">İletişime Geç</button>
     </div>
   </div>
 </template>
 
 <script>
 import cities from '~/data/location.json'
+import Advert from '~/components/Shared/Advert.vue'
 export default {
-  name: 'Advert',
-  props: {
-    advert: Object(),
+  name: 'AdvertPage',
+  components: {
+    Advert
   },
+  layout: 'default',
   data() {
     return {
       dropdown: false,
-      cities,
+      citiesList: {},
       highlighted: false,
-      copied: false,
+      cities,
     }
   },
-
   computed: {
-    image_url() {
-      return `~/assets/img/${this.advert.category_id._id}.png`
+    advertId() {
+      return this.$route.params.id
     },
+    advert() {
+      return this.$store.state.advert.selectedAdvert
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('advert/getAdvertById', this.advertId)
   },
   methods: {
-    goto(to) {
-      this.$router.push(to)
+    contact() {
+      this.$store
+        .dispatch('conversations/createConversation', {
+          advert_id: this.advertId,
+          receiver_id: this.advert.user_id._id,
+        })
+        .then(() => {
+          this.$router.push({
+            name: 'mesajlar',
+          })
+        })
     },
-    copyClipBoard () {
-      const path = window.location.origin + '/ilanlar/' + this.advert._id
-      navigator.clipboard.writeText(path)
-      this.copied = true
-    }
   },
 }
 </script>
 
 <style lang="scss">
-.advert-component-wrapper {
+.contact-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.contact-button {
+  padding: 0.5rem 1rem !important;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+.requests-page-container {
+  .request-page-content {
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      padding: 1rem;
+      color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+/* .advert-component-wrapper {
   width: 100%;
   height: auto;
   display: flex;
@@ -288,14 +326,10 @@ export default {
 
     .adv-image {
       width: 100%;
-      cursor: pointer;
       height: 350px;
       border-radius: 10px;
       margin-bottom: 1rem;
       overflow: hidden;
-      @include media(xs, sm) {
-        height: 200px;
-      }
 
       img {
         width: 100%;
@@ -306,7 +340,9 @@ export default {
 
     .adv-description {
       color: #818ea0;
+      text-align: center;
+      width: 100% !important;
     }
   }
-}
+} */
 </style>

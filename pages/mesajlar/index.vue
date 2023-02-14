@@ -7,34 +7,54 @@
           <div
             class="m-category-item"
             :class="activeCategory == 0 ? 'active' : ''"
-            @click="activeCategory = 0"
+            @click="toggleCategory(0)"
           >
             İstekler
           </div>
           <div
             class="m-category-item"
             :class="activeCategory == 1 ? 'active' : ''"
-            @click="activeCategory = 1"
+            @click="toggleCategory(1)"
           >
             Sonuçlananlar
           </div>
         </div>
         <div class="messages">
-          <MessageUserItem v-for="i in 5" :key="i" />
+          <MessageUserItem
+            v-for="conversation in conversations"
+            :key="conversation.id"
+            :conversation="conversation"
+            :active="
+              selectedConversation?._id == conversation._id ? true : false
+            "
+          />
         </div>
       </div>
       <div ref="contactSection" class="contact-section section">
-        <AdvertInMessage />
-        <MessageItem v-for="i in 10" :key="i" :is-mine="i%2 == 0 ? true : false"/>
-        <div class="message-box">
-          <textarea
-            ref="messageBox"
-            class="message-input"
-            placeholder="Mesajınızı buraya yazınız..."
-            @keydown="autosize"
-          ></textarea>
-          <div class="message-send-button">
-            <i class="afet-icons afet-send"></i>
+        <div v-if="selectedConversation">
+          <AdvertInMessage :advert="selectedConversation.advert_id" />
+          <MessageItem
+            v-for="_message in messages"
+            :key="_message._id"
+            :is-mine="
+              (_message.sender_id?._id ?? _message.sender_id) == userId
+                ? true
+                : false
+            "
+            :message="_message"
+          />
+          <div class="message-box">
+            <textarea
+              ref="messageBox"
+              class="message-input"
+              placeholder="Mesajınızı buraya yazınız..."
+              :value="message"
+              @input="(event) => (message = event.target.value)"
+              @keydown="autosize"
+            ></textarea>
+            <div class="message-send-button" @click="sendMessage()">
+              <i class="afet-icons afet-send"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -49,14 +69,46 @@ import AdvertInMessage from '~/components/Shared/AdvertInMessage.vue'
 export default {
   name: 'MessagesPage',
   components: { MessageUserItem, AdvertInMessage, MessageItem },
+  middleware: ['auth'],
+
   data() {
     return {
       activeCategory: 0,
+      message: '',
     }
+  },
+  computed: {
+    conversations() {
+      return this.$store.state.conversations.conversationsList
+    },
+    selectedConversation() {
+      return this.$store.state.conversations.selectedConversation
+    },
+    messages() {
+      return this.$store.state.conversations.messagesList
+    },
+    userId() {
+      return this.$store.state.user.user._id
+    },
   },
   mounted() {
     this.scrollBottom()
+    this.refresh()
+    this.$socket.emit('addUser', {})
   },
+
+  sockets: {
+    getMessage(data) {
+      this.$store.commit('conversations/APPEND_MESSAGE', data)
+    },
+    getUser(data) {
+      console.log('user', data)
+    },
+    connect() {
+      console.log('socket connected')
+    },
+  },
+
   methods: {
     autosize() {
       const el = this.$refs.messageBox
@@ -65,9 +117,37 @@ export default {
         el.style.cssText = 'height:' + el.scrollHeight + 'px'
       }, 0)
     },
+    toggleCategory(category) {
+      this.activeCategory = category
+      this.$store.dispatch('conversations/selectConversation', null)
+      this.refresh()
+    },
     scrollBottom() {
       const el = document.querySelector('.contact-section')
       el.scrollTop = el.scrollHeight
+    },
+    refresh() {
+      this.$store.dispatch('conversations/fetchConversations', {
+        page: 1,
+        limit: 10,
+        deal: this.activeCategory,
+      })
+    },
+    sendMessage() {
+      if (this.message.length > 0) {
+        const msg = this.message
+        this.$store.dispatch('conversations/sendMessage', msg).then(() => {
+          this.scrollBottom()
+          const receiverId = this.selectedConversation.receiver_id
+            ? this.selectedConversation.receiver_id._id
+            : this.selectedConversation.sender_id._id
+          this.$socket.emit('sendMessage', {
+            receiverId,
+            text: msg,
+          })
+        })
+        this.message = ''
+      }
     },
   },
 }
@@ -91,6 +171,9 @@ export default {
       font-weight: 600;
       color: #828282;
       border-bottom: 1px solid #dedede;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
     .messages-section {
       .message-user-item-wrapper {
@@ -176,6 +259,9 @@ export default {
       justify-content: flex-start;
       border-right: 1px solid #dedede;
     }
+  }
+  .messages {
+    width: 100%;
   }
 }
 </style>

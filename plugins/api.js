@@ -1,20 +1,16 @@
-import Cookies from 'js-cookie'
 import AuthServices from '~/services/User/authServices'
 import ProfileServices from '~/services/User/profileServices'
 import AdvertServices from '~/services/Advert/advertServices'
 import CategoryServices from '~/services/Category/categoryServices'
+import ConversationsServices from '~/services/Conversations/conversationsServices'
 
 export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
     baseURL: 'http://142.93.106.148:5000/api/v1',
   })
   const url = ''
-  let token = ''
-  if(Cookies.get('token')) {
-    token = Cookies.get('token')
-  } else {
-    token = store.state.user?.token
-  }
+  const token = store.state.user?.token
+
   api.onRequest((config) => {
     config.headers.Authorization = 'Bearer ' + token
   })
@@ -30,4 +26,5 @@ export default function ({ $axios, app, store }, inject) {
   api.authServices = new AuthServices(api, url)
   api.profileServices = new ProfileServices(api, url)
   api.categoryServices = new CategoryServices(api, url)
+  api.conversationsServices = new ConversationsServices(api, url)
 }

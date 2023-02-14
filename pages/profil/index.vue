@@ -3,24 +3,22 @@
     <div class="profile-page">
       <div class="page-title">Profil</div>
       <div class="profile-page-content">
-        <div class="profile-info">
+        <div v-if="user" class="profile-info">
           <div class="user-avatar">
-            <img src="https://i.pravatar.cc/300" alt="user-avatar" />
+            <img :src="user.image_url ? user.image_url : require('~/assets/img/profile.png')" alt="user-avatar" />
           </div>
-          <div class="user-name">
-            <span>{{ profile.fullName }}</span>
+          <div>
+            <div class="user-name">
+            <span>{{ user.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@{{ profile.username }}</span>
+            <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
+          </div>
           </div>
         </div>
         <div class="content-tab-items">
-          <div
-            class="tab-item"
-            :class="activeTab == 0 ? 'active' : ''"
-            @click="activeTab = 0"
-          >
-            Destek İçerikleri
+          <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
+            {{user.type == types.SUPPORTER ? 'Destek' : 'Talep'}} İçerikleri
           </div>
           <div
             class="tab-item"
@@ -32,15 +30,15 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <advert
-              v-for="advert in adverts"
-              :key="advert._id"
-              :advert="advert"
-            />
+            <div v-if="user.type === types.DEMANDER">
+              <RequestItem v-for="request in adverts" :key="request._id" :advert="request" />
+            </div>
+            <div v-if="user.type === types.SUPPORTER">
+              <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+            </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis dolorem dignissimos vero tempora accusantium fuga iusto tempore quae necessitatibus rerum laborum, magnam quos debitis officia nemo natus obcaecati minima id.
+            <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
             </textarea>
           </div>
         </div>
@@ -50,26 +48,31 @@
 </template>
 
 <script>
+import RequestItem from '~/components/Request/RequestItem.vue'
 import Advert from '~/components/Shared/Advert.vue'
+import types from '~/data/types.json'
+
 export default {
   name: 'ProfilePage',
-  components: { Advert },
+  components: { RequestItem, Advert },
   layout: 'default',
+  middleware: ['auth'],
   data() {
     return {
       activeTab: 0,
+      types,
     }
   },
   computed: {
-    profile() {
-      return {
-        username: 'johndoe',
-        fullName: 'John Doe',
-      }
+    user() {
+      return this.$store.state.user.user
     },
     adverts() {
-      return this.$store.state.advert.advertList
+      return this.$store.state.user.advertList
     },
+  },
+  async mounted() {
+    await this.$store.dispatch('user/fetchAdverts')
   },
 }
 </script>
@@ -82,11 +85,16 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
+
     .profile-page-content {
       width: 100%;
       display: flex;
       flex-direction: column;
+
       .profile-info {
         width: 100%;
         display: flex;
@@ -94,34 +102,57 @@ export default {
         align-items: center;
         border-top: 1px solid #dedede;
         padding: 1rem;
+        @include media(sm, xs) {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
         .user-avatar {
           width: 100px;
           height: 100px;
           border-radius: 50%;
           overflow: hidden;
           margin-bottom: 1rem;
+          @include media(sm, xs) {
+            width: 75px;
+            height: 75px;
+          }
+
           img {
             width: 100%;
             height: 100%;
             object-fit: cover;
           }
         }
+
         .user-name {
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+          text-align: right;
+          @include media(sm, xs) {
+            font-size: 1rem;
+          }
+
           span {
             color: #4a4a4a;
           }
         }
+
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
+          text-align: right;
+          @include media(sm, xs) {
+            font-size: 0.825rem;
+          }
+
           span {
             color: #828282;
           }
         }
       }
+
       .content-tab-items {
         width: 100%;
         display: flex;
@@ -131,6 +162,7 @@ export default {
         border-top: 1px solid #dedede;
         border-bottom: 1px solid #dedede;
         height: 3rem;
+
         .tab-item {
           font-size: 1rem;
           font-weight: 400;
@@ -143,17 +175,27 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+
           &.active {
             color: #fff;
             background-color: $primary-color;
           }
         }
       }
+
       .tab-contents {
+        .no-content {
+          font-size: 1rem;
+          font-weight: 400;
+          color: #828282;
+          text-align: center;
+          padding: 1rem;
+        }
         .content {
           &.about {
             padding: 1rem;
           }
+
           textarea {
             width: 100%;
             height: 100%;

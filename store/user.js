@@ -1,8 +1,8 @@
-import Cookies from 'js-cookie'
 import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
   user: {},
+  advertList: [],
   isAuthenticated: false,
 })
 
@@ -15,12 +15,14 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
+          image_url: firebaseResponse.user.photoURL,
+          username: firebaseResponse.user.email.split('@')[0],
         })
         if (response.status) {
-          Cookies.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser')
-          this.$router.push('/')
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
+          this.$router.push({ path: '/kayit-tamamla' })
         }
       } catch (error) {
         // user could not be registered
@@ -31,21 +33,21 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          Cookies.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser')
-          this.$router.push('/')
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
         }
       } catch (error) {
         const _response = await this.$api.authServices.register({
           firebase_token: firebaseResponse.user._delegate.accessToken,
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
+          image_url: firebaseResponse.user.photoURL,
         })
-        Cookies.set('token', _response.data, { exp: '7d' })
-        context.commit('SET_TOKEN', _response.data)
-        await context.dispatch('fetchUser')
-        this.$router.push('/')
+        this.$cookiz.set('token', _response.data.token, { exp: '7d' })
+        context.commit('SET_TOKEN', _response.data.token)
+        context.commit('SET_USER', _response.data.user)
+        this.$router.push({ path: '/kayit-tamamla' })
       }
     }
   },
@@ -60,10 +62,10 @@ const actions = {
         fullName: payload.fullName,
       })
       if (response.status) {
-        Cookies.set('token', response.data, { exp: '7d' })
+        this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
-        await context.dispatch('fetchUser')
-        this.$router.push('/')
+        context.commit('SET_USER', response.data.user)
+        this.$router.push({ path: '/kayit-tamamla' })
       }
     } catch (error) {}
   },
@@ -78,10 +80,10 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
         })
         if (response.status) {
-          this.$cookiz.set('token', response.data, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data)
-          await context.dispatch('fetchUser', response.data)
-          window.redirect('/')
+          this.$cookiz.set('token', response.data.token, { exp: '7d' })
+          context.commit('SET_TOKEN', response.data.token)
+          context.commit('SET_USER', response.data.user)
+          this.$router.push('/')
         }
       } else {
         alert('Login Failed')
@@ -90,21 +92,53 @@ const actions = {
   },
 
   async fetchUser(context, payload) {
-    if (context.state.token && !Object.keys(context.state.user).includes('fullName')) {
+    if (
+      context.state.token &&
+      !Object.keys(context.state.user).includes('fullName')
+    ) {
       try {
         const response = await this.$api.profileServices.getOwnProfile()
         context.commit('SET_USER', response.data)
       } catch (error) {
-        console.error(error)
+        // console.error(error)
       }
     }
   },
 
+  async fetchAdverts(context) {
+    try {
+      const response = await this.$api.advertServices.getAdvertsByUserId(
+        context.state.user._id
+      )
+      context.commit('SET_ADVERT_LIST', response.data)
+    } catch (error) {
+      // console.error(error)
+    }
+  },
+
+  async updateUser(context, payload) {
+    if (context.state.token) {
+      try {
+        const response = await this.$api.profileServices.updateOwnProfile(
+          payload
+        )
+        if (response.status) {
+          context.commit('SET_USER', response.data)
+          context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
+          return true
+        }
+      } catch (error) {
+        this.$store.dispatch('modal/setAdvertErrorModal', true)
+      }
+      return false
+    }
+  },
+
   logout(context) {
-    this.$cookiz.set('token', '', { maxAge: '-1' })
+    this.$cookiz.remove('token', { path: '/' })
     context.commit('SET_TOKEN', '')
     context.commit('SET_USER', {})
-    this.$router.push('/login')
+    this.$router.push('/giris-yap')
   },
 
   // Sync Login action
@@ -112,14 +146,21 @@ const actions = {
     context.commit('SET_TOKEN', payload)
   },
 
+  setUser(context, payload) {
+    context.commit('SET_USER', payload)
+  },
+
   isAuthenticated(context) {
     return !!context.state.user.fullName
-  }
+  },
 }
 
 const mutations = {
   SET_TOKEN(state, payload) {
     state.token = payload
+  },
+  SET_ADVERT_LIST(state, payload) {
+    state.advertList = payload
   },
   SET_USER(state, payload) {
     state.user = payload

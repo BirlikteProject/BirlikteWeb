@@ -1,20 +1,30 @@
 <template>
   <div class="index-page">
     <div class="greeting-title">
-      <span>Neye İhtiyacın Var?</span>
+      <span>Neye <b>İhtiyacın</b> Var?</span>
       <span
         ><b>Birlik<em>te</em></b> Bulalım</span
       >
     </div>
     <div class="category-buttons">
-      <category-button
-        v-for="category in categories"
+      <div
+        v-for="(category, i) in categories"
         :key="category.name"
-        :category="category"
-      />
+        @click="filterAdverts(category._id, i)"
+      >
+        <category-button
+          :class="{ 'selected-category': selectedCategory === i }"
+          :category="category"
+        />
+      </div>
     </div>
-    <div v-if="!!adverts && !!cities" class="content">
-      <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+    <div v-if="selectedCategory !== -1 && filteredAdverts" class="content">
+      <advert
+        v-for="advert in filteredAdverts" :key="advert._id" :advert="advert" />
+    </div>
+    <div v-if="selectedCategory === -1 && adverts" class="content">
+      <advert
+        v-for="advert in adverts" :key="advert._id" :advert="advert" />
     </div>
     <login-modal v-if="loginModal" />
     <app-warning-modal v-if="appWarningModal" />
@@ -26,6 +36,7 @@ import LoginModal from '~/components/Main/Modals/LoginModal.vue'
 import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
 import CategoryButton from '~/components/Main/CategoryButton.vue'
 import Advert from '~/components/Shared/Advert.vue'
+import categories from '~/data/categories.json'
 
 export default {
   name: 'IndexPage',
@@ -37,24 +48,10 @@ export default {
   },
   data() {
     return {
-      categories: [
-        {
-          img: 'education',
-          name: 'Eğitim',
-        },
-        {
-          img: 'shelter',
-          name: 'Barınma',
-        },
-        {
-          img: 'job',
-          name: 'İstihdam',
-        },
-        {
-          img: 'psycho',
-          name: 'Psikolojik Destek',
-        },
-      ],
+      categories,
+      selectedCategory: -1,
+      highlightedAdvert: -1,
+      filteredAdverts: []
     }
   },
   computed: {
@@ -68,8 +65,18 @@ export default {
     adverts() {
       return this.$store.state.advert.advertList
     },
-    cities() {
-      return this.$store.state.advert.citiesList
+  },
+  methods: {
+    async filterAdverts(categoryId, categoryIdx) {
+      const data = await this.$store.dispatch('advert/getAdvertsByCategory', {categoryId})
+      this.filteredAdverts = data
+      this.selectedCategory = categoryIdx
+      console.log(this.$socket)
+    },
+  },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
     },
   },
   mounted() {
@@ -86,14 +93,28 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   font-family: 'Campton', sans-serif;
 }
+
+.selected-category {
+  .category-button-component {
+    background-color: rgb(62, 110, 254);
+  }
+
+  .category-name {
+    color: rgb(62, 110, 254);
+  }
+}
+
 .index-page {
   width: 100%;
   height: 100%;
   position: relative;
   background-color: #fff;
+
+
   .greeting-title {
     width: 100%;
     display: flex;
@@ -102,29 +123,39 @@ html {
     padding: 3rem 0;
     color: $primary-color;
     font-size: 2rem;
+    @include media(xs, sm) {
+      font-size: 1.5rem;
+      padding: 2rem 0;
+    }
+
     span {
       font-weight: 300;
     }
   }
+
   .category-buttons {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
     padding-bottom: 1rem;
   }
 }
+
 .afet-icons {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .tooltip {
   position: relative;
+
   .tooltip-wrapper {
     display: none;
   }
+
   &:hover {
     .tooltip-wrapper {
       display: flex;
