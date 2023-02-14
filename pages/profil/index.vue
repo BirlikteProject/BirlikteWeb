@@ -7,33 +7,57 @@
           <div class="user-avatar">
             <img :src="profile.image_url" alt="user-avatar" />
           </div>
-          <div class="user-name">
-            <span>{{ profile.fullName }}</span>
-          </div>
-          <div class="profile-name">
-            <span>@{{ profile.email ? profile.email.split('@')[0] : 'johndoe' }}</span>
+          <div>
+            <div class="user-name">
+              <span>{{ profile.fullName }}</span>
+            </div>
+            <div class="profile-name">
+              <span
+                >@{{
+                  profile.email ? profile.email.split('@')[0] : 'johndoe'
+                }}</span
+              >
+            </div>
           </div>
         </div>
         <div class="content-tab-items">
-          <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
+          <div
+            class="tab-item"
+            :class="activeTab == 0 ? 'active' : ''"
+            @click="activeTab = 0"
+          >
             Destek İçerikleri
           </div>
-          <div class="tab-item" :class="activeTab == 1 ? 'active' : ''" @click="activeTab = 1">
+          <div
+            class="tab-item"
+            :class="activeTab == 1 ? 'active' : ''"
+            @click="activeTab = 1"
+          >
             Hakkında
           </div>
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <div v-if="profile.type === types.DEMANDER">
-              <RequestItem v-for="request in adverts" :key="request._id" :advert="request" />
+            <div v-if="profile.type === types.DEMANDER && adverts.length > 0">
+              <RequestItem
+                v-for="request in adverts"
+                :key="request._id"
+                :advert="request"
+              />
             </div>
-            <div v-if="profile.type === types.SUPPORTER">
-              <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+            <div v-if="profile.type === types.SUPPORTER && adverts.length > 0">
+              <Advert
+                v-for="advert in adverts"
+                :key="advert._id"
+                :advert="advert"
+              />
+            </div>
+            <div v-if="adverts.length == 0" class="no-content">
+              Herhangi bir içerik bulunamadı.
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="profile.description">
-            </textarea>
+            <textarea v-model="profile.description" placeholder="Hakkında bir şeyler ekle"> </textarea>
           </div>
         </div>
       </div>
@@ -54,7 +78,7 @@ export default {
   data() {
     return {
       activeTab: 0,
-      types
+      types,
     }
   },
   computed: {
@@ -67,7 +91,7 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('user/fetchAdverts')
-  }
+  },
 }
 </script>
 
@@ -79,6 +103,9 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
 
     .profile-page-content {
@@ -93,6 +120,10 @@ export default {
         align-items: center;
         border-top: 1px solid #dedede;
         padding: 1rem;
+        @include media(sm, xs) {
+          flex-direction: row;
+          justify-content: space-evenly;
+        }
 
         .user-avatar {
           width: 100px;
@@ -100,6 +131,10 @@ export default {
           border-radius: 50%;
           overflow: hidden;
           margin-bottom: 1rem;
+          @include media(sm, xs) {
+            width: 75px;
+            height: 75px;
+          }
 
           img {
             width: 100%;
@@ -112,6 +147,9 @@ export default {
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+          @include media(sm, xs) {
+            font-size: 1rem;
+          }
 
           span {
             color: #4a4a4a;
@@ -121,6 +159,9 @@ export default {
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
+          @include media(sm, xs) {
+            font-size: 0.825rem;
+          }
 
           span {
             color: #828282;
@@ -159,6 +200,13 @@ export default {
       }
 
       .tab-contents {
+        .no-content {
+          font-size: 1rem;
+          font-weight: 400;
+          color: #828282;
+          text-align: center;
+          padding: 1rem;
+        }
         .content {
           &.about {
             padding: 1rem;

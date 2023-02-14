@@ -24,9 +24,12 @@
         >
           Kayıt Ol
         </nuxt-link>
-        <button v-if="isAuthenticated" class="register-button" @click="logout">
+        <button v-if="isAuthenticated" class="register-button exit-button" @click="logout">
           Çıkış Yap
         </button>
+        <nuxt-link to="/olustur" class="create-button">
+          <i class="afet-icons afet-plus"></i>
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -102,11 +105,24 @@ export default {
         padding: 0.5rem;
         border-radius: 5px;
       }
+      .create-button {
+        color: $primary-color;
+        font-size: 1.25rem;
+        display: none;
+        @include media(xs, sm) {
+          display: block;
+        }
+      }
       .register-button {
         background-color: #fff;
         color: $primary-color;
         padding: 0.5rem;
         border-radius: 5px;
+        &.exit-button {
+          @include media(xs, sm) {
+            display: none;
+          }
+        }
         @include media(xs, sm) {
           background-color: $primary-color;
           color: #fff;

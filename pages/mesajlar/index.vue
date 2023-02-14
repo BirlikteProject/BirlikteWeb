@@ -92,6 +92,9 @@ export default {
       font-weight: 600;
       color: #828282;
       border-bottom: 1px solid #dedede;
+      @include media(sm, xs) {
+        font-size: 1rem;
+      }
     }
     .messages-section {
       .message-user-item-wrapper {

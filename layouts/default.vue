@@ -70,6 +70,10 @@ a {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  @include media (xs, sm) {
+    overflow-x: hidden;
+    margin-bottom: 4rem;
+  }
   .page-feed {
     min-height: calc(100vh - 6rem);
     display: flex;
@@ -94,7 +98,7 @@ a {
         bottom: 0;
         left: 0;
         z-index: 100;
-        height: 3rem;
+        height: 4rem;
         box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
       }
 
@@ -108,6 +112,10 @@ a {
         width: 100%;
         border-left: none;
         border-right: none;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 6rem);
+        
       }
       .content-wrapper {
         height: 100%;

@@ -113,6 +113,9 @@ export default {
     font-weight: 600;
     margin-bottom: 1rem;
     color: #828282;
+    @include media(sm, xs) {
+        font-size: 1rem;
+      }
   }
 
   .search-input-box {
