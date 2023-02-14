@@ -50,10 +50,10 @@ export default class AdvertServices extends APIBaseServices {
     return response.data
   }
 
-  async searchAdverts(city, title) {
+  async searchAdverts(cityId, searchTerm) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/search?city=${city}&title=${title}`,
+      url: this.url + `/advert/search?city_id=${cityId}&term=${searchTerm}`,
     })
     return response.data
   }

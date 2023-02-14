@@ -63,9 +63,10 @@ const actions = {
     }
   },
 
-  async searchAdverts(context, city, title) {
-    const response = await this.$api.advertServices.searchAdverts(city, title)
+  async searchAdverts(context, cityId, searchTerm) {
+    const response = await this.$api.advertServices.searchAdverts(cityId, searchTerm)
     if (response.status) {
+      context.commit('SET_ADVERT_LIST', response.data)
       return response.data
     }
   },
