@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="login-page-container">
     <div class="image-side-section">
@@ -19,7 +20,7 @@
             :class="loginType == types.SUPPORTER ? 'selected' : ''"
             @click="loginType = types.SUPPORTER"
           >
-            Depremzede Girişi
+            Destekçi Girişi
           </div>
         </div>
         <div class="form-inputs">

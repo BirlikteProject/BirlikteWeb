@@ -19,7 +19,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/')
+          this.$router.push('/kayit-tamamla')
         }
       } catch (error) {
         // user could not be registered
@@ -44,7 +44,7 @@ const actions = {
         this.$cookiz.set('token', _response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', _response.data.token)
         context.commit('SET_USER', _response.data.user)
-        this.$router.push('/')
+        this.$router.push('/kayit-tamamla')
       }
     }
   },
@@ -62,7 +62,7 @@ const actions = {
         this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
         context.commit('SET_USER', response.data.user)
-        this.$router.push('/')
+        this.$router.push('/kayit-tamamla')
       }
     } catch (error) {}
   },
@@ -80,7 +80,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/')
+          this.$router.push('/kayit-tamamla')
         }
       } else {
         alert('Login Failed')
@@ -89,13 +89,34 @@ const actions = {
   },
 
   async fetchUser(context, payload) {
-    if (context.state.token && !Object.keys(context.state.user).includes('fullName')) {
+    if (
+      context.state.token &&
+      !Object.keys(context.state.user).includes('fullName')
+    ) {
       try {
         const response = await this.$api.profileServices.getOwnProfile()
         context.commit('SET_USER', response.data)
       } catch (error) {
         // console.error(error)
       }
+    }
+  },
+
+  async updateUser(context, payload) {
+    if (context.state.token) {
+      try {
+        const response = await this.$api.profileServices.updateOwnProfile(
+          payload
+        )
+        if (response.status) {
+          context.commit('SET_USER', response.data)
+          context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
+          return true
+        }
+      } catch (error) {
+        this.$store.dispatch('modal/setAdvertErrorModal', true)
+      }
+      return false
     }
   },
 
@@ -117,7 +138,7 @@ const actions = {
 
   isAuthenticated(context) {
     return !!context.state.user.fullName
-  }
+  },
 }
 
 const mutations = {

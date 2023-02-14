@@ -18,18 +18,18 @@
         </p>
       </div>
       <div class="tckno-wrapper">
-        <div class="tckno-input">
-          <input type="text" placeholder="T.C Kimlik Numarası" />
+        <div class="input-wrapper">
+          <input v-model="tckn" type="text" placeholder="T.C Kimlik Numarası" />
         </div>
-        <div class="tckno-button">
-          <button class="btn btn-primary">Onayla</button>
+        <div>
+          <button class="primary-button" @click="completeRegister()">Onayla</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 import ImageSide from '~/components/Auth/ImageSide.vue'
 import types from '~/data/types.json'
 export default {
@@ -39,20 +39,60 @@ export default {
   data() {
     return {
       types,
+      tckn: ''
     }
   },
+  methods: {
+    async completeRegister() {
+      try {
+        await this.$store.dispatch('user/updateUser', { tckn: this.tckn })
+        this.$router.push('/')
+      } catch (error) {
+
+      }
+    }
+  }
 }
 </script>
-  
-  <style lang="scss">
+
+<style lang="scss">
+.complete-description {
+  margin: 1.5rem;
+}
+.tckno-wrapper {
+  width: 50%;
+}
+.input-wrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  input {
+    color: #828282;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+    padding: 0.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.primary-button {
+  width: 100%;
+}
+
 .complete-register-page-container {
   width: 100%;
   display: flex;
   flex-direction: row;
+
   .image-side-section {
     width: 50%;
     height: 100vh;
   }
+
   .complete-register-form-seciton {
     width: 50%;
     height: 100vh;
@@ -68,28 +108,33 @@ export default {
       align-items: center;
       justify-content: center;
     }
+
     .logo-section {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 1rem;
+
       img {
         width: 200px;
       }
     }
+
     .form-name {
       padding: 1rem;
       font-size: 1.5rem;
       font-weight: 600;
       color: #828282;
     }
+
     .complete-register-types {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
+
       .complete-register-type {
         width: 200px;
         height: 75px;
@@ -103,24 +148,29 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+
         &.selected {
           background-color: $primary-color;
           color: #fff;
         }
+
         &:first-child {
           margin-right: 1rem;
         }
       }
     }
+
     .form-inputs {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 100%;
+
       .input-wrapper {
         width: 100%;
         margin-bottom: 1rem;
+
         input {
           color: #828282;
           border: 1px solid #dedede;
@@ -133,6 +183,7 @@ export default {
           font-weight: 500;
         }
       }
+
       .forgot-password {
         margin-bottom: 1rem;
         color: #828282;
@@ -142,9 +193,11 @@ export default {
         width: 100%;
         text-align: right;
       }
+
       .primary-button {
         width: 100%;
       }
+
       .or-sign-with-google {
         margin: 2rem 0;
         border-bottom: 1px solid #dedede;
@@ -165,6 +218,7 @@ export default {
           background-color: white;
         }
       }
+
       .google-button {
         background-color: white !important;
         width: 100%;
@@ -175,16 +229,19 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         i {
           margin-right: 0.5rem;
         }
       }
+
       .no-account {
         margin-top: 1rem;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         .register-link {
           margin-left: 0.5rem;
           color: $primary-color;

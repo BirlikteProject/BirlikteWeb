@@ -15,7 +15,7 @@ export default {
     }
   },
   mounted() {
-    this.timeout = setTimeout(this.close, 5000)
+    this.timeout = setTimeout(this.close, 3000)
     window.addEventListener('keydown', this.onKeyDown)
     document
       .getElementById('advert-success-modal-overlay')

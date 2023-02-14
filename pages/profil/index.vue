@@ -15,28 +15,21 @@
           </div>
         </div>
         <div class="content-tab-items">
-          <div
-            class="tab-item"
-            :class="activeTab == 0 ? 'active' : ''"
-            @click="activeTab = 0"
-          >
+          <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
             Destek İçerikleri
           </div>
-          <div
-            class="tab-item"
-            :class="activeTab == 1 ? 'active' : ''"
-            @click="activeTab = 1"
-          >
+          <div class="tab-item" :class="activeTab == 1 ? 'active' : ''" @click="activeTab = 1">
             Hakkında
           </div>
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <RequestItem
-              v-for="advert in adverts"
-              :key="advert._id"
-              :advert="advert"
-            />
+            <div v-if="profile.type === 'bdb6656f-bb06-43e7-a33d-0fd9a50a893d'">
+              <RequestItem v-for="advert in adverts" :key="advert._id" :advert="advert" />
+            </div>
+            <div v-if="profile.type === '4ad62f30-4294-4e07-b578-ba22627ed59f'">
+              <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+            </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
             <textarea v-model="profile.description">
@@ -50,9 +43,10 @@
 
 <script>
 import RequestItem from '~/components/Request/RequestItem.vue'
+import Advert from '~/components/Shared/Advert.vue'
 export default {
   name: 'ProfilePage',
-  components: { RequestItem },
+  components: { RequestItem, Advert },
   layout: 'default',
   middleware: ['auth'],
   data() {
@@ -80,10 +74,12 @@ export default {
       padding: 1rem;
       color: #828282;
     }
+
     .profile-page-content {
       width: 100%;
       display: flex;
       flex-direction: column;
+
       .profile-info {
         width: 100%;
         display: flex;
@@ -91,34 +87,41 @@ export default {
         align-items: center;
         border-top: 1px solid #dedede;
         padding: 1rem;
+
         .user-avatar {
           width: 100px;
           height: 100px;
           border-radius: 50%;
           overflow: hidden;
           margin-bottom: 1rem;
+
           img {
             width: 100%;
             height: 100%;
             object-fit: cover;
           }
         }
+
         .user-name {
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+
           span {
             color: #4a4a4a;
           }
         }
+
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
+
           span {
             color: #828282;
           }
         }
       }
+
       .content-tab-items {
         width: 100%;
         display: flex;
@@ -128,6 +131,7 @@ export default {
         border-top: 1px solid #dedede;
         border-bottom: 1px solid #dedede;
         height: 3rem;
+
         .tab-item {
           font-size: 1rem;
           font-weight: 400;
@@ -140,17 +144,20 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+
           &.active {
             color: #fff;
             background-color: $primary-color;
           }
         }
       }
+
       .tab-contents {
         .content {
           &.about {
             padding: 1rem;
           }
+
           textarea {
             width: 100%;
             height: 100%;

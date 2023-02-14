@@ -22,9 +22,13 @@ export default {
 </script>
 
 <style lang="scss">
+.category-button-wrapper {
+  cursor: pointer;
+}
+
 .category-button-component {
-  width: 150px;
-  height: 150px;
+  width: 125px;
+  height: 125px;
   background-color: $primary-color;
   display: flex;
   align-items: center;
@@ -37,11 +41,14 @@ export default {
   }
 }
 .category-name {
-    width: 100%;
+    width: 125px;
+    text-align: center;
     display: flex;
     justify-content: center;
     margin-top: 0.5rem;
     color: $primary-color;
     font-weight: 600;
+    word-break: break-word;
+    overflow: hidden;
 }
 </style>

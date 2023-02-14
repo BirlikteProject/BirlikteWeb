@@ -8,8 +8,11 @@
 export default {
   name: 'EmptyLayout',
   // middleware: ['guest'],
+  data()  {
+    return {
+    }
+  },
   created() {
-    // await this.$store.dispatch('user/fetchUser')
     if(this.$store.state.user.isAuthenticated) {
       this.$router.push('/')
     }

@@ -4,7 +4,7 @@
       <div class="left-side">
         <span class="header-info">{{ advert.category_id.name }}</span>
         <span class="middot" />
-        <span class="header-info">{{ citiesList[advert.city_id == Number() ? advert.city_id : 0 ]?.name }}</span>
+        <span class="header-info">{{ citiesList[advert.city_id == Number() ? advert.city_id : 0]?.name }}</span>
       </div>
       <div class="right-side">
         <div class="advert-actions" @mouseenter="dropdown = true" @mouseleave="dropdown = false">
@@ -24,11 +24,11 @@
     </div>
     <div class="advert-body">
       <div class="adv-title">
-       {{ advert.title }}
+        {{ advert.title }}
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img :src="advert.user_id.image_url" alt="user-avatar">
+          <img :src="image_url" alt="user-avatar">
         </div>
         <div class="user-info">
           <div class="user-name">
@@ -40,10 +40,10 @@
         </div>
       </div>
       <div class="adv-image">
-        <img :src="advert.image_url" alt="advert-image">
+        <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="advert-image">
       </div>
       <div class="adv-description">
-      {{ advert.description }}
+        {{ advert.description }}
       </div>
     </div>
   </div>
@@ -54,18 +54,23 @@ import cities from '~/data/location.json'
 export default {
   name: 'Advert',
   props: {
-  advert: Object(),
+    advert: Object(),
   },
   data() {
     return {
       dropdown: false,
-      citiesList : {}
+      citiesList: {}
     }
   },
 
-  mounted(){
-   this.citiesList = cities
-  }
+  computed: {
+    image_url() {
+      return `~/assets/img/${this.advert.category_id._id}.png`
+    }
+  },
+  mounted() {
+    this.citiesList = cities
+  },
 }
 </script>
 
@@ -80,19 +85,23 @@ export default {
   border-bottom: 1px solid #dedede;
   border-top: 1px solid #dedede;
   padding: 1rem;
+
   .advert-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .left-side {
       display: flex;
       align-items: center;
+
       .header-info {
         font-size: 0.875rem;
         color: #ccc;
         padding-top: 2px;
       }
     }
+
     .right-side {
       .advert-actions {
         height: 1.5rem;
@@ -105,15 +114,19 @@ export default {
         cursor: pointer;
         transition: 0.2s ease;
         position: relative;
+
         &:hover {
           background-color: $primary-color;
+
           i {
             color: #fff;
           }
         }
+
         i {
           color: #ccc;
         }
+
         .action-dropdown {
           position: absolute;
           top: 1.5rem;
@@ -133,11 +146,13 @@ export default {
           opacity: 0;
           visibility: hidden;
           transform: translateY(-0.5rem);
+
           &.active {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
           }
+
           .dropdown-item {
             display: flex;
             align-items: center;
@@ -147,20 +162,25 @@ export default {
             padding: 0 1rem;
             cursor: pointer;
             transition: 0.2s ease;
+
             &:hover {
               background-color: $primary-color;
+
               i {
                 color: #fff;
               }
+
               span {
                 color: #fff;
               }
             }
+
             i {
               color: #ccc;
               font-size: 0.825rem;
               margin-right: 0.5rem;
             }
+
             span {
               color: #ccc;
               font-size: 0.875rem;
@@ -171,6 +191,7 @@ export default {
       }
     }
   }
+
   .advert-body {
     display: flex;
     flex-direction: column;
@@ -178,6 +199,7 @@ export default {
     align-items: flex-start;
     width: 100%;
     height: auto;
+
     .adv-title {
       display: flex;
       color: #4a4a4a;
@@ -185,39 +207,47 @@ export default {
       font-weight: 600;
       margin: 1rem 0;
     }
+
     .user-profile {
       display: flex;
       align-items: center;
       margin-bottom: 2rem;
+
       .user-avatar {
         width: 3rem;
         height: 3rem;
         border-radius: 50%;
         overflow: hidden;
+
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
+
       .user-info {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         margin-left: 1rem;
+
         .user-name {
           display: flex;
           align-items: center;
+
           span {
             font-size: 1.125rem;
             font-weight: 500;
             color: #4a4a4a;
           }
         }
+
         .user-profile-name {
           display: flex;
           align-items: center;
+
           span {
             font-size: 0.875rem;
             color: #ccc;
@@ -226,18 +256,21 @@ export default {
         }
       }
     }
+
     .adv-image {
       width: 100%;
       height: 350px;
       border-radius: 10px;
       margin-bottom: 1rem;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
     }
+
     .adv-description {
       color: #818EA0;
     }

@@ -142,7 +142,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('advert/createAdvert', this.newAdvert)
+      this.$store.dispatch('advert/createAdvert', { ...this.newAdvert, type: this.$store.state.user.user.type })
     },
     selectCategory(category) {
       this.selectedCategory = category.name

@@ -16,6 +16,14 @@ export default class AdvertServices extends APIBaseServices {
     return response.data
   }
 
+  async getAdvertByCategory(categoryId) {
+    const response = await this.http({
+      method: 'GET',
+      url: this.url + `/advert/category/${categoryId}?page=1&limit=10`,
+    })
+    return response.data
+  }
+
   async createAdvert(data) {
     const response = await this.http({
       method: 'POST',

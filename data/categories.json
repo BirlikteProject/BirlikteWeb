@@ -1,18 +1,27 @@
 [
-    { 
+    {
         "_id": "63e7c856752984d395d3dcee",
-        "name": "Eğitim"
+        "name": "Eğitim",
+        "img": "education"
     },
     {
         "_id": "63e7c86d752984d395d3dcf1",
-        "name": "İstihdam"
+        "name": "İstihdam",
+        "img": "job"
     },
     {
         "name": "Barınma",
-        "_id": "63e8ebb91f42670b82d7d8d3"
+        "_id": "63e8ebb91f42670b82d7d8d3",
+        "img": "shelter"
     },
     {
         "_id": "63e8ebcb1f42670b82d7d8d5",
-        "name": "Psikolojik Destek"
+        "name": "Psikolojik Destek",
+        "img": "psycho"
+    },
+    {
+        "_id": "63eac436780b4e796f00132b",
+        "name": "Sosyal Alan & Destek",
+        "img": "social"
     }
 ]

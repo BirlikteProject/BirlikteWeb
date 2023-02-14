@@ -1,7 +1,8 @@
 const state = () => ({
   advertList: [],
+  demandList: [],
   categoryList: [],
-  citiesList: {},
+  citiesList: {}
 })
 
 const mutations = {
@@ -24,6 +25,13 @@ const actions = {
     }
     context.dispatch('fetchCategories')
     context.dispatch('fetchCities')
+  },
+
+  async fetchAdvertsByCategory(context, payload) {
+    const advResponse = await this.$api.advertServices.getAdvertByCategory(payload)
+    if (advResponse.status) {
+      context.commit('SET_ADVERT_LIST', advResponse.data)
+    }
   },
 
   async fetchCategories(context) {
@@ -69,6 +77,7 @@ const actions = {
     }
   },
 }
+
 
 export default {
   namespaced: true,

@@ -30,9 +30,8 @@ export default {
       return this.$store.state.user.token
     }
   },
-  created() {
-    // await this.$store.dispatch('advert/fetchAdverts')
-    // await this.$store.dispatch('user/fetchUser')
+  async mounted() {
+    await this.$store.dispatch('advert/fetchAdverts')
   },
 }
 </script>
