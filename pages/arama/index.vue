@@ -97,7 +97,6 @@ export default {
       try {
         this.loading = true
         const data = await this.$store.dispatch('advert/searchAdverts', {'city_id': this.location.id, 'term': this.searchTerm, userType: this.userType})
-        console.log({'city_id': this.location.id, 'term': this.searchTerm, userType: this.userType})
         if (data) {
           this.didFetch = true
           this.advertList = data

@@ -19,7 +19,7 @@ export default {
       .getElementById('advert-error-modal-overlay')
       .addEventListener('click', this.onModalOverlayClick)
   },
-  destroy() {
+  destroyed() {
     clearTimeout(this.timeout)
     window.removeEventListener('keydown', this.onKeyDown)
   },
