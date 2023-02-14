@@ -1,7 +1,7 @@
 
 <template>
   <div v-if="advert.title" class="requests-page-container">
-    <div class="advert-page-wrapper">
+    <!-- <div class="advert-component-wrapper">
       <div class="advert-header">
         <div class="left-side">
           <span class="header-info">{{ advert.category_id.name }}</span>
@@ -49,16 +49,23 @@
         <div class="adv-description">
           {{ advert.description }}
         </div>
-        <button class="primary-button contact-button">İletişime Geç</button>
       </div>
+    </div> -->
+    <Advert :advert="advert"/>
+    <div class="contact-button-wrapper">
+      <button class="primary-button contact-button">İletişime Geç</button>
     </div>
   </div>
 </template>
 
 <script>
 import cities from '~/data/location.json'
+import Advert from '~/components/Shared/Advert.vue'
 export default {
   name: 'AdvertPage',
+  components: {
+    Advert
+  },
   layout: 'default',
   data() {
     return {
@@ -86,12 +93,17 @@ export default {
 </script>
 
 <style lang="scss">
+.contact-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
 .contact-button {
-  width: 70%;
-  margin: 2rem auto 0 auto;
-  padding: 1.3rem 2.3rem!important;
+  padding: 0.5rem 1rem !important;
   font-size: 1.5rem;
-  border-radius: 1rem!important;
+  border-radius: 10px;
+  font-size: 1rem;
 }
 .requests-page-container {
   .request-page-content {
@@ -107,7 +119,7 @@ export default {
   }
 }
 
-.advert-page-wrapper {
+/* .advert-component-wrapper {
   width: 100%;
   height: auto;
   display: flex;
@@ -308,5 +320,5 @@ export default {
       width: 100%!important;
     }
   }
-}
+} */
 </style>

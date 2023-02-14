@@ -133,6 +133,9 @@ export default {
   .image-side-section {
     width: 50%;
     height: 100vh;
+    @include media(xs, sm) {
+      display: none;
+    }
   }
 
   .register-form-seciton {
@@ -142,6 +145,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @include media(xs, sm) {
+      width: 100%;
+    }
 
     .register-form {
       width: 416px;
@@ -149,6 +155,10 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      @include media(xs, sm) {
+        padding: 1rem;
+        width: 100%;
+      }
     }
 
     .logo-section {
@@ -240,7 +250,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
-
+      width: 100%;
       .register-type {
         width: 200px;
         height: 75px;
@@ -254,6 +264,9 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+        @include media(xs, sm) {
+          width: 50%;
+        }
 
         &.selected {
           background-color: $primary-color;
