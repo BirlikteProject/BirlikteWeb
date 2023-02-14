@@ -5,6 +5,8 @@ const state = () => ({
   privacyPolicy: false,
   advertSuccessModal: false,
   advertErrorModal: false,
+  appWarningModal: false,
+  appInfoModal: false,
 })
 
 const mutations = {
@@ -26,6 +28,12 @@ const mutations = {
   SET_ADVERT_SUCCESS_MODAL(state, payload) {
     state.advertSuccessModal = payload
   },
+  SET_APP_WARNING_MODAL(state, payload) {
+    state.appWarningModal = payload
+  },
+  SET_APP_INFO_MODAL(state, payload) {
+    state.appInfoModal = payload
+  },
 }
 
 const actions = {
@@ -46,6 +54,16 @@ const actions = {
   },
   setAdvertErrorModal(context, payload) {
     context.commit('SET_ADVERT_ERROR_MODAL', payload)
+  },
+  setAppWarningModal(context, payload) {
+    context.commit('SET_APP_WARNING_MODAL', payload)
+  },
+  setAppInfoModal(context, payload) {
+    context.commit('SET_APP_INFO_MODAL', payload)
+
+    if (payload === true) {
+      localStorage.setItem('isAppInfoModalDisplayed', true)
+    }
   },
 }
 

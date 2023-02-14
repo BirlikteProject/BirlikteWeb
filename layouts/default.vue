@@ -28,12 +28,12 @@ export default {
   computed: {
     token() {
       return this.$store.state.user.token
-    }
+    },
   },
   async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
     await this.$store.dispatch('user/fetchUser')
-    if(this.$store.state.user.isAuthenticated) {
+    if (this.$store.state.user.isAuthenticated) {
       this.$router.push('/')
     }
   },
