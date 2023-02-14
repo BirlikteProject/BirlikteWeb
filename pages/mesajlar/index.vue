@@ -1,8 +1,14 @@
 <template>
   <div class="messages-page-container">
     <div class="messages-page-content">
-      <div class="page-title">Mesajlar</div>
-      <div class="messages-section section">
+      <div class="page-title">
+        <i v-if="activeCategory == 1" class="afet-icons afet-caret-up" @click="setConversation"></i>
+        Mesajlar
+      </div>
+      <div
+        class="messages-section section"
+        :class="selectedConversation ? 'mobile-disable' : 'mobile-active'"
+      >
         <div class="message-categories">
           <div
             class="m-category-item"
@@ -27,11 +33,16 @@
             :active="
               selectedConversation?._id == conversation._id ? true : false
             "
+            @focusBottom="scrollBottom"
           />
         </div>
       </div>
-      <div ref="contactSection" class="contact-section section">
-        <div v-if="selectedConversation">
+      <div
+        ref="contactSection"
+        class="contact-section section"
+        :class="selectedConversation ? 'mobile-active' : 'mobile-disable'"
+      >
+        <div v-if="selectedConversation" class="selected-conversation">
           <AdvertInMessage :advert="selectedConversation.advert_id" />
           <MessageItem
             v-for="_message in messages"
@@ -117,14 +128,19 @@ export default {
         el.style.cssText = 'height:' + el.scrollHeight + 'px'
       }, 0)
     },
+    setConversation() {
+      this.$store.dispatch('conversations/selectConversation', null)
+    },
     toggleCategory(category) {
       this.activeCategory = category
       this.$store.dispatch('conversations/selectConversation', null)
       this.refresh()
     },
     scrollBottom() {
-      const el = document.querySelector('.contact-section')
-      el.scrollTop = el.scrollHeight
+      /* const el = document.querySelector('.selected-conversation')
+      if (this.selectedConversation) {
+       // el.scrollTop = el.scrollHeight
+      } */
     },
     refresh() {
       this.$store.dispatch('conversations/fetchConversations', {
@@ -171,8 +187,18 @@ export default {
       font-weight: 600;
       color: #828282;
       border-bottom: 1px solid #dedede;
+      i {
+        display: none;
+      }
       @include media(sm, xs) {
         font-size: 1rem;
+        display: flex;
+        i {
+          display: flex;
+          margin-right: 0.5rem;
+          cursor: pointer;
+          transform: rotate(-90deg);
+        }
       }
     }
     .messages-section {
@@ -187,6 +213,10 @@ export default {
         width: 100%;
         flex-wrap: wrap;
         padding: 1rem;
+        @include media(xs, sm) {
+          width: 100%;
+          flex-wrap: nowrap;
+        }
         .m-category-item {
           height: 2.5rem;
           padding: 0 1rem;
@@ -211,6 +241,13 @@ export default {
     .contact-section {
       overflow-y: auto;
       padding: 1rem;
+      .selected-conversation {
+        width: 100%;
+        min-height: calc(100vh);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
       .message-box {
         width: 100%;
         display: flex;
@@ -258,6 +295,15 @@ export default {
       align-items: flex-start;
       justify-content: flex-start;
       border-right: 1px solid #dedede;
+      @include media(xs, sm) {
+        &.mobile-active {
+          width: 100% !important;
+          border-right: none;
+        }
+        &.mobile-disable {
+          display: none !important;
+        }
+      }
     }
   }
   .messages {

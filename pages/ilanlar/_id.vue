@@ -65,7 +65,7 @@
     </div> -->
     <Advert :advert="advert"/>
     <div class="contact-button-wrapper">
-      <button class="primary-button contact-button">İletişime Geç</button>
+      <button class="primary-button contact-button" @click="contact()">İletişime Geç</button>
     </div>
   </div>
 </template>
@@ -106,9 +106,7 @@ export default {
           receiver_id: this.advert.user_id._id,
         })
         .then(() => {
-          this.$router.push({
-            name: 'mesajlar',
-          })
+          this.$router.push('/mesajlar')
         })
     },
   },
