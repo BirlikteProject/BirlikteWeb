@@ -88,9 +88,4 @@ sw.*
 *.swp
 
 # assets auto generated afet font
-assets/font/afet-font.eot
-assets/font/afet-font.ttf
-assets/font/afet-font.woff
-assets/font/afet-font.woff2
-assets/font/afet-font.css
-assets/font/afet-font.svg
+assets/font/
