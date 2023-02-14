@@ -60,7 +60,7 @@
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
-            <span class="register-link" @click="$router.push('/giris-yap')">Giriş Yap</span>
+            <span class="register-link" @click="$router.push({path: '/giris-yap', query: {type: registerType}})">Giriş Yap</span>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       types,
-      registerType: types.DEMANDER,
+      registerType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
       isKvkkAccepted: false,
       fullName: '',
       email: '',

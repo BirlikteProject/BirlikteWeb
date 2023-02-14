@@ -82,12 +82,11 @@ export default {
   },
   methods: {
     async filterAdverts() {
-      console.log('filterAdverts is called')
       try {
         this.loading = true
         const response = await this.$store.dispatch('advert/searchAdverts')
         if (response.status) {
-          console.log('filtered')
+          console.log(response.data)
         }
       } catch (error) {
         this.error = true

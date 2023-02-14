@@ -3,20 +3,20 @@
     <div class="profile-page">
       <div class="page-title">Profil</div>
       <div class="profile-page-content">
-        <div v-if="profile" class="profile-info">
+        <div v-if="user" class="profile-info">
           <div class="user-avatar">
-            <img :src="profile.image_url" alt="user-avatar" />
+            <img :src="user.image_url" alt="user-avatar" />
           </div>
           <div class="user-name">
-            <span>{{ profile.fullName }}</span>
+            <span>{{ user.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@{{ profile.email ? profile.email.split('@')[0] : 'johndoe' }}</span>
+            <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
           </div>
         </div>
         <div class="content-tab-items">
           <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
-            Destek İçerikleri
+            {{user.type == types.SUPPORTER ? 'Destek' : 'Talep'}} İçerikleri
           </div>
           <div class="tab-item" :class="activeTab == 1 ? 'active' : ''" @click="activeTab = 1">
             Hakkında
@@ -24,15 +24,15 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <div v-if="profile.type === types.DEMANDER">
+            <div v-if="user.type === types.DEMANDER">
               <RequestItem v-for="request in adverts" :key="request._id" :advert="request" />
             </div>
-            <div v-if="profile.type === types.SUPPORTER">
+            <div v-if="user.type === types.SUPPORTER">
               <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="profile.description">
+            <textarea v-model="user.description">
             </textarea>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default {
     }
   },
   computed: {
-    profile() {
+    user() {
       return this.$store.state.user.user
     },
     adverts() {
