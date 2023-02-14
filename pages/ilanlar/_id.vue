@@ -317,7 +317,6 @@ export default {
 
     .adv-description {
       color: #818EA0;
-      text-align: center;
       width: 100%!important;
     }
   }

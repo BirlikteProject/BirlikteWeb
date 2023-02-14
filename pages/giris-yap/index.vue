@@ -41,10 +41,10 @@
           </button>
           <div class="no-account">
             <span>Hesabın yok mu?</span>
-            <span class="register-link" @click="$router.push('/kayit-ol')"
+            <span class="register-link" @click="$router.push({path: '/kayit-ol', query: {type: loginType}})"
               >Kayıt Ol</span
             >
-            <span class="register-link" @click="$router.push({ path: '/kayit-tamamla', query: { id: 'asd' } })"
+            <span class="register-link" @click="$router.push({ path: '/kayit-tamamla' })"
               >Kayıt Tamamla</span
             >
           </div>
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       types,
-      loginType: types.DEMANDER,
+      loginType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
       email: '',
       password: '',
     }

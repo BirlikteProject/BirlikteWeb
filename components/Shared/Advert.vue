@@ -112,7 +112,6 @@ export default {
 
 <style lang="scss">
 .advert-component-wrapper {
-  cursor: pointer;
   width: 100%;
   height: auto;
   display: flex;
@@ -296,6 +295,7 @@ export default {
 
     .adv-image {
       width: 100%;
+      cursor: pointer;
       height: 350px;
       border-radius: 10px;
       margin-bottom: 1rem;

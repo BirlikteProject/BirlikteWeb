@@ -8,12 +8,26 @@
 export default {
   name: 'EmptyLayout',
   // middleware: ['guest'],
-  data()  {
+  data() {
     return {
+      isFrom: false
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.isFrom = true
+      if (to.path === '/kayit-tamamla' && from.path !== '/kayit-yap') {
+        return this.$router.push('/')
+      }
+    },
+  },
+  mounted() {
+    if(this.$route.path === '/kayit-tamamla' && !this.isFrom) {
+      this.$router.push('/')
     }
   },
   created() {
-    if(this.$store.state.user.isAuthenticated) {
+    if (this.$store.state.user.isAuthenticated) {
       this.$router.push('/')
     }
   },
