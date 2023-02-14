@@ -1,6 +1,11 @@
 <template>
   <div class="sidebar-wrapper">
-    <div v-for="(link, i) in links" :key="i" @click="changeSelected(i)">
+    <div
+      v-for="(link, i) in links"
+      class="links"
+      :key="i"
+      @click="changeSelected(i)"
+    >
       <nuxt-link
         :to="link.to"
         class="link-item"
@@ -115,7 +120,25 @@ export default {
       display: none !important;
     }
   }
-
+  .links {
+    @include media(xs, sm) {
+      &:nth-child(1) {
+        order: 1;
+      }
+      &:nth-child(2) {
+        order: 3;
+      }
+      &:nth-child(3) {
+        order: 4;
+      }
+      &:nth-child(4) {
+        order: 5;
+      }
+      &:nth-child(5) {
+        order: 2;
+      }
+    }
+  }
   .link-item {
     text-decoration: none;
     color: $primary-text-color;

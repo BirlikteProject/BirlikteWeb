@@ -27,7 +27,7 @@
         <button v-if="isAuthenticated" class="register-button exit-button" @click="logout">
           Çıkış Yap
         </button>
-        <nuxt-link to="/olustur" class="create-button">
+        <nuxt-link v-if="isAuthenticated" to="/olustur" class="create-button">
           <i class="afet-icons afet-plus"></i>
         </nuxt-link>
       </div>
@@ -104,6 +104,9 @@ export default {
         color: #fff;
         padding: 0.5rem;
         border-radius: 5px;
+        @include media(xs, sm) {
+          color: $primary-color;
+        }
       }
       .create-button {
         color: $primary-color;
