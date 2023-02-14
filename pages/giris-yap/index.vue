@@ -88,6 +88,9 @@ export default {
   .image-side-section {
     width: 50%;
     height: 100vh;
+    @include media(xs, sm) {
+      display: none;
+    }
   }
   .login-form-seciton {
     width: 50%;
@@ -96,6 +99,9 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @include media(xs, sm) {
+      width: 100%;
+    }
 
     .login-form {
       width: 416px;
@@ -103,6 +109,9 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      @include media(xs, sm) {
+        padding: 1rem;
+      }
     }
     .form-name {
       padding: 1rem;
@@ -116,6 +125,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
+      width: 100%;
       .login-type {
         width: 200px;
         height: 75px;

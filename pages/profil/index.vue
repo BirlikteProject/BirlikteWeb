@@ -122,7 +122,7 @@ export default {
         padding: 1rem;
         @include media(sm, xs) {
           flex-direction: row;
-          justify-content: space-evenly;
+          justify-content: space-between;
         }
 
         .user-avatar {
@@ -147,6 +147,7 @@ export default {
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 0.5rem;
+          text-align: right;
           @include media(sm, xs) {
             font-size: 1rem;
           }
@@ -159,6 +160,7 @@ export default {
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
+          text-align: right;
           @include media(sm, xs) {
             font-size: 0.825rem;
           }
