@@ -1,7 +1,7 @@
 
 <template>
   <div v-if="advert.title" class="requests-page-container">
-    <div class="advert-component-wrapper">
+    <div class="advert-page-wrapper">
       <div class="advert-header">
         <div class="left-side">
           <span class="header-info">{{ advert.category_id.name }}</span>
@@ -107,7 +107,7 @@ export default {
   }
 }
 
-.advert-component-wrapper {
+.advert-page-wrapper {
   width: 100%;
   height: auto;
   display: flex;
@@ -305,7 +305,6 @@ export default {
 
     .adv-description {
       color: #818EA0;
-      text-align: center;
       width: 100%!important;
     }
   }

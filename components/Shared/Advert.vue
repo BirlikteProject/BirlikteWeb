@@ -1,5 +1,5 @@
 <template>
-  <div class="advert-component-wrapper" :style="{'background-color': highlighted ? 'white' : 'white'}" @mouseover="highlighted = true" @mouseleave="highlighted = false" @click="goto('/ilanlar/' + advert._id)">
+  <div class="advert-component-wrapper" :style="{'background-color': highlighted ? 'white' : 'white'}">
     <div class="advert-header">
       <div class="left-side">
         <span class="header-info">{{ advert.category_id.name }}</span>
@@ -28,7 +28,7 @@
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img :src="advert.user_id.image_url ? advert.user_id.image_url : require(`~/assets/img/${advert.category_id._id}.png`)" alt="user-avatar">
+          <img :src="advert.user_id.image_url ? advert.user_id.image_url : require(`~/assets/img/${advert.category_id._id}.png`)">
         </div>
         <div class="user-info">
           <div class="user-name">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="adv-image">
+      <div class="adv-image" @mouseover="highlighted = true" @mouseleave="highlighted = false" @click="goto('/ilanlar/' + advert._id)">
         <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="advert-image">
       </div>
       <div class="adv-description">
@@ -79,7 +79,6 @@ export default {
 
 <style lang="scss">
 .advert-component-wrapper {
-  cursor: pointer;
   width: 100%;
   height: auto;
   display: flex;
@@ -263,6 +262,7 @@ export default {
 
     .adv-image {
       width: 100%;
+      cursor: pointer;
       height: 350px;
       border-radius: 10px;
       margin-bottom: 1rem;
