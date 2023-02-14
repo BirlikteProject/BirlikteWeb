@@ -9,12 +9,15 @@
       </div>
       <div class="form-name">Kayıt Tamamla</div>
       <div class="complete-description">
-        <p>
+        <p v-if="user.type === types.DEMANDER">
           Afetzede girişini kullanan değerli vatandaşımız; Afet bölgesi ilan
           edilen 10 ilde ikamet ettiğinizi, paylaşmış olduğunuz T.C Kimlik
           numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş
           bulunmaktasınız.Afet Bölgesinde ikamet etmiyorsanız lütfen bu girişi
           kullanmayın.
+        </p>
+        <p v-if="user.type === types.SUPPORTER">
+          Paylaşmış olduğunuz T.C Kimlik numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş bulunmaktasınız.
         </p>
       </div>
       <div class="tckno-wrapper">
@@ -40,6 +43,11 @@ export default {
     return {
       types,
       tckn: ''
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user
     }
   },
   methods: {

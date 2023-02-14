@@ -75,6 +75,8 @@ const actions = {
     const response = await this.$api.advertServices.createAdvert(payload)
     if (response.status) {
       context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
+      const category = context.state.categoryList.filter((c) => c._id === response.data.category_id)[0]
+      context.commit('SET_ADVERT_LIST', [{...(response.data), category_id: category}, ...context.state.advertList])
     }
   },
 }

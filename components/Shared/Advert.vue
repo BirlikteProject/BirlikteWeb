@@ -35,7 +35,7 @@
             <span>{{ advert.user_id.fullName }}</span>
           </div>
           <div class="user-profile-name">
-            <span>@{{ advert.user_id.username ? advert.user_id.username : user.email.split('@')[0] }}</span>
+            <span>@{{ advert.user_id.username ? advert.user_id.username : "user.email.split('@')[0]" }}</span>
           </div>
         </div>
       </div>

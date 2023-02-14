@@ -148,7 +148,7 @@ const mutations = {
     state.token = payload
   },
   SET_USER(state, payload) {
-    state.user = {...payload, username: payload.username ? payload.username : payload.email.split('@')[0]}
+    state.user = {...payload}
     state.isAuthenticated = !!payload.fullName
   },
 }

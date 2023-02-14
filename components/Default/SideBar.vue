@@ -1,7 +1,10 @@
 <template>
   <div class="sidebar-wrapper">
     <div v-for="link, i in links" :key="i" @click="changeSelected(i)">
-      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }"> {{ link.title }} </nuxt-link>
+      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
+          <i class="afet-icons" :class="`afet-${link.icon}`"></i>
+        {{ link.title }}
+      </nuxt-link>
     </div>
 
     <nuxt-link to="/olustur" class="link-item create-link">
@@ -19,23 +22,28 @@ export default {
       selected: 0,
       links: [{
         to: '/',
-        title: 'Anasayfa'
+        title: 'Anasayfa',
+        icon: 'home'
       },
       {
         to: '/talepler',
-        title: 'Talepler'
+        title: 'Talepler',
+        icon: 'request'
       },
       {
         to: '/mesajlar',
-        title: 'Mesajlar'
+        title: 'Mesajlar',
+        icon: 'message'
       },
       {
         to: '/profil',
-        title: 'Profil'
+        title: 'Profil',
+        icon: 'profile'
       },
       {
         to: '/arama',
-        title: 'Arama'
+        title: 'Arama',
+        icon: 'search-small'
       },
       ]
     }
@@ -54,6 +62,10 @@ export default {
 </script>
 
 <style lang="scss">
+.afet-icons {
+  margin-right: 10px;
+}
+
 .sidebar-wrapper {
   display: flex;
   flex-direction: column;
@@ -61,17 +73,24 @@ export default {
   padding: 1rem;
   height: 100%;
 
+  .selected-icon {
+    color: blue!important;
+  }
+
   .selected-link {
-    background-color: $primary-color;
-    color: white !important;
+    background-color: inherit;
+    color: #4a4a4a !important;
     border-radius: 10px;
     font-weight: 400;
     margin-top: 0;
+    .afet-icons {
+      color: $primary-color;
+    }
   }
 
   .create-link {
     background-color: $primary-color;
-    color: white!important;
+    color: white !important;
     border-radius: 10px;
     font-weight: 400;
     margin-top: 2rem;

@@ -11,7 +11,7 @@
             <span>{{ profile.fullName }}</span>
           </div>
           <div class="profile-name">
-            <span>@{{ profile.email ? profile.email.split('@')[0] : 'johndoe' }}</span>
+            <span>@{{ profile.email ? "profile.email.split('@')[0]" : 'johndoe' }}</span>
           </div>
         </div>
         <div class="content-tab-items">

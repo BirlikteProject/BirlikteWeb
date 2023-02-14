@@ -22,13 +22,6 @@
             Destekçi Girişi
           </div>
         </div>
-        <div v-if="registerType == types.DEMANDER" class="warning-info">
-          Afetzede girişini kullanan değerli vatandaşımız, devletimizin afet
-          bölgesi ilan ettiği 10 İlde ikamet ettiğinizi ve paylaşmış olduğunuz
-          T.C Kimlik numaranızın doğruluğunu beyan ve taahhüt etmiş
-          bulunmaktasınız. Afet Bölgesinde yaşamıyorsanız lütfen bu girişi
-          kullanmayın.
-        </div>
 
         <div class="form-inputs">
           <div class="input-wrapper">
