@@ -122,13 +122,14 @@ export default {
   @media screen and (max-width: 740px) {
     .img-container {
       img {
-        width: 5rem;
+        width: 4rem;
       }
     }
 
     .modal-body {
       font-size: 1rem;
-      padding: 0;
+      padding: 1rem;
+      gap: 1rem;
     }
   }
 }
