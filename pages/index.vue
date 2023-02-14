@@ -34,6 +34,7 @@
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
 import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
+import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import CategoryButton from '~/components/Main/CategoryButton.vue'
 import Advert from '~/components/Shared/Advert.vue'
 import categories from '~/data/categories.json'
@@ -45,6 +46,7 @@ export default {
     CategoryButton,
     Advert,
     AppInfoModal,
+    AppWarningModal
   },
   data() {
     return {
@@ -66,23 +68,21 @@ export default {
       return this.$store.state.advert.advertList
     },
   },
+  mounted() {
+    if (!JSON.parse(localStorage.getItem('isAppInfoModalDisplayed'))) {
+      this.$store.dispatch('modal/setAppInfoModal', true)
+    }
+  },
   methods: {
     async filterAdverts(categoryId, categoryIdx) {
       const data = await this.$store.dispatch('advert/getAdvertsByCategory', {categoryId})
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
-      console.log(this.$socket)
     },
   },
   sockets: {
     connect: function () {
-      console.log('socket connected')
     },
-  },
-  mounted() {
-    if (!JSON.parse(localStorage.getItem('isAppInfoModalDisplayed'))) {
-      this.$store.dispatch('modal/setAppInfoModal', true)
-    }
   },
 }
 </script>

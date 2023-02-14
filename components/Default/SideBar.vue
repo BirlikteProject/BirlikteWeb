@@ -6,10 +6,12 @@
         <span class="link-title">{{ link.title }}</span>
       </nuxt-link>
     </div>
-    <nuxt-link to="/olustur" class="link-item create-link" @click="changeSelected(i)">
-      <i class="afet-icons afet-plus"></i>
-      <span class="link-name">Oluştur</span>
-    </nuxt-link>
+    <div @click="changeSelected(-1)">
+      <nuxt-link to="/olustur" class="link-item create-link">
+        <i class="afet-icons afet-plus"></i>
+        <span class="link-name">Oluştur</span>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
@@ -56,6 +58,7 @@ export default {
   methods: {
     changeSelected(i) {
       this.selected = i
+      console.log(this.selected)
     },
   },
 }
