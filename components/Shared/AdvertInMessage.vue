@@ -2,17 +2,17 @@
   <div class="advert-in-message-wrapper">
     <div class="advert-in-message">
       <div class="advert-in-message-image">
-      <img src="https://picsum.photos/200/300" alt="" />
-    </div>
-    <div class="advert-in-message-info">
-      <div class="advert-info-header">
-        <span>Eğitim</span>
-        <span class="middot"></span>
-        <span>İstanbul</span>
+        <img src="https://picsum.photos/200/300" alt="" />
       </div>
-      <div class="advert-in-message-title">Advert Title</div>
-      <div class="go-to-advert">İçeriğe Git</div>
-    </div>
+      <div class="advert-in-message-info">
+        <div class="advert-info-header">
+          <span>Eğitim</span>
+          <span class="middot"></span>
+          <span>{{ advert.city_id.name }}</span>
+        </div>
+        <div class="advert-in-message-title">{{ advert.description }}</div>
+        <div class="go-to-advert">İçeriğe Git</div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +20,12 @@
 <script>
 export default {
   name: 'AdvertInMessage',
+  props: {
+    advert: {
+      type: Object,
+      required: true,
+    },
+  },
 }
 </script>
 
@@ -48,7 +54,7 @@ export default {
       border-top-right-radius: 10px;
     }
   }
-  .advert-in-message-info{
+  .advert-in-message-info {
     width: 100%;
     height: 150px;
     padding: 1rem;
@@ -62,7 +68,6 @@ export default {
       span {
         font-size: 0.8rem;
         color: #fff !important;
-        
       }
       .middot {
         background-color: #fff !important;

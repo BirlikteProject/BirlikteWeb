@@ -1,18 +1,25 @@
 <template>
-  <div class="message-user-item-wrapper">
+  <div
+    class="message-user-item-wrapper"
+    :class="active ? 'active' : ''"
+    @click="
+      () => {
+        $store.dispatch('conversations/selectConversation', conversation)
+      }
+    "
+  >
     <div class="user-item-info">
       <div class="user-avatar">
-        <img src="https://picsum.photos/200/300" alt="" />
+        <img :src="user.image_url" alt="" />
       </div>
       <div class="message-preview">
         <div class="user-name">
-          <span class="name">John Doe</span>
+          <span class="name">{{ user.fullName }}</span>
           <span class="middot"></span>
-          <span class="time">1 saat önce</span>
+          <span class="time">{{ conversation.createdAt | dateFormat }}</span>
         </div>
         <div class="message-text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quod.
+          {{ conversation.last_message }}
         </div>
       </div>
     </div>
@@ -20,8 +27,30 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'MessageUserItem',
+  filters: {
+    dateFormat: function (date) {
+      return moment(date).fromNow()
+    },
+  },
+  props: {
+    conversation: {
+      type: Object,
+      required: true,
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    user() {
+      return this.conversation.receiver_id ?? this.conversation.sender_id
+    },
+  },
 }
 </script>
 
@@ -34,9 +63,11 @@ export default {
   padding: 0.5rem 1rem;
   cursor: pointer;
   transition: 0.2s ease-in-out;
-  &:hover {
+  &:hover,
+  &.active {
     background-color: #59cdff1e;
   }
+
   .user-item-info {
     display: flex;
     flex-direction: row;
@@ -67,7 +98,8 @@ export default {
         color: #828282;
         align-items: center;
         margin-bottom: 0.25rem;
-        .name, .time {
+        .name,
+        .time {
           padding-top: 2px;
         }
       }
