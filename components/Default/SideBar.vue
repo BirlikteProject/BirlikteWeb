@@ -53,7 +53,7 @@ export default {
         {
           to: '/arama',
           title: 'Arama',
-          icon: 'search-small',
+          icon: 'search',
         },
       ],
     }
@@ -121,6 +121,9 @@ export default {
     }
   }
   .links {
+    &:nth-child(4) {
+      font-size: 1.25rem;
+    }
     @include media(xs, sm) {
       &:nth-child(1) {
         order: 1;
@@ -133,6 +136,7 @@ export default {
       }
       &:nth-child(4) {
         order: 5;
+        
       }
       &:nth-child(5) {
         order: 2;
