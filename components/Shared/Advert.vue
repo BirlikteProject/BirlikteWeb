@@ -28,7 +28,7 @@
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img :src="image_url" alt="user-avatar">
+          <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="user-avatar">
         </div>
         <div class="user-info">
           <div class="user-name">

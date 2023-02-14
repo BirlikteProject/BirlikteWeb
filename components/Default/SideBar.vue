@@ -1,14 +1,11 @@
 <template>
   <div class="sidebar-wrapper">
-    <nuxt-link to="/" class="link-item"> Anasayfa </nuxt-link>
-    <nuxt-link to="/talepler" class="link-item"> Talepler </nuxt-link>
-    <nuxt-link to="/mesajlar" class="link-item"> Mesajlar </nuxt-link>
-    <nuxt-link to="/profil" class="link-item"> Profil </nuxt-link>
-    <nuxt-link to="/arama" class="link-item"> Arama </nuxt-link>
+    <div v-for="link, i in links" :key="i" @click="changeSelected(i)">
+      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }"> {{ link.title }} </nuxt-link>
+    </div>
 
-    <nuxt-link to="/olustur" class="link-item">
+    <nuxt-link to="/olustur" class="link-item create-link">
       <i class="afet-icons afet-plus"></i>
-
       <span class="link-name">Oluştur</span>
     </nuxt-link>
   </div>
@@ -18,11 +15,39 @@
 export default {
   name: 'SideBar',
   data() {
-    return {}
+    return {
+      selected: 0,
+      links: [{
+        to: '/',
+        title: 'Anasayfa'
+      },
+      {
+        to: '/talepler',
+        title: 'Talepler'
+      },
+      {
+        to: '/mesajlar',
+        title: 'Mesajlar'
+      },
+      {
+        to: '/profil',
+        title: 'Profil'
+      },
+      {
+        to: '/arama',
+        title: 'Arama'
+      },
+      ]
+    }
   },
   computed: {
     isAuthenticated() {
       return this.$store.state.user.isAuthenticated
+    }
+  },
+  methods: {
+    changeSelected(i) {
+      this.selected = i
     }
   }
 }
@@ -35,6 +60,23 @@ export default {
   justify-content: flex-start;
   padding: 1rem;
   height: 100%;
+
+  .selected-link {
+    background-color: $primary-color;
+    color: white !important;
+    border-radius: 10px;
+    font-weight: 400;
+    margin-top: 0;
+  }
+
+  .create-link {
+    background-color: $primary-color;
+    color: white!important;
+    border-radius: 10px;
+    font-weight: 400;
+    margin-top: 2rem;
+  }
+
   .link-item {
     text-decoration: none;
     color: $primary-text-color;
@@ -45,13 +87,7 @@ export default {
     align-items: center;
     padding: 0 1rem;
     height: 3rem;
-    &:last-child {
-        background-color: $primary-color;
-        color: white;
-        border-radius: 10px;
-        font-weight: 400;
-        margin-top: 2rem;
-    }
+
     .link-name {
       display: flex;
       align-items: center;
