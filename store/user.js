@@ -163,7 +163,7 @@ const mutations = {
     state.advertList = payload
   },
   SET_USER(state, payload) {
-    state.user = { ...payload }
+    state.user = payload
     state.isAuthenticated = !!payload.fullName
   },
 }

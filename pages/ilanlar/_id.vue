@@ -31,7 +31,7 @@
         <div class="user-profile">
           <div class="user-avatar">
             <img
-              :src="advert.user_id.image_url ? advert.user_id.image_url : require(`~/assets/img/${advert.category_id._id}.png`)"
+              :src="advert.user_id.image_url ? advert.user_id.image_url : require('~/assets/img/profile.png')"
               alt="user-avatar">
           </div>
           <div class="user-info">
@@ -74,9 +74,6 @@ export default {
     },
     advert() {
       return this.$store.state.advert.selectedAdvert
-    },
-    image_url() {
-      return `~/assets/img/${this.advert.category_id._id}.png`
     }
   },
   async mounted() {

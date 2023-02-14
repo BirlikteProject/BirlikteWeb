@@ -9,7 +9,11 @@
         <category-button :class="{ 'selected-category': selectedCategory === i }" :category="category" />
       </div>
     </div>
-    <div v-if="adverts" class="content">
+    <div v-if="selectedCategory !== -1 && filteredAdverts" class="content">
+      <advert
+        v-for="advert in filteredAdverts" :key="advert._id" :advert="advert" />
+    </div>
+    <div v-if="selectedCategory === -1 && adverts" class="content">
       <advert
         v-for="advert in adverts" :key="advert._id" :advert="advert" />
     </div>
@@ -29,7 +33,8 @@ export default {
     return {
       categories,
       selectedCategory: -1,
-      highlightedAdvert: -1
+      highlightedAdvert: -1,
+      filteredAdverts: []
     }
   },
   computed: {
@@ -41,8 +46,9 @@ export default {
     }
   },
   methods: {
-    filterAdverts(categoryId, categoryIdx) {
-      this.$store.dispatch('advert/fetchAdvertsByCategory', categoryId)
+    async filterAdverts(categoryId, categoryIdx) {
+      const data = await this.$store.dispatch('advert/getAdvertsByCategory', {categoryId})
+      this.filteredAdverts = data
       this.selectedCategory = categoryIdx
     }
   }
@@ -75,7 +81,7 @@ html {
   height: 100%;
   position: relative;
   background-color: #fff;
-  
+
 
   .greeting-title {
     width: 100%;

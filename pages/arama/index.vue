@@ -4,7 +4,7 @@
       <div class="page-title">Arama</div>
       <div class="search-input-box">
         <input v-model="searchTerm" type="text" placeholder="Arama yapın" />
-        <span v-if="searchTerm" class="search-icon" @click="filterAdverts()">
+        <span v-if="searchTerm || location.name" class="search-icon" @click="filterAdverts()">
           <i class="afet-icons afet-search"></i>
         </span>
       </div>
@@ -13,7 +13,7 @@
           <div class="dropdown-button-text">
             {{
               location.name !== null
-                ? location.name.toLowerCase()
+                ? location.name
                 : 'Şehir Seçiniz'
             }}
           </div>
@@ -22,24 +22,28 @@
           </div>
         </div>
         <div v-if="results" class="dropdown-results">
-          <div v-for="city, idx in locations" :key="idx" class="city-item"
-            @click="; (location.name = city), (location.id = idx), (results = false)">
-            {{ city.toLowerCase() }}
+          <div
+            v-for="cityId in Object.keys(cities)" :key="cityId" class="city-item"
+            @click="; (location.name = cities[cityId]), (location.id = cityId), (results = false)">
+            {{ cities[cityId] }}
           </div>
         </div>
       </div>
     </div>
     <div class="search-results">
-      <spinner v-if="loading" />
-      <div v-else-if="advertList">
+      <spinner v-if="loading" class="spinner" />
+      <div v-else-if="advertList?.length && userType === types.DEMANDER">
         <advert v-for="advert in advertList" :key="advert._id" :advert="advert" />
       </div>
-      <div class="no-results">
+      <div v-else-if="advertList?.length && userType === types.SUPPORTER">
+        <request-item v-for="demand in advertList" :key="demand._id" :advert="demand" />
+      </div>
+      <div v-else-if="didFetch" class="no-results">
         <div class="result-message">
           Ne Yazık ki Aradığın Kriterlere <br />
-          Uygun Destek Bulunamadı.
+          Uygun {{userType === types.DEMANDER ? 'Destek' : 'Talep'}} Bulunamadı.
         </div>
-        <div class="create-advert">
+        <div v-show="!user.type === types.SUPPORTER" class="create-advert">
           <span class="plus-icon">
             <i class="afet-icons afet-plus"></i>
           </span>
@@ -55,40 +59,51 @@
 
 <script>
 import Advert from '~/components/Shared/Advert.vue'
+import RequestItem from '~/components/Request/RequestItem.vue'
 import cities from '~/data/location.json'
+import types from '~/data/types.json'
 
 export default {
   name: 'SearchPage',
-  components: { Advert },
+  components: { Advert, RequestItem },
   data() {
     return {
+      types,
       location: {
         name: null,
         id: '',
       },
+      didFetch: false,
       loading: false,
       error: false,
       searchTerm: '',
       results: false,
+      advertList: []
     }
   },
   computed: {
-    locations() {
-      return Object.values(cities)
+    cities() {
+      return cities
     },
-    advertList() {
-      return this.$store.state.advertList
+    user() {
+      return this.$store.state.user.user
     },
+    userType() {
+      return this.user?.type ? this.user?.type : types.DEMANDER
+    }
   },
   methods: {
     async filterAdverts() {
       try {
         this.loading = true
-        const response = await this.$store.dispatch('advert/searchAdverts')
-        if (response.status) {
-          console.log(response.data)
+        const data = await this.$store.dispatch('advert/searchAdverts', {'city_id': this.location.id, 'term': this.searchTerm, userType: this.userType})
+        console.log({'city_id': this.location.id, 'term': this.searchTerm, userType: this.userType})
+        if (data) {
+          this.didFetch = true
+          this.advertList = data
         }
       } catch (error) {
+        console.error(error)
         this.error = true
       } finally {
         this.loading = false
@@ -99,6 +114,10 @@ export default {
 </script>
 
 <style lang="scss">
+.spinner {
+  margin: auto;
+}
+
 .search-page-container {
   display: flex;
   flex-direction: column;

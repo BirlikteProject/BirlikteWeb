@@ -1,9 +1,16 @@
 import APIBaseServices from '../APIBaseServices'
+import types from '~/data/types.json'
+
 export default class AdvertServices extends APIBaseServices {
-  async getAdvertPage(page = 1, limit = 15) {
+  async getAdverts(opts) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}&type=4ad62f30-4294-4e07-b578-ba22627ed59f`,
+      url: this.url + `/advert/list/filter`,
+      params: {
+        ...opts,
+        page: opts.page ? opts.page : 1,
+        limit: opts.limit ? opts.limit : 15
+      }
     })
     return response.data
   }
@@ -16,14 +23,6 @@ export default class AdvertServices extends APIBaseServices {
     return response.data
   }
 
-  async getDemandPage(page = 1, limit = 15) {
-    const response = await this.http({
-      method: 'GET',
-      url: this.url + `/advert/list/filter?page=${page}&limit=${limit}&type=bdb6656f-bb06-43e7-a33d-0fd9a50a893d`,
-    })
-    return response.data
-  }
-
   async getAdvertById(id) {
     const response = await this.http({
       method: 'GET',
@@ -32,10 +31,15 @@ export default class AdvertServices extends APIBaseServices {
     return response.data
   }
 
-  async getAdvertByCategory(categoryId) {
+  async getAdvertByCategory(categoryId, type=types.SUPPORTER, page=1, limit=15) {
     const response = await this.http({
       method: 'GET',
-      url: this.url + `/advert/category/${categoryId}?page=1&limit=10`,
+      url: this.url + `/advert/category/${categoryId}`,
+      params: {
+        type,
+        page,
+        limit
+      }
     })
     return response.data
   }
@@ -62,14 +66,6 @@ export default class AdvertServices extends APIBaseServices {
     const response = await this.http({
       method: 'DELETE',
       url: this.url + `/advert/${id}`,
-    })
-    return response.data
-  }
-
-  async searchAdverts(cityId, searchTerm) {
-    const response = await this.http({
-      method: 'GET',
-      url: this.url + `/advert/search?city_id=${cityId}&term=${searchTerm}`,
     })
     return response.data
   }

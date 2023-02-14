@@ -65,7 +65,7 @@
 import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
 import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
 import types from '~/data/types.json'
-import cities from '~/data/location.json'
+import locations from '~/data/location.json'
 
 export default {
   name: 'CreateAdvertPage',
@@ -75,6 +75,7 @@ export default {
   data() {
     return {
       types,
+      locations,
       categorySelection: false,
       locationKeyword: '',
       selectedCategory: '* Kategori Seçiniz',
@@ -97,12 +98,6 @@ export default {
     },
     categories() {
       return this.$store.state.advert.categoryList
-    },
-    locations() {
-      return {
-        [this.types.ONLINE]: 'Online',
-        cities,
-      }
     },
     filteredLocation() {
       if (this.locationKeyword.length > 0) {

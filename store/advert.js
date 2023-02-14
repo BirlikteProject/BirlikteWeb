@@ -1,9 +1,11 @@
+import types from '~/data/types.json'
+
 const state = () => ({
   advertList: [],
   demandList: [],
   categoryList: [],
   citiesList: {},
-  selectedAdvert: {}
+  selectedAdvert: {},
 })
 
 const mutations = {
@@ -25,8 +27,12 @@ const mutations = {
 }
 
 const actions = {
-  async fetchAdverts(context) {
-    const advResponse = await this.$api.advertServices.getAdvertPage()
+  async fetchAdverts(context, payload) {
+    const advResponse = await this.$api.advertServices.getAdverts({
+      type: types.SUPPORTER,
+      page: payload?.page,
+      limit: payload?.limit,
+    })
     if (advResponse.status) {
       context.commit('SET_ADVERT_LIST', advResponse.data)
     }
@@ -35,17 +41,25 @@ const actions = {
     context.dispatch('fetchCities')
   },
 
-  async fetchDemands(context) {
-    const demandResponse = await this.$api.advertServices.getDemandPage()
-    if (demandResponse.status) {
-      context.commit('SET_DEMAND_LIST', demandResponse.data)
+  async fetchDemands(context, payload) {
+    const response = await this.$api.advertServices.getAdverts({
+      type: types.DEMANDER,
+      page: payload?.page,
+      limit: payload?.limit,
+    })
+    if (response.status) {
+      context.commit('SET_DEMAND_LIST', response.data)
     }
   },
 
-  async fetchAdvertsByCategory(context, payload) {
-    const advResponse = await this.$api.advertServices.getAdvertByCategory(payload)
-    if (advResponse.status) {
-      context.commit('SET_ADVERT_LIST', advResponse.data)
+  async getAdvertsByCategory(context, payload) {
+    try {
+      const response = await this.$api.advertServices.getAdvertByCategory(payload.categoryId)
+      if (response.status) {
+        return response.data
+      }
+    } catch (error) {
+
     }
   },
 
@@ -71,18 +85,36 @@ const actions = {
     const filteredList = context.state.advertList.filter(
       (adv) => adv._id === id
     )
-    if (filteredList.length) return context.commit('SET_SELECTED_ADVERT', filteredList[0])
+    if (filteredList.length)
+      return context.commit('SET_SELECTED_ADVERT', filteredList[0])
     const response = await this.$api.advertServices.getAdvertById(id)
     if (response.status) {
       context.commit('SET_SELECTED_ADVERT', response.data)
     }
   },
 
-  async searchAdverts(context, cityId, searchTerm) {
-    const response = await this.$api.advertServices.searchAdverts(cityId, searchTerm)
-    if (response.status) {
-      context.commit('SET_ADVERT_LIST', response.data)
-      return response.data
+  async searchAdverts(context, payload) {
+    try {
+      if (payload.userType === types.DEMANDER) {
+        const response = await this.$api.advertServices.getAdverts({
+          ...payload,
+          type: types.SUPPORTER,
+        })
+        if (response.status) {
+          return response.data
+        }
+      }
+      if (payload.userType === types.SUPPORTER) {
+        const response = await this.$api.advertServices.getAdverts({
+          ...payload,
+          type: types.DEMANDER,
+        })
+        if (response.status) {
+          return response.data
+        }
+      }
+    } catch (error) {
+      return []
     }
   },
 
@@ -90,12 +122,16 @@ const actions = {
     const response = await this.$api.advertServices.createAdvert(payload)
     if (response.status) {
       context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
-      const category = context.state.categoryList.filter((c) => c._id === response.data.category_id)[0]
-      context.commit('SET_ADVERT_LIST', [{...(response.data), category_id: category}, ...context.state.advertList])
+      const category = context.state.categoryList.filter(
+        (c) => c._id === response.data.category_id
+      )[0]
+      context.commit('SET_ADVERT_LIST', [
+        { ...response.data, category_id: category },
+        ...context.state.advertList,
+      ])
     }
   },
 }
-
 
 export default {
   namespaced: true,
