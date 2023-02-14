@@ -1,7 +1,7 @@
 <template>
   <div class="index-page">
     <div class="greeting-title">
-      <span>Neye İhtiyacın Var?</span>
+      <span>Neye <b>İhtiyacın</b> Var?</span>
       <span><b>Birlik<em>te</em></b> Bulalım</span>
     </div>
     <div class="category-buttons">
@@ -75,6 +75,7 @@ html {
   height: 100%;
   position: relative;
   background-color: #fff;
+  
 
   .greeting-title {
     width: 100%;
@@ -84,6 +85,10 @@ html {
     padding: 3rem 0;
     color: $primary-color;
     font-size: 2rem;
+    @include media(xs, sm) {
+      font-size: 1.5rem;
+      padding: 2rem 0;
+    }
 
     span {
       font-weight: 300;
