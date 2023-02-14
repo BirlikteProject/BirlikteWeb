@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Logger from './logger';
 
 export default class EventEmitter{
@@ -29,7 +30,7 @@ export default class EventEmitter{
 
         } else {
 
-            throw new Error(`callback must be a function`);
+            throw new TypeError(`callback must be a function`);
 
         }
 
@@ -93,11 +94,11 @@ export default class EventEmitter{
 
         if(this.store && this.store._actions){
 
-            let prefixed_event = this.actionPrefix + event;
+            const prefixed_event = this.actionPrefix + event;
 
-            for (let key in this.store._actions) {
+            for (const key in this.store._actions) {
 
-                let action = key.split('/').pop();
+                const action = key.split('/').pop();
 
                 if(action === prefixed_event) {
 
@@ -111,11 +112,11 @@ export default class EventEmitter{
 
             if(this.mutationPrefix) {
 
-                let prefixed_event = this.mutationPrefix + event;
+                const prefixed_event = this.mutationPrefix + event;
 
-                for (let key in this.store._mutations) {
+                for (const key in this.store._mutations) {
 
-                    let mutation = key.split('/').pop();
+                    const mutation = key.split('/').pop();
 
                     if(mutation === prefixed_event) {
 
