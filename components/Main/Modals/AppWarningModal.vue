@@ -8,7 +8,7 @@
       </div>
       <div class="modal-body">
         <div class="img-container">
-          <img src="~/assets/icon/no-money.svg" alt="" />
+          <img src="~/assets/icon/no-money.svg" class="no-money-icon" />
           <img src="~/assets/icon/solidarity.svg" alt="" />
         </div>
         <p>
@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-warning-modal-wrapper {
   position: fixed;
   top: 0;
@@ -94,24 +94,42 @@ export default {
         align-items: center;
       }
     }
-    .modal-body {
+  }
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    height: 100%;
+    padding: 6rem 3rem;
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    .img-container {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
       gap: 2rem;
-      width: 100%;
-      height: 100%;
-      padding: 6rem 3rem;
-      color: white;
-      font-size: 1.5rem;
-      text-align: center;
-      .img-container {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
+      flex-wrap: wrap;
+
+      .no-money-icon {
+        filter: invert(1);
       }
+    }
+  }
+
+  @media screen and (max-width: 740px) {
+    .img-container {
+      img {
+        width: 4rem;
+      }
+    }
+
+    .modal-body {
+      font-size: 1rem;
+      padding: 1rem;
+      gap: 1rem;
     }
   }
 }
