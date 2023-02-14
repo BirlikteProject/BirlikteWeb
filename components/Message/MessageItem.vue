@@ -2,20 +2,31 @@
   <div class="message-item-wrapper" :class="isMine ? 'end' : 'start'">
     <div class="message-item">
       <div class="message-item-text">
-        Merhaba ilanınızla ilgileniyorum. İletişime geçebilir misiniz?
+        {{ message.message }}
       </div>
-      <div class="time">11:00</div>
+      <div class="time">{{message.time | dateFormat}}</div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'MessageItem',
+  filters: {
+    dateFormat: function (date) {
+      return moment(date).fromNow()
+    },
+  },
   props: {
     isMine: {
       type: Boolean,
       default: false,
+    },
+    message: {
+      type: Object,
+      required: true,
     },
   },
 }
@@ -29,13 +40,13 @@ export default {
   &.end {
     justify-content: flex-end;
     .message-item {
-        background-color: rgb(251, 248, 203);
+      background-color: rgb(251, 248, 203);
     }
   }
   &.start {
     justify-content: flex-start;
     .message-item {
-        background-color: #59cdff1e;
+      background-color: #59cdff1e;
     }
   }
 }

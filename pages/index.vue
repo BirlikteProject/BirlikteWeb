@@ -2,11 +2,20 @@
   <div class="index-page">
     <div class="greeting-title">
       <span>Neye <b>İhtiyacın</b> Var?</span>
-      <span><b>Birlik<em>te</em></b> Bulalım</span>
+      <span
+        ><b>Birlik<em>te</em></b> Bulalım</span
+      >
     </div>
     <div class="category-buttons">
-      <div v-for="category, i in categories" :key="category.name" @click="filterAdverts(category._id, i)">
-        <category-button :class="{ 'selected-category': selectedCategory === i }" :category="category" />
+      <div
+        v-for="(category, i) in categories"
+        :key="category.name"
+        @click="filterAdverts(category._id, i)"
+      >
+        <category-button
+          :class="{ 'selected-category': selectedCategory === i }"
+          :category="category"
+        />
       </div>
     </div>
     <div v-if="selectedCategory !== -1 && filteredAdverts" class="content">
@@ -43,15 +52,21 @@ export default {
     },
     adverts() {
       return this.$store.state.advert.advertList
-    }
+    },
   },
   methods: {
     async filterAdverts(categoryId, categoryIdx) {
       const data = await this.$store.dispatch('advert/getAdvertsByCategory', {categoryId})
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
-    }
-  }
+      console.log(this.$socket)
+    },
+  },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+  },
 }
 </script>
 

@@ -1,4 +1,3 @@
-
 <template>
   <div v-if="advert.title" class="requests-page-container">
     <!-- <div class="advert-component-wrapper">
@@ -9,7 +8,11 @@
           <span class="header-info">{{ advert.city_id.name }}</span>
         </div>
         <div class="right-side">
-          <div class="advert-actions" @mouseenter="dropdown = true" @mouseleave="dropdown = false">
+          <div
+            class="advert-actions"
+            @mouseenter="dropdown = true"
+            @mouseleave="dropdown = false"
+          >
             <i class="afet-icons afet-ellipsis"></i>
             <div class="action-dropdown" :class="dropdown ? 'active' : ''">
               <span class="dropdown-item">
@@ -39,12 +42,21 @@
               <span>{{ advert.user_id.fullName }}</span>
             </div>
             <div class="user-profile-name">
-              <span>@{{ advert.user_id.username ? advert.user_id.username : advert.user_id.email.split('@')[0] }}</span>
+              <span
+                >@{{
+                  advert.user_id.username
+                    ? advert.user_id.username
+                    : advert.user_id.email.split('@')[0]
+                }}</span
+              >
             </div>
           </div>
         </div>
         <div class="adv-image">
-          <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="advert-image">
+          <img
+            :src="require(`~/assets/img/${advert.category_id._id}.png`)"
+            alt="advert-image"
+          />
         </div>
         <div class="adv-description">
           {{ advert.description }}
@@ -72,7 +84,7 @@ export default {
       dropdown: false,
       citiesList: {},
       highlighted: false,
-      cities
+      cities,
     }
   },
   computed: {
@@ -85,6 +97,20 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('advert/getAdvertById', this.advertId)
+  },
+  methods: {
+    contact() {
+      this.$store
+        .dispatch('conversations/createConversation', {
+          advert_id: this.advertId,
+          receiver_id: this.advert.user_id._id,
+        })
+        .then(() => {
+          this.$router.push({
+            name: 'mesajlar',
+          })
+        })
+    },
   },
 }
 </script>
@@ -313,8 +339,9 @@ export default {
     }
 
     .adv-description {
-      color: #818EA0;
-      width: 100%!important;
+      color: #818ea0;
+      text-align: center;
+      width: 100% !important;
     }
   }
 } */

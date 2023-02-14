@@ -2,6 +2,7 @@ import AuthServices from '~/services/User/authServices'
 import ProfileServices from '~/services/User/profileServices'
 import AdvertServices from '~/services/Advert/advertServices'
 import CategoryServices from '~/services/Category/categoryServices'
+import ConversationsServices from '~/services/Conversations/conversationsServices'
 
 export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
@@ -25,4 +26,5 @@ export default function ({ $axios, app, store }, inject) {
   api.authServices = new AuthServices(api, url)
   api.profileServices = new ProfileServices(api, url)
   api.categoryServices = new CategoryServices(api, url)
+  api.conversationsServices = new ConversationsServices(api, url)
 }
