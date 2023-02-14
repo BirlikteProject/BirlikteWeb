@@ -114,7 +114,7 @@ a {
         border-right: none;
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 6rem);
+        min-height: calc(100vh - 6rem);
         
       }
       .content-wrapper {

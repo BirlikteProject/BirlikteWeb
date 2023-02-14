@@ -36,6 +36,21 @@
             <div v-if="user.type === types.SUPPORTER">
               <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
             </div>
+            <image-cropper 
+            :file="imageUrl"
+              @croppedImage="($event) => {
+                imageUrl = $event[0]
+                image = $event[1]
+              }"
+              @onImageImported="()=>{
+                isImageImported=true
+              }"
+              @removeFile="() => {
+                imageUrl = null
+                image = null
+                isImageImported = false
+              }"
+            />
           </div>
           <div v-if="activeTab == 1" class="content about">
             <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
@@ -50,17 +65,21 @@
 <script>
 import RequestItem from '~/components/Request/RequestItem.vue'
 import Advert from '~/components/Shared/Advert.vue'
+import ImageCropper from '~/components/Shared/ImageCropper/ImageCropper.vue'
 import types from '~/data/types.json'
 
 export default {
   name: 'ProfilePage',
-  components: { RequestItem, Advert },
+  components: { RequestItem, Advert, ImageCropper },
   layout: 'default',
   middleware: ['auth'],
   data() {
     return {
       activeTab: 0,
       types,
+      imageUrl: null,
+      image: null,
+      isImageImported: false,
     }
   },
   computed: {
