@@ -116,7 +116,9 @@ export default {
 
   sockets: {
     getMessage(data) {
-      this.$store.commit('conversations/APPEND_MESSAGE', data)
+      if (data.conversationId === this.selectedConversation._id) {
+        this.$store.commit('conversations/APPEND_MESSAGE', data)
+      }
     },
   },
 
@@ -159,6 +161,7 @@ export default {
             : this.selectedConversation.sender_id._id
           this.$socket.emit('sendMessage', {
             receiverId,
+            conversationId: this.selectedConversation._id,
             text: msg,
           })
         })
