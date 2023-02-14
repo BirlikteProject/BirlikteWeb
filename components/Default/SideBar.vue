@@ -1,22 +1,12 @@
 <template>
   <div class="sidebar-wrapper">
-    <div
-      v-for="(link, i) in links"
-      class="links"
-      :key="i"
-      @click="changeSelected(i)"
-    >
-      <nuxt-link
-        :to="link.to"
-        class="link-item"
-        :class="{ 'selected-link': selected === i }"
-      >
+    <div v-for="(link, i) in links" class="links" :key="i" @click="changeSelected(i)">
+      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
         <i class="afet-icons" :class="`afet-${link.icon}`"></i>
         <span class="link-title">{{ link.title }}</span>
       </nuxt-link>
     </div>
-
-    <nuxt-link to="/olustur" class="link-item create-link">
+    <nuxt-link to="/olustur" class="link-item create-link" @click="changeSelected(i)">
       <i class="afet-icons afet-plus"></i>
       <span class="link-name">Oluştur</span>
     </nuxt-link>
@@ -78,10 +68,12 @@ export default {
   justify-content: flex-start;
   padding: 1rem;
   height: 100%;
+
   @include media(xs, sm) {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
     .link-title {
       display: none;
     }
@@ -90,8 +82,10 @@ export default {
   .selected-icon {
     color: blue !important;
   }
+
   .afet-icons {
     margin-right: 10px;
+
     @include media(xs, sm) {
       margin-right: 0;
       font-size: 1.25rem;
@@ -104,6 +98,7 @@ export default {
     border-radius: 10px;
     font-weight: 400;
     margin-top: 0;
+
     .afet-icons {
       color: $primary-color;
     }
@@ -116,33 +111,41 @@ export default {
     font-weight: 400;
     display: none;
     margin-top: 2rem;
+
     @include media(xs, sm) {
       display: none !important;
     }
   }
+
   .links {
     &:nth-child(4) {
       font-size: 1.25rem;
     }
+
     @include media(xs, sm) {
       &:nth-child(1) {
         order: 1;
       }
+
       &:nth-child(2) {
         order: 3;
       }
+
       &:nth-child(3) {
         order: 4;
       }
+
       &:nth-child(4) {
         order: 5;
-        
+
       }
+
       &:nth-child(5) {
         order: 2;
       }
     }
   }
+
   .link-item {
     text-decoration: none;
     color: $primary-text-color;

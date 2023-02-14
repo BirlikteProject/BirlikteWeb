@@ -69,7 +69,7 @@ export default {
       return Math.floor(time)+text
     },
     user() {
-      return this.$store.state.user
+      return this.$store.state.user.user
     }
   },
   methods: {
