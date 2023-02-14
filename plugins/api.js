@@ -8,12 +8,8 @@ export default function ({ $axios, app, store }, inject) {
     baseURL: 'http://142.93.106.148:5000/api/v1',
   })
   const url = ''
-  let token = ''
-  if(app.$cookiz.get('token')) {
-    token = app.$cookiz.get('token')
-  } else {
-    token = store.state.user?.token
-  }
+  const token = store.state.user?.token
+
   api.onRequest((config) => {
     config.headers.Authorization = 'Bearer ' + token
   })

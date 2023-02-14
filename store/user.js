@@ -14,6 +14,8 @@ const actions = {
           firebase_token: firebaseResponse.user._delegate.accessToken,
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
+          image_url: firebaseResponse.user.photoURL,
+          username: firebaseResponse.user.email.split('@')[0]
         })
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
@@ -33,7 +35,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/')
+          this.$router.push('/kayit-tamamla')
         }
       } catch (error) {
         const _response = await this.$api.authServices.register({
@@ -146,7 +148,7 @@ const mutations = {
     state.token = payload
   },
   SET_USER(state, payload) {
-    state.user = payload
+    state.user = {...payload, username: payload.username ? payload.username : payload.email.split('@')[0]}
     state.isAuthenticated = !!payload.fullName
   },
 }

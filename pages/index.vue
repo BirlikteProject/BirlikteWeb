@@ -5,8 +5,8 @@
       <span><b>Birlik<em>te</em></b> Bulalım</span>
     </div>
     <div class="category-buttons">
-      <div v-for="category in categories" :key="category.name" @click="filterAdverts(category._id)">
-        <category-button :category="category" />
+      <div v-for="category, i in categories" :key="category.name" @click="filterAdverts(category._id, i)">
+        <category-button :class="{ 'selected-category': selectedCategory === i }" :category="category" />
       </div>
     </div>
     <div v-if="!!adverts && !!cities" class="content">
@@ -26,7 +26,8 @@ export default {
   components: { LoginModal, CategoryButton, Advert },
   data() {
     return {
-      categories
+      categories,
+      selectedCategory: -1
     }
   },
   computed: {
@@ -41,8 +42,9 @@ export default {
     },
   },
   methods: {
-    filterAdverts(categoryId) {
+    filterAdverts(categoryId, categoryIdx) {
       this.$store.dispatch('advert/fetchAdvertsByCategory', categoryId)
+      this.selectedCategory = categoryIdx
     }
   }
 }
@@ -57,6 +59,16 @@ export default {
 
 html {
   font-family: 'Campton', sans-serif;
+}
+
+.selected-category {
+  .category-button-component {
+    background-color: rgb(62, 110, 254);
+  }
+
+  .category-name {
+    color: rgb(62, 110, 254);
+  }
 }
 
 .index-page {

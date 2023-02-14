@@ -5,7 +5,7 @@
       <div class="profile-page-content">
         <div v-if="profile" class="profile-info">
           <div class="user-avatar">
-            <img :src="profile.image_url ? profile.image_url : 'https://i.pravatar.cc/300'" alt="user-avatar" />
+            <img :src="profile.image_url" alt="user-avatar" />
           </div>
           <div class="user-name">
             <span>{{ profile.fullName }}</span>

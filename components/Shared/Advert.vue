@@ -28,14 +28,14 @@
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="user-avatar">
+          <img :src="user.image_url ? user.image_url : require(`~/assets/img/${advert.category_id._id}.png`)" alt="user-avatar">
         </div>
         <div class="user-info">
           <div class="user-name">
             <span>{{ advert.user_id.fullName }}</span>
           </div>
           <div class="user-profile-name">
-            <span>@{{ advert.user_id.username }}</span>
+            <span>@{{ advert.user_id.username ? advert.user_id.username : user.email.split('@')[0] }}</span>
           </div>
         </div>
       </div>
@@ -66,6 +66,9 @@ export default {
   computed: {
     image_url() {
       return `~/assets/img/${this.advert.category_id._id}.png`
+    },
+    user() {
+      return this.$store.state.user.user
     }
   },
   mounted() {
