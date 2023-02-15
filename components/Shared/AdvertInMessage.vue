@@ -11,7 +11,7 @@
           <span>{{ advert.city_id.name }}</span>
         </div>
         <div class="advert-in-message-title">{{ advert.description }}</div>
-        <div class="go-to-advert">İçeriğe Git</div>
+        <div class="go-to-advert" @click="goToAdvert()">İçeriğe Git</div>
       </div>
     </div>
   </div>
@@ -24,6 +24,11 @@ export default {
     advert: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    goToAdvert() {
+      this.$router.push(`/ilanlar/${this.advert._id}`)
     },
   },
 }
