@@ -2,7 +2,11 @@
   <div class="messages-page-container">
     <div class="messages-page-content">
       <div class="page-title">
-        <i v-if="activeCategory == 1" class="afet-icons afet-caret-up" @click="setConversation"></i>
+        <i
+          v-if="activeCategory == 1"
+          class="afet-icons afet-caret-up"
+          @click="setConversation"
+        ></i>
         Mesajlar
       </div>
       <div
@@ -74,9 +78,18 @@
 </template>
 
 <script>
+import { io } from 'socket.io-client'
 import MessageItem from '~/components/Message/MessageItem.vue'
 import MessageUserItem from '~/components/Message/MessageUserItem.vue'
 import AdvertInMessage from '~/components/Shared/AdvertInMessage.vue'
+
+const socket = io('https://socket.birlikte.org.tr', {
+  path: '',
+  transports: ['websocket'],
+  autoConnect: false,
+  secure: true,
+})
+
 export default {
   name: 'MessagesPage',
   components: { MessageUserItem, AdvertInMessage, MessageItem },
@@ -105,26 +118,39 @@ export default {
   mounted() {
     this.scrollBottom()
     this.refresh()
-    this.$socket.auth.token = this.$store.state.user.token
-    this.$socket.connect((e) => {
-      this.$socket.emit('addUser', {})
-    })
-    this.$socket.auth.token = this.$store.state.user.token
-    this.$socket.connect((e) => {
-      this.$socket.emit('addUser', {})
-    })
-  },
-  destroyed() {
-    this.$socket.disconnect()
-  },
 
-  sockets: {
-    getMessage(data) {
+    socket.once('connect', () => {
+      socket.emit('addUser', {})
+    })
+
+    socket.on('getMessage', (data) => {
       if (data.conversationId === this.selectedConversation._id) {
         this.$store.commit('conversations/APPEND_MESSAGE', data)
+        this.scrollBottom()
       }
-    },
+    })
+
+    socket.auth = {
+      token: this.$store.state.user.token,
+    };
+    socket.connect()
   },
+  beforeDestroy() {
+    socket.off('getMessage')
+    socket.disconnect()
+  },
+
+  // sockets: {
+  //   getMessage(data) {
+  //     if (data.conversationId === this.selectedConversation._id) {
+  //       this.$store.commit('conversations/APPEND_MESSAGE', data)
+  //       this.scrollBottom()
+  //     }
+  //   },
+  //   connect() {
+  //     this.$socket.emit('addUser', {})
+  //   },
+  // },
 
   methods: {
     autosize() {
@@ -143,10 +169,10 @@ export default {
       this.refresh()
     },
     scrollBottom() {
-      /* const el = document.querySelector('.selected-conversation')
-      if (this.selectedConversation) {
-       // el.scrollTop = el.scrollHeight
-      } */
+      const el = document.querySelector('.selected-conversation')
+      if (this.selectedConversation && el) {
+        el.scrollTop = el.scrollHeight
+      }
     },
     refresh() {
       this.$store.dispatch('conversations/fetchConversations', {
@@ -163,7 +189,7 @@ export default {
           const receiverId = this.selectedConversation.receiver_id
             ? this.selectedConversation.receiver_id._id
             : this.selectedConversation.sender_id._id
-          this.$socket.emit('sendMessage', {
+          socket.emit('sendMessage', {
             receiverId,
             conversationId: this.selectedConversation._id,
             text: msg,
