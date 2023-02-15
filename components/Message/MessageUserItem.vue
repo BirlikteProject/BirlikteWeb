@@ -12,7 +12,7 @@
     <div class="user-item-info">
       <div class="user-avatar">
         <img v-if="user.image_url" :src="user.image_url"  alt=""/>
-        <img v-else src="~/assets/img/profile.png"  alt=""/>
+        <img v-else src="~/assets/img/profile.jpg"  alt=""/>
       </div>
       <div class="message-preview">
         <div class="user-name">

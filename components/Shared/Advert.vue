@@ -39,7 +39,7 @@
       </div>
       <div class="user-profile">
         <div class="user-avatar">
-          <img :src="advert.user_id.image_url ? advert.user_id.image_url : require('~/assets/img/profile.png')">
+          <img :src="advert.user_id.image_url ? advert.user_id.image_url : require('~/assets/img/profile.jpg')">
         </div>
         <div class="user-info">
           <div class="user-name">

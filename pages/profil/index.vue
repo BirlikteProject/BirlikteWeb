@@ -5,7 +5,7 @@
       <div class="profile-page-content">
         <div v-if="user" class="profile-info">
           <div class="user-avatar">
-            <img :src="user.image_url ? user.image_url : require('~/assets/img/profile.png')" alt="user-avatar" />
+            <img :src="user.image_url ? user.image_url : require('~/assets/img/profile.jpg')" alt="user-avatar" />
           </div>
           <div>
             <div class="user-name">
