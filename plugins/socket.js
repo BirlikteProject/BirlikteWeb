@@ -14,6 +14,7 @@ export default (context, inject) => {
         },
         transports: ['websocket'],
         autoConnect: false,
+        secure: true,
       }),
       vuex: {
         store: context.app.store,
