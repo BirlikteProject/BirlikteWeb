@@ -16,7 +16,7 @@ export default {
   },
   server: {
     port: process.env.PORT || 3200,
-    server: 0,
+    host: 0,
   },
 
   css: ['./assets/font/afet-font.css', '~/assets/scss/global.scss'],
