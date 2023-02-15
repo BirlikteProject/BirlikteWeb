@@ -10,6 +10,12 @@ const mutations = {
   },
   APPEND_MESSAGE(state, payload) {
     state.messagesList = [...state.messagesList, payload]
+    state.conversationsList = state.conversationsList.map((c) => {
+      if (c._id === payload.conversation_id) {
+        c.last_message = payload.message
+      }
+      return c
+    })
   },
   SET_CONVERSATIONS_LIST(state, payload) {
     state.conversationsList = payload

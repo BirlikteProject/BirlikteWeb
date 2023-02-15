@@ -125,14 +125,17 @@ export default {
 
     socket.on('getMessage', (data) => {
       if (data.conversationId === this.selectedConversation._id) {
-        this.$store.commit('conversations/APPEND_MESSAGE', data)
+        this.$store.commit('conversations/APPEND_MESSAGE', {
+          ...data,
+          conversation_id: data.conversationId,
+        })
         this.scrollBottom()
       }
     })
 
     socket.auth = {
       token: this.$store.state.user.token,
-    };
+    }
     socket.connect()
   },
   beforeDestroy() {
