@@ -34,7 +34,7 @@
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
 import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
-import appWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
+import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import CategoryButton from '~/components/Main/CategoryButton.vue'
 import Advert from '~/components/Shared/Advert.vue'
 import categories from '~/data/categories.json'
@@ -46,7 +46,7 @@ export default {
     CategoryButton,
     Advert,
     AppInfoModal,
-    appWarningModal
+    AppWarningModal
   },
   data() {
     return {
@@ -60,9 +60,11 @@ export default {
     loginModal() {
       return this.$store.state.modal.loginModal
     },
-
     appInfoModal() {
       return this.$store.state.modal.appInfoModal
+    },
+    appWarningModal() {
+      return this.$store.state.modal.appWarningModal
     },
     adverts() {
       return this.$store.state.advert.advertList
