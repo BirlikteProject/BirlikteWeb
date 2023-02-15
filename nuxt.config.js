@@ -15,7 +15,8 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   server: {
-    port: 3200,
+    port: process.env.PORT || 3200,
+    server: 0,
   },
 
   css: ['./assets/font/afet-font.css', '~/assets/scss/global.scss'],
@@ -83,6 +84,6 @@ export default {
     },
   },
   router: {
-    middleware: ['global']
-  }
+    middleware: ['global'],
+  },
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-wrapper">
-    <div v-for="(link, i) in links" class="links" :key="i" @click="changeSelected(i)">
+    <div v-for="(link, i) in links" :key="i" class="links" @click="changeSelected(i)">
       <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
         <i class="afet-icons" :class="`afet-${link.icon}`"></i>
         <span class="link-title">{{ link.title }}</span>
@@ -58,7 +58,6 @@ export default {
   methods: {
     changeSelected(i) {
       this.selected = i
-      console.log(this.selected)
     },
   },
 }
