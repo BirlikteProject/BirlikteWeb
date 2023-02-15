@@ -13,7 +13,7 @@ export default async function ({ app, store }) {
         if(store.state.user.isAuthenticated) return
         const response = await app.$axios({
           method: 'GET',
-          url: process.env.API_BASE_URL + '/profile',
+          url: 'https://api.birlikte.org.tr/api/v1/profile',
           headers: {
             Authorization: 'Bearer ' + token
           }

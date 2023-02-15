@@ -6,7 +6,7 @@ import ConversationsServices from '~/services/Conversations/conversationsService
 
 export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
-    baseURL: process.env.API_BASE_URL,
+    baseURL: 'https://api.birlikte.org.tr/api/v1',
   })
   const url = ''
   const token = store.state.user?.token
