@@ -73,7 +73,7 @@ export default class AdvertServices extends APIBaseServices {
   async getCities() {
     const response = await this.http({
       method: 'GET',
-      url: `http://142.93.106.148:5000/cities`,
+      url: `https://api.birlikte.org.tr/cities`,
     })
     return response.data
   }
