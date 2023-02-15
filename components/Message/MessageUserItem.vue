@@ -4,13 +4,15 @@
     :class="active ? 'active' : ''"
     @click="
       () => {
-        $store.dispatch('conversations/selectConversation', conversation)
+        $store.dispatch('conversations/selectConversation', conversation),
+        $emit('focusBottom')
       }
     "
   >
     <div class="user-item-info">
       <div class="user-avatar">
-        <img :src="user.image_url" alt="" />
+        <img v-if="user.image_url" :src="user.image_url"  alt=""/>
+        <img v-else src="~/assets/img/profile.png"  alt=""/>
       </div>
       <div class="message-preview">
         <div class="user-name">
