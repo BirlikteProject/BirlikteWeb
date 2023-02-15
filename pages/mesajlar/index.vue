@@ -109,6 +109,10 @@ export default {
     // this.$socket.connect((e) => {
     //   this.$socket.emit('addUser', {})
     // })
+    // this.$socket.auth.token = this.$store.state.user.token
+    // this.$socket.connect((e) => {
+    //   this.$socket.emit('addUser', {})
+    // })
   },
   // destroyed() {
   //   this.$socket.disconnect()
@@ -156,6 +160,14 @@ export default {
         const msg = this.message
         this.$store.dispatch('conversations/sendMessage', msg).then(() => {
           this.scrollBottom()
+          // const receiverId = this.selectedConversation.receiver_id
+          //   ? this.selectedConversation.receiver_id._id
+          //   : this.selectedConversation.sender_id._id
+          // this.$socket.emit('sendMessage', {
+          //   receiverId,
+          //   conversationId: this.selectedConversation._id,
+          //   text: msg,
+          // })
           // const receiverId = this.selectedConversation.receiver_id
           //   ? this.selectedConversation.receiver_id._id
           //   : this.selectedConversation.sender_id._id

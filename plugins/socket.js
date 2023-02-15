@@ -6,7 +6,7 @@ export default (context, inject) => {
   Vue.use(
     new VueSocketIO({
       debug: true,
-      connection: io('http://142.93.106.148:3200', {
+      connection: io('https://api.birlikte.org.tr:3300', {
         path: '',
         auth: (cb) => {
           const data = { token: context.app.store.state.user.token }

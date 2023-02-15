@@ -82,10 +82,6 @@ export default {
       this.selectedCategory = categoryIdx
     },
   },
-  sockets: {
-    connect: function () {
-    },
-  },
 }
 </script>
 
