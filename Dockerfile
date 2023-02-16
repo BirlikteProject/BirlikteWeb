@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM birlikteorgtr/node:latest
 
 # create destination directory
 RUN mkdir -p /usr/src/nuxt-app
@@ -15,10 +15,6 @@ RUN npm run build; exit 0
 RUN npm run build
 
 EXPOSE 80
-
-RUN /bin/echo 'api.birlikte.org.tr 20.105.232.5' >> /etc/hosts
-
-RUN /bin/echo 'socket.birlikte.org.tr 20.105.232.5' >> /etc/hosts
 
 ENV NUXT_HOST="0"
 ENV NUXT_PORT=80
