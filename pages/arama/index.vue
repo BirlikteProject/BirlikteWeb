@@ -3,19 +3,24 @@
     <div class="search-section">
       <div class="page-title">Arama</div>
       <div class="search-input-box">
-        <input v-model="searchTerm" type="text" placeholder="Arama yapın" />
-        <span v-if="searchTerm || location.name" class="search-icon" @click="filterAdverts()">
+        <input
+          v-model="searchTerm"
+          type="text"
+          placeholder="Arama yapın"
+          @keypress.enter="filterAdverts"
+        />
+        <span
+          v-if="searchTerm || location.name"
+          class="search-icon"
+          @click="filterAdverts()"
+        >
           <i class="afet-icons afet-search"></i>
         </span>
       </div>
       <div class="location-dropdown">
         <div class="dropdown-button" @click="results = !results">
           <div class="dropdown-button-text">
-            {{
-              location.name !== null
-                ? location.name
-                : 'Şehir Seçiniz'
-            }}
+            {{ location.name !== null ? location.name : 'Şehir Seçiniz' }}
           </div>
           <div class="dropdown-button-icon">
             <i class="afet-icons afet-caret"></i>
@@ -23,8 +28,15 @@
         </div>
         <div v-if="results" class="dropdown-results">
           <div
-            v-for="cityId in Object.keys(cities)" :key="cityId" class="city-item"
-            @click="; (location.name = cities[cityId]), (location.id = cityId), (results = false)">
+            v-for="cityId in Object.keys(cities)"
+            :key="cityId"
+            class="city-item"
+            @click="
+              ;(location.name = cities[cityId]),
+                (location.id = cityId),
+                (results = false)
+            "
+          >
             {{ cities[cityId] }}
           </div>
         </div>
@@ -33,15 +45,24 @@
     <div class="search-results">
       <spinner v-if="loading" class="spinner" />
       <div v-else-if="advertList?.length && userType === types.DEMANDER">
-        <advert v-for="advert in advertList" :key="advert._id" :advert="advert" />
+        <advert
+          v-for="advert in advertList"
+          :key="advert._id"
+          :advert="advert"
+        />
       </div>
       <div v-else-if="advertList?.length && userType === types.SUPPORTER">
-        <request-item v-for="demand in advertList" :key="demand._id" :advert="demand" />
+        <request-item
+          v-for="demand in advertList"
+          :key="demand._id"
+          :advert="demand"
+        />
       </div>
       <div v-else-if="didFetch" class="no-results">
         <div class="result-message">
           Ne Yazık ki Aradığın Kriterlere <br />
-          Uygun {{userType === types.DEMANDER ? 'Destek' : 'Talep'}} Bulunamadı.
+          Uygun
+          {{ userType === types.DEMANDER ? 'Destek' : 'Talep' }} Bulunamadı.
         </div>
         <div v-show="!user.type === types.SUPPORTER" class="create-advert">
           <span class="plus-icon">
@@ -78,7 +99,7 @@ export default {
       error: false,
       searchTerm: '',
       results: false,
-      advertList: []
+      advertList: [],
     }
   },
   computed: {
@@ -90,25 +111,30 @@ export default {
     },
     userType() {
       return this.user?.type ? this.user?.type : types.DEMANDER
-    }
+    },
   },
   methods: {
     async filterAdverts() {
-      try {
-        this.loading = true
-        const data = await this.$store.dispatch('advert/searchAdverts', {'city_id': this.location.id, 'term': this.searchTerm, userType: this.userType})
-        if (data) {
-          this.didFetch = true
-          this.advertList = data
+      if (this.searchTerm.length > 0) {
+        try {
+          this.loading = true
+          const data = await this.$store.dispatch('advert/searchAdverts', {
+            city_id: this.location.id,
+            term: this.searchTerm,
+            userType: this.userType,
+          })
+          if (data) {
+            this.didFetch = true
+            this.advertList = data
+          }
+        } catch (error) {
+          this.error = true
+        } finally {
+          this.loading = false
         }
-      } catch (error) {
-        console.error(error)
-        this.error = true
-      } finally {
-        this.loading = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -131,8 +157,8 @@ export default {
     margin-bottom: 1rem;
     color: #828282;
     @include media(sm, xs) {
-        font-size: 1rem;
-      }
+      font-size: 1rem;
+    }
   }
 
   .search-input-box {
