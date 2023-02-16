@@ -7,7 +7,7 @@
     <div class="login-form-section">
       <form class="login-form" @submit.prevent="login()">
         <div class="logo-section">
-          <img src="~/assets/img/logo-2.png" />
+          <img src="~/assets/img/logo-2.png" @click="$router.push('/')" />
         </div>
         <span class="form-name">Giriş Yap</span>
         <div class="login-types">
@@ -101,6 +101,7 @@ export default {
 <style lang="scss">
 .logo-section {
   width: 100%;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

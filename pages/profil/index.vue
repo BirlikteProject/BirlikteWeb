@@ -9,22 +9,18 @@
           </div>
           <div>
             <div class="user-name">
-            <span>{{ user.fullName }}</span>
-          </div>
-          <div class="profile-name">
-            <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
-          </div>
+              <span>{{ user.fullName }}</span>
+            </div>
+            <div class="profile-name">
+              <span>@{{ user.email ? user.email.split('@')[0] : 'johndoe' }}</span>
+            </div>
           </div>
         </div>
         <div class="content-tab-items">
           <div class="tab-item" :class="activeTab == 0 ? 'active' : ''" @click="activeTab = 0">
-            {{user.type == types.SUPPORTER ? 'Destek' : 'Talep'}} İçerikleri
+            {{ user.type == types.SUPPORTER ? 'Destek' : 'Talep' }} İçerikleri
           </div>
-          <div
-            class="tab-item"
-            :class="activeTab == 1 ? 'active' : ''"
-            @click="activeTab = 1"
-          >
+          <div class="tab-item" :class="activeTab == 1 ? 'active' : ''" @click="activeTab = 1">
             Hakkında
           </div>
         </div>
@@ -39,12 +35,12 @@
           </div>
           <div v-if="activeTab == 1" class="content about">
             <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
-            </textarea>
+              </textarea>
           </div>
         </div>
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -85,6 +81,7 @@ export default {
       font-weight: 600;
       padding: 1rem;
       color: #828282;
+
       @include media(sm, xs) {
         font-size: 1rem;
       }
@@ -102,6 +99,7 @@ export default {
         align-items: center;
         border-top: 1px solid #dedede;
         padding: 1rem;
+
         @include media(sm, xs) {
           flex-direction: row;
           justify-content: space-between;
@@ -113,6 +111,7 @@ export default {
           border-radius: 50%;
           overflow: hidden;
           margin-bottom: 1rem;
+
           @include media(sm, xs) {
             width: 75px;
             height: 75px;
@@ -130,6 +129,7 @@ export default {
           font-weight: 600;
           margin-bottom: 0.5rem;
           text-align: right;
+
           @include media(sm, xs) {
             font-size: 1rem;
           }
@@ -142,7 +142,8 @@ export default {
         .profile-name {
           font-size: 1rem;
           font-weight: 400;
-          text-align: right;
+          text-align: center;
+
           @include media(sm, xs) {
             font-size: 0.825rem;
           }
@@ -191,6 +192,7 @@ export default {
           text-align: center;
           padding: 1rem;
         }
+
         .content {
           &.about {
             padding: 1rem;

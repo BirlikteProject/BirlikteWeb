@@ -9,7 +9,7 @@
     <div class="register-form-seciton">
       <div class="register-form">
         <div class="logo-section">
-          <img src="~/assets/img/logo-2.png" />
+          <img src="~/assets/img/logo-2.png" @click="$router.push('/')" />
         </div>
         <span class="form-name">Kayıt Ol</span>
         <div class="register-types">
@@ -22,31 +22,32 @@
             Destekçi
           </div>
         </div>
-
-        <form class="form-inputs" @submit.prevent="register()">
-          <div class="input-wrapper">
-            <input v-model="fullName" type="text" placeholder="Ad Soyad" />
-          </div>
-          <div class="input-wrapper">
-            <input v-model="email" type="email" placeholder="E-Posta" />
-          </div>
-          <div class="input-wrapper">
-            <input v-model="password" type="password" placeholder="Şifre" />
-          </div>
-          <div class="confirm-checkbox">
-            <span class="custom-checkbox" :class="isKvkkAccepted ? 'checked' : ''"
-              @click="isKvkkAccepted = !isKvkkAccepted">
-              <span />
-            </span>
-            <input v-model="isKvkkAccepted" type="checkbox" />
-            <span class="kvkk-accept-text">
-              <span class="underline" @click="setKvkkModal()">KVKK Metni'ni</span>
-              ve
-              <span class="underline" @click="setPrivacyPolicy()">Gizlilik Sözleşmesi'ni</span>
-              okudum ve kabul ediyorum.
-            </span>
-          </div>
-          <input type="submit" value="Kayıt Ol" class="primary-button" />
+        <div class="form-inputs">
+          <form @submit.prevent="register()">
+            <div class="input-wrapper">
+              <input v-model="fullName" type="text" placeholder="Ad Soyad" />
+            </div>
+            <div class="input-wrapper">
+              <input v-model="email" type="email" placeholder="E-Posta" />
+            </div>
+            <div class="input-wrapper">
+              <input v-model="password" type="password" placeholder="Şifre" />
+            </div>
+            <div class="confirm-checkbox">
+              <span class="custom-checkbox" :class="isKvkkAccepted ? 'checked' : ''"
+                @click="isKvkkAccepted = !isKvkkAccepted">
+                <span />
+              </span>
+              <input v-model="isKvkkAccepted" type="checkbox" />
+              <span class="kvkk-accept-text">
+                <span class="underline" @click="setKvkkModal()">KVKK Metni'ni</span>
+                ve
+                <span class="underline" @click="setPrivacyPolicy()">Gizlilik Sözleşmesi'ni</span>
+                okudum ve kabul ediyorum.
+              </span>
+            </div>
+            <input type="submit" value="Kayıt Ol" class="primary-button" />
+          </form>
           <spinner v-if="isLoading" class="spinner" />
           <div v-if="submitted && error" class="error-messages">
             <span class="error-message">{{ error }}</span>
@@ -63,7 +64,7 @@
             <span class="register-link" @click="$router.push({ path: '/giris-yap', query: { type: registerType } })">Giriş
               Yap</span>
           </div>
-        </form>
+        </div>
       </div>
     </div>
 </div>
@@ -133,6 +134,7 @@ export default {
       }
     },
     signWithGoogle() {
+      console.log(this.submitted)
       this.$store.dispatch('user/signWithGoogle', { type: this.registerType })
     }
   },
@@ -180,6 +182,7 @@ export default {
     }
 
     .logo-section {
+      cursor: pointer;
       width: 100%;
       display: flex;
       align-items: center;
@@ -413,4 +416,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>
