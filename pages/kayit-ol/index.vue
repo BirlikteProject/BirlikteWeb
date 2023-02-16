@@ -270,6 +270,8 @@ export default {
       .custom-checkbox {
         width: 20px;
         height: 20px;
+        min-width: 20px;
+        min-height: 20px;
         border: 1px solid #dedede;
         border-radius: 5px;
         display: flex;
@@ -345,9 +347,7 @@ export default {
         font-weight: 600;
         cursor: pointer;
 
-        @include media(xs, sm) {
-          width: 50%;
-        }
+        
 
         &.selected {
           background-color: $primary-color;

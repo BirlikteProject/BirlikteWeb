@@ -4,13 +4,13 @@
     <scroll-top />
     <div class="content page-feed">
       <div class="side-bar-section">
-        <side-bar v-if="true" />
+        <side-bar />
+
       </div>
       <div class="content-section">
         <nuxt />
       </div>
     </div>
-    <ffooter />
   </div>
 </template>
 
@@ -18,14 +18,13 @@
 import ScrollTop from '~/components/Default/ScrollTop.vue'
 import TopBar from '~/components/Default/TopBar.vue'
 import SideBar from '~/components/Default/SideBar.vue'
-import Footer from '~/components/Default/Footer.vue'
+// import Footer from '~/components/Default/Footer.vue'
 export default {
   name: 'DefaultLayout',
   components: {
     TopBar,
     ScrollTop,
     SideBar,
-    Ffooter: Footer
   },
   computed: {
     token() {
@@ -102,6 +101,10 @@ a {
         z-index: 100;
         height: 4rem;
         box-shadow: 0px -2px 10px 0px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding: 0 1rem;
       }
     }
     .content-section {
@@ -109,13 +112,16 @@ a {
       background-color: #fff;
       border-left: 1px solid #dedede;
       border-right: 1px solid #dedede;
+      @include media(md, lg, xl) {
+        padding-top: 3rem;
+      }
       @include media(xs, sm) {
         width: 100%;
         border-left: none;
         border-right: none;
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 6rem);
+        height: calc(100vh - 4rem);
       }
       .content-wrapper {
         height: 100%;
