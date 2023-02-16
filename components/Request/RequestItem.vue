@@ -7,7 +7,7 @@
         <span class="header-info">{{ time }}</span>
       </div>
       <div class="right-side">
-        <div v-if="user.type === types.SUPPORTER" class="request-actions" @click="goto('/olustur')">
+        <div v-if="user.type === types.SUPPORTER" class="request-actions" @click="$router.push('/olustur')">
           <i class="afet-icons afet-plus tooltip">
             <tool-tip text="Destek ol" type="bottom" />
           </i>
@@ -72,11 +72,6 @@ export default {
       return this.$store.state.user.user
     }
   },
-  methods: {
-    goto(to) {
-      this.$router.push(to)
-    }
-  }
 }
 </script>
 

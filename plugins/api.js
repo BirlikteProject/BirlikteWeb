@@ -6,13 +6,12 @@ import ConversationsServices from '~/services/Conversations/conversationsService
 
 export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
-    baseURL: 'https://api.birlikte.org.tr/api/v1',
+    baseURL: `${process.env.API_BASE_URL}/api/v1`,
   })
   const url = ''
-  const token = store.state.user?.token
 
   api.onRequest((config) => {
-    config.headers.Authorization = 'Bearer ' + token
+    config.headers.Authorization = 'Bearer ' + store.getters['user/getToken']
   })
 
   api.onResponse((response) => {

@@ -1,5 +1,5 @@
 const state = () => ({
-  conversationsList: [],
+  conversationList: [],
   messagesList: [],
   selectedConversation: null,
 })
@@ -10,7 +10,7 @@ const mutations = {
   },
   APPEND_MESSAGE(state, payload) {
     state.messagesList = [...state.messagesList, payload]
-    state.conversationsList = state.conversationsList.map((c) => {
+    state.conversationList = state.conversationList.map((c) => {
       if (c._id === payload.conversation_id) {
         c.last_message = payload.message
       }
@@ -18,7 +18,7 @@ const mutations = {
     })
   },
   SET_CONVERSATIONS_LIST(state, payload) {
-    state.conversationsList = payload
+    state.conversationList = payload
   },
   SELECT_CONVERSATION(state, payload) {
     state.selectedConversation = payload
@@ -52,7 +52,7 @@ const actions = {
   selectConversation(context, payload) {
     context.commit(
       'SELECT_CONVERSATION',
-      payload // context.state.conversationsList.first((c) => c._id === payload)
+      payload // context.state.conversationList.first((c) => c._id === payload)
     )
 
     if (payload) {
@@ -64,6 +64,17 @@ const actions = {
 
     // }
   },
+
+  async finishConversation(context, payload) {
+    const response = await this.$api.conversationsServices.updateConversation(
+      context.state.selectedConversation._id,
+      payload
+    )
+    if (response.status) {
+      context.commit('APPEND_MESSAGE', response.data)
+    }
+  },
+
   async sendMessage(context, payload) {
     const message = {
       message: payload,

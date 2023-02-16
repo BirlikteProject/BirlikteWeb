@@ -9,14 +9,14 @@
       </div>
       <div class="form-name">Kayıt Tamamla</div>
       <div class="complete-description">
-        <p v-if="user.type === types.DEMANDER">
+        <p v-if="user.type === types.DEMANDER" class="description-text">
           Afetzede girişini kullanan değerli vatandaşımız; Afet bölgesi ilan
           edilen 10 ilde ikamet ettiğinizi, paylaşmış olduğunuz T.C Kimlik
           numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş
-          bulunmaktasınız.Afet Bölgesinde ikamet etmiyorsanız lütfen bu girişi
+          bulunmaktasınız. Afet Bölgesinde ikamet etmiyorsanız lütfen bu girişi
           kullanmayın.
         </p>
-        <p v-if="user.type === types.SUPPORTER">
+        <p v-if="user.type === types.SUPPORTER" class="description-text">
           Paylaşmış olduğunuz T.C Kimlik numarasının size ait olduğunu ve doğruluğunu beyan ve taahhüt etmiş
           bulunmaktasınız.
         </p>
@@ -40,6 +40,7 @@ export default {
   name: 'RegisterCompletePage',
   components: { ImageSide },
   layout: 'empty',
+  middleware: ['auth'],
   data() {
     return {
       types,
@@ -67,6 +68,12 @@ export default {
 <style lang="scss">
 .complete-description {
   margin: 1.5rem;
+}
+
+.description-text {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .tckno-wrapper {

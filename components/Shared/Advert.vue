@@ -4,7 +4,7 @@
     :style="{ 'background-color': highlighted ? 'white' : 'white' }"
     @mouseover="highlighted = true"
     @mouseleave="highlighted = false"
-    @click="goto('/ilanlar/' + advert._id)"
+    @click="$router.push('/ilanlar/' + advert._id)"
   >
     <div class="advert-header">
       <div class="left-side">
@@ -91,9 +91,6 @@ export default {
     },
   },
   methods: {
-    goto(to) {
-      this.$router.push(to)
-    },
     copyClipBoard () {
       const path = window.location.origin + '/ilanlar/' + this.advert._id
       navigator.clipboard.writeText(path)

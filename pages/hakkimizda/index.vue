@@ -1,14 +1,14 @@
 <template>
-  <div ref="modalOverlay" class="app-info-modal-wrapper">
-    <div class="app-info-modal">
-      <div class="modal-header">
-        <span class="close-icon" @click="closeModal()">
-          <i class="afet-icons afet-close"></i>
-        </span>
+  <div class="about-wrapper">
+    <div>
+      <div class="about-header">
       </div>
-      <div class="modal-body">
-        <img class="modal-img" src="~/assets/img/app-info-img.png" alt="" />
+      <div class="about-body">
+        <img class="about-img" src="~/assets/img/app-info-img.png" alt="" />
         <div class="text-container">
+          <div class="logo-section">
+            <img src="~/assets/img/logo-2.png" @click="$router.push('/')" />
+          </div>
           <p>
             <strong>Birlikte</strong>, depremzedelerin
             <strong>istihdam</strong>, <strong>eğitim</strong>,
@@ -33,70 +33,38 @@
             <a href="https://twitter.com/Birlikteorgtr" target="_blank">
               <img src="~/assets/icon/twitter.svg" class="follow-us-icon" />
             </a>
-            <a
-              href="https://www.linkedin.com/company/birlikte/"
-              target="_blank"
-            >
+            <a href="https://www.linkedin.com/company/birlikte/" target="_blank">
               <img src="~/assets/icon/linkedin-in.svg" class="follow-us-icon" />
             </a>
-            <strong class="birlikteorgtr">birlikteorgtr</strong>
+            <strong class="birlikteorgtr" @click="$router.push('/')">birlikteorgtr</strong>
           </div>
         </div>
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'AppInfoModal',
-  mounted() {
-    window.addEventListener('keydown', this.onKeyDown)
-    this.$refs.modalOverlay.addEventListener('click', this.onModalOverlayClick)
-  },
-  destroy() {
-    window.removeEventListener('keydown', this.onKeyDown)
-  },
-  methods: {
-    closeModal() {
-      this.$store.dispatch('modal/setAppInfoModal', false)
-    },
-    onKeyDown(e) {
-      if (e.code === 'Escape') {
-        this.closeModal()
-      }
-    },
-    onModalOverlayClick(e) {
-      if (e.target.className.includes('app-info-modal-wrapper')) {
-        this.closeModal()
-      }
-    },
-  },
+  name: 'AboutPage',
+  layout: 'empty'
 }
 </script>
 
 <style lang="scss" scoped>
-.app-info-modal-wrapper {
+.about-wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  background-color: #27ae60;
   z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .app-info-modal {
-    background-color: #27ae60;
-    border-radius: 0.5rem;
-    padding: 0 1rem 0 0;
-    margin: 1rem;
-    max-width: 1110px;
-  }
-
-  .modal-header {
+  .about-header {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -105,29 +73,32 @@ export default {
     font-weight: 500;
     color: $primary-color;
     position: relative;
-    .close-icon {
-      width: 2rem;
-      height: 2rem;
-      position: absolute;
-      right: -2rem;
+  }
+
+  .logo-section {
+    img {
       cursor: pointer;
-      top: -1.5rem;
-      background-color: #fff;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    }
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    img {
+      width: 200px;
     }
   }
 
-  .modal-body {
+  .about-body {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     color: white;
   }
 
@@ -135,9 +106,15 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    background-color: #f0f0f0;
+    color: #27ae60;
+    padding: 3rem;
+    margin-right: 2rem;
+    border-radius: 10px;
 
-    & > p:first-child {
+    &>p:first-child {
       position: relative;
+
       &::after {
         content: '';
         position: absolute;
@@ -150,7 +127,7 @@ export default {
     }
   }
 
-  .modal-img {
+  .about-img {
     max-width: 30rem;
   }
 
@@ -162,6 +139,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     .birlikteorgtr {
       cursor: pointer;
       margin: auto .5rem;
@@ -181,6 +159,7 @@ export default {
   .birlikteorgtr {
     position: relative;
     margin-left: 0.5rem;
+
     &::before {
       content: '';
       position: absolute;
@@ -193,15 +172,12 @@ export default {
   }
 
   @media screen and (max-width: 740px) {
-    .app-info-modal {
-      padding: 1rem;
-    }
 
-    .modal-body {
+    .about-body {
       flex-direction: column;
     }
 
-    .modal-img {
+    .about-img {
       display: none;
     }
 
@@ -210,5 +186,4 @@ export default {
       bottom: unset;
     }
   }
-}
-</style>
+}</style>

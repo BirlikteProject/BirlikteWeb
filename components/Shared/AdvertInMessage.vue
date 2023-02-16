@@ -2,16 +2,16 @@
   <div class="advert-in-message-wrapper">
     <div class="advert-in-message">
       <div class="advert-in-message-image">
-        <img src="https://picsum.photos/200/300" alt="" />
+        <img :src="require(`~/assets/img/${advert.category_id._id}.png`)" alt="" />
       </div>
       <div class="advert-in-message-info">
         <div class="advert-info-header">
-          <span>Eğitim</span>
+          <span>{{advert.category_id.name}}</span>
           <span class="middot"></span>
           <span>{{ advert.city_id.name }}</span>
         </div>
         <div class="advert-in-message-title">{{ advert.description }}</div>
-        <div class="go-to-advert" @click="goToAdvert()">İçeriğe Git</div>
+        <div class="go-to-advert" @click="$router.push(`/ilanlar/${advert._id}`)">İçeriğe Git</div>
       </div>
     </div>
   </div>
@@ -25,12 +25,7 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  methods: {
-    goToAdvert() {
-      this.$router.push(`/ilanlar/${this.advert._id}`)
-    },
-  },
+  }
 }
 </script>
 

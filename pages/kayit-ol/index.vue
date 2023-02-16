@@ -15,11 +15,11 @@
         <div class="register-types">
           <div class="register-type" :class="registerType == types.DEMANDER ? 'selected' : ''"
             @click="registerType = types.DEMANDER">
-            Afetzede Girişi
+            Afetzede
           </div>
           <div class="register-type" :class="registerType == types.SUPPORTER ? 'selected' : ''"
             @click="registerType = types.SUPPORTER">
-            Destekçi Girişi
+            Destekçi
           </div>
         </div>
 
@@ -77,6 +77,7 @@ export default {
   name: 'LoginPage',
   components: { ImageSide, KVKK, PrivacyPolicy },
   layout: 'empty',
+  middleware: ['guest'],
   data() {
     return {
       types,

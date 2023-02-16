@@ -19,6 +19,15 @@ export default class ConversationsServices extends APIBaseServices {
     return response.data
   }
 
+  async updateConversation(id, data) {
+    const response = await this.http({
+      method: 'PUT',
+      url: this.url + '/conversation/' + id,
+      data,
+    })
+    return response.data
+  }
+
   async deleteConversation(id) {
     const response = await this.http({
       method: 'DELETE',

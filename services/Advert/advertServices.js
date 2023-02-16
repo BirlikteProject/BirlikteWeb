@@ -9,7 +9,7 @@ export default class AdvertServices extends APIBaseServices {
       params: {
         ...opts,
         page: opts.page ? opts.page : 1,
-        limit: opts.limit ? opts.limit : 15
+        limit: opts.limit ? opts.limit : 20
       }
     })
     return response.data
@@ -73,7 +73,7 @@ export default class AdvertServices extends APIBaseServices {
   async getCities() {
     const response = await this.http({
       method: 'GET',
-      url: `https://api.birlikte.org.tr/cities`,
+      url: `${process.env.API_BASE_URL}/cities`,
     })
     return response.data
   }

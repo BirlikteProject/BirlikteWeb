@@ -6,21 +6,18 @@
     </div>
     <div class="login-form-seciton">
       <div class="login-form">
+        <div class="logo-section">
+          <img src="~/assets/img/logo-2.png" />
+        </div>
         <span class="form-name">Giriş Yap</span>
         <div class="login-types">
-          <div
-            class="login-type"
-            :class="loginType == types.DEMANDER ? 'selected' : ''"
-            @click="loginType = types.DEMANDER"
-          >
-            Afetzede Girişi
+          <div class="login-type" :class="loginType == types.DEMANDER ? 'selected' : ''"
+            @click="loginType = types.DEMANDER">
+            Afetzede
           </div>
-          <div
-            class="login-type"
-            :class="loginType == types.SUPPORTER ? 'selected' : ''"
-            @click="loginType = types.SUPPORTER"
-          >
-            Destekçi Girişi
+          <div class="login-type" :class="loginType == types.SUPPORTER ? 'selected' : ''"
+            @click="loginType = types.SUPPORTER">
+            Destekçi
           </div>
         </div>
         <div class="form-inputs">
@@ -41,9 +38,8 @@
           </button>
           <div class="no-account">
             <span>Hesabın yok mu?</span>
-            <span class="register-link" @click="$router.push({path: '/kayit-ol', query: {type: loginType}})"
-              >Kayıt Ol</span
-            >
+            <span class="register-link" @click="$router.push({ path: '/kayit-ol', query: { type: loginType } })">Kayıt
+              Ol</span>
           </div>
         </div>
       </div>
@@ -58,6 +54,7 @@ export default {
   name: 'LoginPage',
   components: { ImageSide },
   layout: 'empty',
+  middleware: ['guest'],
   data() {
     return {
       types,
@@ -67,10 +64,10 @@ export default {
     }
   },
   methods: {
-    signWithGoogle () {
+    signWithGoogle() {
       this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
     },
-    login () {
+    login() {
       this.$store.dispatch('user/login', { email: this.email, password: this.password })
     }
   }
@@ -78,17 +75,32 @@ export default {
 </script>
 
 <style lang="scss">
+.logo-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    width: 200px;
+  }
+}
+
 .login-page-container {
   width: 100%;
   display: flex;
   flex-direction: row;
+
   .image-side-section {
     width: 50%;
     height: 100vh;
+
     @include media(xs, sm) {
       display: none;
     }
   }
+
   .login-form-seciton {
     width: 50%;
     height: 100vh;
@@ -96,6 +108,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     @include media(xs, sm) {
       width: 100%;
     }
@@ -106,16 +119,19 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       @include media(xs, sm) {
         padding: 1rem;
       }
     }
+
     .form-name {
       padding: 1rem;
       font-size: 1.5rem;
       font-weight: 600;
       color: #828282;
     }
+
     .login-types {
       display: flex;
       flex-direction: row;
@@ -123,6 +139,7 @@ export default {
       align-items: center;
       margin-bottom: 1rem;
       width: 100%;
+
       .login-type {
         width: 200px;
         height: 75px;
@@ -136,24 +153,29 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+
         &.selected {
           background-color: $primary-color;
           color: #fff;
         }
+
         &:first-child {
           margin-right: 1rem;
         }
       }
     }
+
     .form-inputs {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 100%;
+
       .input-wrapper {
         width: 100%;
         margin-bottom: 1rem;
+
         input {
           color: #828282;
           border: 1px solid #dedede;
@@ -166,6 +188,7 @@ export default {
           font-weight: 500;
         }
       }
+
       .forgot-password {
         margin-bottom: 1rem;
         color: #828282;
@@ -175,9 +198,11 @@ export default {
         width: 100%;
         text-align: right;
       }
+
       .primary-button {
         width: 100%;
       }
+
       .or-sign-with-google {
         margin: 2rem 0;
         border-bottom: 1px solid #dedede;
@@ -198,6 +223,7 @@ export default {
           background-color: white;
         }
       }
+
       .google-button {
         background-color: white !important;
         width: 100%;
@@ -208,16 +234,19 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         i {
           margin-right: 0.5rem;
         }
       }
+
       .no-account {
         margin-top: 1rem;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
         .register-link {
           margin-left: 0.5rem;
           color: $primary-color;

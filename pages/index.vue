@@ -2,34 +2,23 @@
   <div class="index-page">
     <div class="greeting-title">
       <span>Neye <b>İhtiyacın</b> Var?</span>
-      <span
-        ><b>Birlik<em>te</em></b> Bulalım</span
-      >
+      <span><b>Birlik<em>te</em></b> Bulalım</span>
     </div>
     <div class="category-buttons">
-      <div
-        v-for="(category, i) in categories"
-        :key="category.name"
-        @click="filterAdverts(category._id, i)"
-      >
-        <category-button
-          :class="{ 'selected-category': selectedCategory === i }"
-          :category="category"
-        />
+      <div v-for="(category, i) in categories" :key="category.name" @click="filterAdverts(category._id, i)">
+        <category-button :class="{ 'selected-category': selectedCategory === i }" :category="category" />
       </div>
     </div>
-    <div v-if="selectedCategory !== -1 && filteredAdverts" class="content">
-      <advert
-        v-for="advert in filteredAdverts" :key="advert._id" :advert="advert" />
-    </div>
-    <div v-if="selectedCategory === -1 && adverts" class="content">
-      <advert
-        v-for="advert in adverts" :key="advert._id" :advert="advert" />
+    <div class="advert-grid">
+      <div v-if="adverts" class="content">
+        <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
+      </div>
+      <button class="primary-button next-page-button" @click="fetchNextPage()">Daha Fazla İlan</button>
     </div>
     <login-modal v-if="loginModal" />
     <app-warning-modal v-if="appWarningModal" />
     <app-info-modal v-if="appInfoModal" />
-  </div>
+</div>
 </template>
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
@@ -50,6 +39,7 @@ export default {
   },
   data() {
     return {
+      currentPage: 1,
       categories,
       selectedCategory: -1,
       highlightedAdvert: -1,
@@ -67,6 +57,9 @@ export default {
       return this.$store.state.modal.appWarningModal
     },
     adverts() {
+      if(this.filteredAdverts.length) {
+        return this.filteredAdverts
+      }
       return this.$store.state.advert.advertList
     },
   },
@@ -77,10 +70,21 @@ export default {
   },
   methods: {
     async filterAdverts(categoryId, categoryIdx) {
-      const data = await this.$store.dispatch('advert/getAdvertsByCategory', {categoryId})
+      if(this.selectedCategory === categoryIdx) {
+        this.filteredAdverts = []
+        this.selectedCategory = -1
+        return
+      }
+      const data = await this.$store.dispatch('advert/getAdvertsByCategory', { categoryId })
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
     },
+    async fetchNextPage() {
+      this.currentPage++
+      await this.$store.dispatch('advert/fetchAdverts', {
+        page: this.currentPage,
+      })
+    }
   },
 }
 </script>
@@ -106,6 +110,14 @@ html {
   }
 }
 
+.next-page-button {
+  margin: 1rem auto!important;
+  padding: 0.5rem 1rem !important;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  display: block;
+}
+
 .index-page {
   width: 100%;
   height: 100%;
@@ -121,6 +133,7 @@ html {
     padding: 3rem 0;
     color: $primary-color;
     font-size: 2rem;
+
     @include media(xs, sm) {
       font-size: 1.5rem;
       padding: 2rem 0;

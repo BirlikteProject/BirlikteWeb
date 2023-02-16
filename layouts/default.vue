@@ -10,6 +10,7 @@
         <nuxt />
       </div>
     </div>
+    <ffooter />
   </div>
 </template>
 
@@ -17,14 +18,15 @@
 import ScrollTop from '~/components/Default/ScrollTop.vue'
 import TopBar from '~/components/Default/TopBar.vue'
 import SideBar from '~/components/Default/SideBar.vue'
+import Footer from '~/components/Default/Footer.vue'
 export default {
   name: 'DefaultLayout',
   components: {
     TopBar,
     ScrollTop,
     SideBar,
+    Ffooter: Footer
   },
-  // middleware: ['auth'],
   computed: {
     token() {
       return this.$store.state.user.token
@@ -32,10 +34,6 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('advert/fetchAdverts')
-    await this.$store.dispatch('user/fetchUser')
-    if (this.$store.state.user.isAuthenticated) {
-      this.$router.push('/')
-    }
   },
 }
 </script>

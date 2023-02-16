@@ -4,7 +4,7 @@ const state = () => ({
   advertList: [],
   demandList: [],
   categoryList: [],
-  citiesList: {},
+  cityList: {},
   selectedAdvert: {},
 })
 
@@ -19,7 +19,7 @@ const mutations = {
     state.categoryList = payload
   },
   SET_CITIES_LIST(state, payload) {
-    state.citiesList = payload
+    state.cityList = payload
   },
   SET_SELECTED_ADVERT(state, payload) {
     state.selectedAdvert = payload
@@ -34,9 +34,8 @@ const actions = {
       limit: payload?.limit,
     })
     if (advResponse.status) {
-      context.commit('SET_ADVERT_LIST', advResponse.data)
+      context.commit('SET_ADVERT_LIST', [...context.state.advertList, ...advResponse.data])
     }
-    context.dispatch('fetchDemands')
     context.dispatch('fetchCategories')
     context.dispatch('fetchCities')
   },
@@ -64,6 +63,9 @@ const actions = {
   },
 
   async fetchCategories(context) {
+    if(context.state.categoryList.length > 0) {
+      return
+    }
     const response = await this.$api.categoryServices.getCategories()
     if (response.status) {
       context.commit('SET_CATEGORY_LIST', response.data)
@@ -71,6 +73,9 @@ const actions = {
   },
 
   async fetchCities(context) {
+    if(context.state.cityList.length > 0) {
+      return
+    }
     const response = await this.$api.advertServices.getCities()
     if (response.status) {
       const cities = {}

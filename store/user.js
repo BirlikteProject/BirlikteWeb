@@ -84,7 +84,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
-          this.$router.push('/')
+          this.$router.push({ path: '/' })
         }
       } else {
         alert('Login Failed')
@@ -139,7 +139,7 @@ const actions = {
     this.$cookiz.remove('token', { path: '/' })
     context.commit('SET_TOKEN', '')
     context.commit('SET_USER', {})
-    this.$router.push('/giris-yap')
+    this.$router.push({ path: '/giris-yap' })
   },
 
   // Sync Login action
@@ -173,6 +173,9 @@ const getters = {
   isAuthenticated(state) {
     return !!state.user.fullName
   },
+  getToken(state) {
+    return state.token
+  }
 }
 
 export default {
