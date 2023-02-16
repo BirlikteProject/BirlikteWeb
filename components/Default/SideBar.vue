@@ -21,6 +21,18 @@
         <span class="link-name">Oluştur</span>
       </nuxt-link>
     </div>
+    <div class="hamburger-menu-wrapper">
+      <div class="hamburger-menu">
+        <i class="afet-icons afet-bars"></i>
+        <span class="more-setting">Daha Fazla</span>
+        <div class="more-dropdown">
+          <span class="more-dropdown-item">Hakkında</span>
+          <span class="more-dropdown-item">İletişim</span>
+          <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
+          <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,6 +80,12 @@ export default {
     changeSelected(i) {
       this.selected = i
     },
+    setKvkkModal() {
+      this.$store.dispatch('modal/setKvkkModal', true)
+    },
+    setPrivacyPolicy() {
+      this.$store.dispatch('modal/setPrivacyPolicy', true)
+    },
   },
 }
 </script>
@@ -79,11 +97,11 @@ export default {
   justify-content: flex-start;
   padding: 1rem;
   height: 100%;
+  position: relative;
   @include media(md, lg, xl) {
     position: fixed;
     padding-top: 6rem;
     top: 0;
-    
   }
 
   @include media(xs, sm) {
@@ -94,6 +112,72 @@ export default {
 
     .link-title {
       display: none;
+    }
+  }
+  .hamburger-menu-wrapper {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    @include media(xs, sm) {
+      display: none;
+    }
+    &:hover {
+      color: #fff;
+      .more-dropdown {
+        display: flex;
+      }
+      .more-setting {
+        font-weight: 600;
+        color: $primary-color;
+      }
+    }
+  }
+  .hamburger-menu {
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    
+    i {
+      color: #4a4a4a;
+      margin: 0 !important;
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    .more-setting {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+      padding-top: 3px;
+      color: #4a4a4a;
+    }
+    .more-dropdown {
+      position: absolute;
+      bottom: calc(100% + 1rem);
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 0.5rem 0;
+      .more-dropdown-item {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #4a4a4a;
+        &:hover {
+          background-color: $primary-color;
+          color: #fff;
+        }
+      }
     }
   }
 
@@ -118,6 +202,7 @@ export default {
     border-radius: 10px;
     font-weight: 400;
     margin-top: 0;
+    color: $primary-color !important;
 
     .afet-icons {
       color: $primary-color;
@@ -131,6 +216,7 @@ export default {
     font-weight: 400;
     display: none;
     margin-top: 2rem;
+
 
     @include media(xs, sm) {
       display: none !important;
@@ -191,10 +277,15 @@ export default {
       align-items: center;
       margin-left: 0.5rem;
       padding-top: 5px;
+
     }
     .link-title {
       margin-left: 0.5rem;
       padding-top: 5px;
+      &:hover {
+        font-weight: 600;
+        color: $primary-color;
+      }
     }
   }
 }

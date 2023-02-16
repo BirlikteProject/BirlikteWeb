@@ -1,5 +1,7 @@
 <template>
   <div class="default-layout">
+    <KVKK v-if="kvkkModal" />
+    <PrivacyPolicy v-if="privacyPolicyModal" />
     <top-bar />
     <scroll-top />
     <div class="content page-feed">
@@ -18,6 +20,9 @@
 import ScrollTop from '~/components/Default/ScrollTop.vue'
 import TopBar from '~/components/Default/TopBar.vue'
 import SideBar from '~/components/Default/SideBar.vue'
+
+import KVKK from '~/components/Auth/Modals/KVKK.vue'
+import PrivacyPolicy from '~/components/Auth/Modals/PrivacyPolicy.vue'
 // import Footer from '~/components/Default/Footer.vue'
 export default {
   name: 'DefaultLayout',
@@ -25,10 +30,18 @@ export default {
     TopBar,
     ScrollTop,
     SideBar,
+    KVKK,
+    PrivacyPolicy,
   },
   computed: {
     token() {
       return this.$store.state.user.token
+    },
+    kvkkModal() {
+      return this.$store.state.modal.kvkkModal
+    },
+    privacyPolicyModal() {
+      return this.$store.state.modal.privacyPolicy
     },
   },
   async mounted() {
@@ -71,12 +84,14 @@ a {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding-top: 5rem;
   @include media(xs, sm) {
     overflow-x: hidden;
     margin-bottom: 4rem;
+    padding-top: 3rem;
   }
   .page-feed {
-    min-height: calc(100vh - 6rem);
+    min-height: calc(100vh - 5rem);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -112,9 +127,7 @@ a {
       background-color: #fff;
       border-left: 1px solid #dedede;
       border-right: 1px solid #dedede;
-      @include media(md, lg, xl) {
-        padding-top: 3rem;
-      }
+
       @include media(xs, sm) {
         width: 100%;
         border-left: none;
