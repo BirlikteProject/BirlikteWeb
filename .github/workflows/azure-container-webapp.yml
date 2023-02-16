@@ -64,8 +64,8 @@ jobs:
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           file: ./Dockerfile
           add-hosts: |
-            - api.birlikte.org.tr:20.105.232.5
-            - socket.birlikte.org.tr:20.105.232.5
+            api.birlikte.org.tr:20.105.232.5
+            socket.birlikte.org.tr:20.105.232.5
 
   deploy:
     permissions:
