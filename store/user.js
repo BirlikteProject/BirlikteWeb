@@ -1,7 +1,10 @@
 import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
-  user: {},
+  user: {
+    loading: false,
+    error: ''
+  },
   advertList: [],
   isAuthenticated: false,
 })
@@ -21,7 +24,7 @@ const actions = {
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', response.data.user)
+          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
           this.$router.push({ path: '/kayit-tamamla' })
         }
       } catch (error) {
@@ -35,26 +38,16 @@ const actions = {
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', response.data.user)
+          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
           this.$router.push({ path: '/' })
         }
-      } catch (error) {
-        const _response = await this.$api.authServices.register({
-          firebase_token: firebaseResponse.user._delegate.accessToken,
-          type: payload.type,
-          fullName: firebaseResponse.user.displayName,
-          image_url: firebaseResponse.user.photoURL,
-        })
-        this.$cookiz.set('token', _response.data.token, { exp: '7d' })
-        context.commit('SET_TOKEN', _response.data.token)
-        context.commit('SET_USER', _response.data.user)
-        this.$router.push({ path: '/kayit-tamamla' })
-      }
+      } catch (error) {}
     }
   },
 
   async registerWithEmail(context, payload) {
     try {
+      context.commit('SET_USER', { loading: true, error: '' })
       const firebaseResponse = await auth // response from firebase
         .createUserWithEmailAndPassword(payload.email, payload.password)
       const response = await this.$api.authServices.register({
@@ -65,7 +58,7 @@ const actions = {
       if (response.status) {
         this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
-        context.commit('SET_USER', response.data.user)
+        context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
         this.$router.push({ path: '/kayit-tamamla' })
       }
     } catch (error) {}
@@ -74,6 +67,7 @@ const actions = {
   // Async login action
   async login(context, payload) {
     try {
+      context.commit('SET_USER', { loading: true, error: '' })
       const firebaseResponse = await auth // response from firebase
         .signInWithEmailAndPassword(payload.email, payload.password)
       if (firebaseResponse.user._delegate.accessToken) {
@@ -83,13 +77,24 @@ const actions = {
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', response.data.user)
+          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
           this.$router.push({ path: '/' })
         }
-      } else {
-        alert('Login Failed')
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.code)
+      if(error.code === 'auth/user-not-found') {
+        context.commit('SET_USER', { loading: false, error: 'Email adresinizi veya şifrenizi yanlış girdiniz.' })
+      }
+      else if(error.code === 'auth/wrong-password') {
+        context.commit('SET_USER', { loading: false, error: 'Email adresinizi veya şifrenizi yanlış girdiniz.' })
+      }
+      else if(error.code === 'auth/too-many-requests') {
+        context.commit('SET_USER', { loading: false, error: 'Çok fazla yanlış deneme yaptınız, tekrar denemeden önce lütfen bekleyiniz.' })
+      } else {
+        context.commit('SET_USER', { loading: false, error: 'Geçici süre için giriş yapamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.' })
+      }
+    }
   },
 
   async fetchUser(context, payload) {
@@ -98,10 +103,11 @@ const actions = {
       !Object.keys(context.state.user).includes('fullName')
     ) {
       try {
+        context.commit('SET_USER', {loading: true, error: '' })
         const response = await this.$api.profileServices.getOwnProfile()
-        context.commit('SET_USER', response.data)
+        context.commit('SET_USER', {...response.data, loading: false, error: '' })
       } catch (error) {
-        // console.error(error)
+        context.commit('SET_USER', { loading: false, error: '' })
       }
     }
   },

@@ -4,8 +4,8 @@
     <div class="image-side-section">
       <image-side />
     </div>
-    <div class="login-form-seciton">
-      <div class="login-form">
+    <div class="login-form-section">
+      <form class="login-form" @submit.prevent="login()">
         <div class="logo-section">
           <img src="~/assets/img/logo-2.png" />
         </div>
@@ -28,7 +28,11 @@
             <input v-model="password" type="password" placeholder="Şifre" />
           </div>
           <div class="forgot-password">Şifreni mi unuttun?</div>
-          <button class="primary-button" @click="login">Giriş Yap</button>
+          <input type="submit" value="Giriş Yap" class="primary-button" />
+          <div v-if="submitted" class="error-messages">
+            <span v-if="error" class="error-message">{{ error }}</span>
+          </div>
+          <spinner v-if="isLoading" class="spinner" />
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
@@ -42,17 +46,18 @@
               Ol</span>
           </div>
         </div>
-      </div>
+      </form>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
 import ImageSide from '~/components/Auth/ImageSide.vue'
+import Spinner from '~/components/Shared/Spinner.vue'
 import types from '~/data/types.json'
 export default {
   name: 'LoginPage',
-  components: { ImageSide },
+  components: { ImageSide, Spinner },
   layout: 'empty',
   middleware: ['guest'],
   data() {
@@ -61,6 +66,22 @@ export default {
       loginType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
       email: '',
       password: '',
+      submitted: false,
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user
+    },
+    areFieldsFilled() {
+      return this.email && this.password
+    },
+    error() {
+      if(!this.email && !this.password) return 'Lütfen tüm alanları doldurunuz!'
+      return this.user.error
+    },
+    isLoading() {
+      return this.user.loading
     }
   },
   methods: {
@@ -68,7 +89,10 @@ export default {
       this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
     },
     login() {
+      this.submitted = false
+      if (this.areFieldsFilled)
       this.$store.dispatch('user/login', { email: this.email, password: this.password })
+      this.submitted = true
     }
   }
 }
@@ -101,7 +125,7 @@ export default {
     }
   }
 
-  .login-form-seciton {
+  .login-form-section {
     width: 50%;
     height: 100vh;
     display: flex;
@@ -200,6 +224,7 @@ export default {
       }
 
       .primary-button {
+        background-color: $primary-color!important;
         width: 100%;
       }
 
@@ -257,5 +282,21 @@ export default {
       }
     }
   }
+  .error-messages {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0.5rem 0;
+
+        .error-message {
+          color: #ff0000;
+          font-size: 1.1rem;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+
 }
 </style>

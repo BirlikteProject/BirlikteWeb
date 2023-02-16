@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <div class="form-inputs">
+        <form class="form-inputs" @submit.prevent="register()">
           <div class="input-wrapper">
             <input v-model="fullName" type="text" placeholder="Ad Soyad" />
           </div>
@@ -46,7 +46,7 @@
               okudum ve kabul ediyorum.
             </span>
           </div>
-          <button class="primary-button" @click="register()">Kayıt Ol</button>
+          <input type="submit" value="Kayıt Ol" class="primary-button" />
           <div v-if="submitted" class="error-messages">
             <span v-if="errors" class="error-message">Lütfen tüm alanları doldurunuz!</span>
             <span v-if="!errors && !isKvkkAccepted" class="error-message">Lütfen aydınlatma metnini onaylayınız!</span>
@@ -62,7 +62,7 @@
             <span>Zaten hesabın var mı?</span>
             <span class="register-link" @click="$router.push({path: '/giris-yap', query: {type: registerType}})">Giriş Yap</span>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -321,6 +321,7 @@ export default {
       }
 
       .primary-button {
+        background-color: $primary-color!important;
         width: 100%;
       }
 
@@ -334,7 +335,7 @@ export default {
 
         .error-message {
           color: #ff0000;
-          font-size: 0.8rem;
+          font-size: 1.1rem;
           font-weight: 500;
           text-align: center;
         }
