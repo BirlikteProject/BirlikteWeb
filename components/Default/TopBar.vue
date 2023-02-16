@@ -78,6 +78,9 @@ export default {
     align-items: center;
     font-size: 0.825rem;
     .logo-section {
+      .mobile {
+        display:none;
+      }
       @include media(xs, sm) {
         .desktop {
           display: none;
