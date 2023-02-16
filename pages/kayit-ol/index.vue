@@ -47,9 +47,9 @@
             </span>
           </div>
           <input type="submit" value="Kayıt Ol" class="primary-button" />
-          <div v-if="submitted" class="error-messages">
-            <span v-if="errors" class="error-message">Lütfen tüm alanları doldurunuz!</span>
-            <span v-if="!errors && !isKvkkAccepted" class="error-message">Lütfen aydınlatma metnini onaylayınız!</span>
+          <spinner v-if="isLoading" class="spinner" />
+          <div v-if="submitted && error" class="error-messages">
+            <span class="error-message">{{ error }}</span>
           </div>
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
@@ -60,22 +60,24 @@
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
-            <span class="register-link" @click="$router.push({path: '/giris-yap', query: {type: registerType}})">Giriş Yap</span>
+            <span class="register-link" @click="$router.push({ path: '/giris-yap', query: { type: registerType } })">Giriş
+              Yap</span>
           </div>
         </form>
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
 import ImageSide from '~/components/Auth/ImageSide.vue'
 import KVKK from '~/components/Auth/Modals/KVKK.vue'
 import PrivacyPolicy from '~/components/Auth/Modals/PrivacyPolicy.vue'
+import Spinner from '~/components/Shared/Spinner.vue'
 import types from '~/data/types.json'
 export default {
   name: 'LoginPage',
-  components: { ImageSide, KVKK, PrivacyPolicy },
+  components: { ImageSide, KVKK, PrivacyPolicy, Spinner },
   layout: 'empty',
   middleware: ['guest'],
   data() {
@@ -90,14 +92,25 @@ export default {
     }
   },
   computed: {
+    fieldsFilled() {
+      return this.email && this.password && this.fullName
+    },
     kvkkModal() {
       return this.$store.state.modal.kvkkModal
     },
     privacyPolicyModal() {
       return this.$store.state.modal.privacyPolicy
     },
-    errors() {
-      return !this.email || !this.password
+    user() {
+      return this.$store.state.user.user
+    },
+    isLoading() {
+      return this.user.loading
+    },
+    error() {
+      if (!this.fieldsFilled) return 'Lütfen tüm alanları doldurunuz!'
+      if (!this.isKvkkAccepted) return 'Lütfen aydınlatma metnini onaylayınız!'
+      return this.user.error
     },
   },
   methods: {
@@ -109,7 +122,8 @@ export default {
     },
     register() {
       this.submitted = true
-      if (this.isKvkkAccepted && !this.errors) {
+      setTimeout(() => (this.submitted = false), 3000)
+      if (this.fieldsFilled && this.isKvkkAccepted) {
         this.$store.dispatch('user/registerWithEmail', {
           email: this.email,
           password: this.password,
@@ -134,6 +148,7 @@ export default {
   .image-side-section {
     width: 50%;
     height: 100vh;
+
     @include media(xs, sm) {
       display: none;
     }
@@ -146,6 +161,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     @include media(xs, sm) {
       width: 100%;
     }
@@ -156,6 +172,7 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
       @include media(xs, sm) {
         padding: 1rem;
         width: 100%;
@@ -252,6 +269,7 @@ export default {
       align-items: center;
       margin-bottom: 1rem;
       width: 100%;
+
       .register-type {
         width: 200px;
         height: 75px;
@@ -265,6 +283,7 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+
         @include media(xs, sm) {
           width: 50%;
         }
@@ -321,7 +340,7 @@ export default {
       }
 
       .primary-button {
-        background-color: $primary-color!important;
+        background-color: $primary-color !important;
         width: 100%;
       }
 
@@ -394,5 +413,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>

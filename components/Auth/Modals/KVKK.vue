@@ -8,139 +8,83 @@
         </span>
       </div>
       <div class="modal-body">
-        <b>
-          BİRLİKTE ADLI WEB SİTESİNİN KİŞİSEL VERİLERİN İŞLENMESİ HAKKINDA
-          AYDINLATMA METNİ
-        </b>
+        <b>BİRLİKTE ADLI WEB SİTESİNİN KİŞİSEL VERİLERİN İŞLENMESİ HAKKINDA AYDINLATMA METNİ</b>
         <br />
         <br />
-        <p>
-          6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“KVKK”) 10.
-          maddesi “Veri Sorumlusunun Aydınlatma Yükümlülüğü” madde başlığı
-          altında veri sorumlusu olan T.C. İçişleri Bakanlığı Afet ve Acil Durum
-          Yönetimi Başkanlığı, adres ve bilgileri, kişisel verilerin hangi
-          amaçla işleneceği, işlenen kişisel verilerin kimlere ve hangi amaçla
-          aktarılabileceği, kişisel veri toplamanın yöntemi ve hukuki sebebi,
-          kişisel veri sahibinin veri sorumlusuna yöneltebileceği ve KVKK’nın
-          11. maddesinde yer verilen hakları konusunda bilgilendirme yükümlülüğü
-          getirmiştir.
-        </p>
-        <!-- <br />
+        <p>6698 Sayılı Kişisel Verilerin Korunması Kanunu’nun (“KVKK”) 10. maddesi “Veri Sorumlusunun Aydınlatma Yükümlülüğü” madde başlığı altında veri sorumlusu olan T.C. Ulaştırma ve Altyapı Bakanlığı Bilgi Teknolojileri ve İletişim Kurumu, adres ve bilgileri, kişisel verilerin hangi amaçla işleneceği, işlenen kişisel verilerin kimlere ve hangi amaçla aktarılabileceği, kişisel veri toplamanın yöntemi ve hukuki sebebi, kişisel veri sahibinin veri sorumlusuna yöneltebileceği ve KVKK’nın 11. maddesinde yer verilen hakları konusunda bilgilendirme yükümlülüğü getirmiştir.</p>
+        <br />
+        <br />
+        <p>İşbu Aydınlatma Metni KVKK ve ilgili mevzuat uyarınca veri sahiplerini bilgilendirmek ve aydınlatmak amacı ile hazırlanmıştır.</p>
+        <br />
+        <br />
         <b>VERİ SORUMLUSU</b>
-        <p>
-          Veri sorumlusu …………… olup, tarafımıza aşağıda yer verilen iletişim
-          bilgileri aracılığıyla ulaşmanız mümkündür.
-        </p> -->
-        <br />
-        <b>İŞLENEN KİŞİSEL VERİLER </b>
         <br />
         <br />
-        <p>
-          • Kimlik Bilgileriniz: Kimlik numarası, ad soyadı, doğum yeri, doğum
-          tarihi, cinsiyet,
-          <br />
-          • İletişim Bilgileriniz: e-posta, cep telefonu, Adres Kayıt Sistemi
-          kaydı (il-ilçe)
-          <br />
-          • Diğer Bilgiler: Engellilik durumu, öğrenim durumu, kurum ve unvan
-          bilgileri
-        </p>
-        <br />
-        <b>KİŞİSEL VERİLERİN İŞLENME AMAÇLARI </b>
+        <p>Veri sorumlusu Muhammed Fatih Bölükbaşı olup, tarafımıza aşağıda yer verilen iletişim bilgileri aracılığıyla ulaşmanız mümkündür.</p>
         <br />
         <br />
-        <p>
-          Kişisel verileriniz aşağıda yer verilen amaçlarla işlenebilecektir.
-          <br />
-
-          • Tarafımızdan eğitim alan kişilerin kayıtlarının oluşturulması ve
-          yönetilmesi,
-          <br />
-
-          • Eğitim alan kişi ile ilgili olarak yasal sınırlar içerisinde
-          değerlendirme, analiz çalışmalarının yapılması,
-          <br />
-
-          • Tarafımızdan sunulan eğitim hizmetlerinden vatandaşlarımızı
-          faydalandırmak için gerekli çalışmaların birimlerimiz tarafından
-          yapılması,
-          <br />
-
-          • Platformumuz eğitim stratejilerinin belirlenmesi ve uygulanması,
-          <br />
-
-          • Eğitim faaliyet ortaklarımızla yürütülen işlerin planlanması,
-          <br />
-
-          • Eğitim alan kişilere sunulan hizmetten memnuniyetlerini ölçmek
-          amaçlı olan anketler de dahil olmak üzere araştırma çalışmaları ve
-          analizinin yürütülmesi,
-          <br />
-
-          • Eğitim alan kişilere sunulan hizmete ilişkin şikâyetlerinin
-          çözülmesi ve veri erişim veya düzeltme taleplerinin işleme alınması,
-          <br />
-
-          • Peşru menfaati.
-          <br />
-        </p>
+        <p>Adres: Çiğdemtepe mahallesi, 1093.cad. no:5/22 Yenimahalle/ Ankara</p>
+        <p>Telefon: 0533 161 1000</p>
+        <p>Web Adresi: www.birlikte.org.tr</p>
+        <br />
+        <br />
+        <b>İŞLENEN KİŞİSEL VERİLER</b>
+        <br />
+        <br />
+        <p>• Kimlik Bilgileriniz: Kimlik numarası, ad soyadı, doğum yeri, doğum tarihi, cinsiyet, fotoğraf</p>
+        <p>• İletişim Bilgileriniz: e-posta, cep telefonu</p>
+        <br />
+        <br />
+        <b>KİŞİSEL VERİLERİN İŞLENME AMAÇLARI</b>
+        <br />
+        <br />
+        <p>Kişisel verileriniz aşağıda yer verilen amaçlarla işlenebilecektir.</p>
+        <br />
+        <br />
+        <p>• Tarafımızdan destek alan kişilerin kayıtlarının oluşturulması ve yönetilmesi,</p>
+        <p>• Destek alan kişi ile ilgili olarak yasal sınırlar içerisinde değerlendirme, analiz çalışmalarının yapılması,</p>
+        <p>• Tarafımızdan sunulan eğitim hizmetlerinden vatandaşlarımızı faydalandırmak için gerekli çalışmaların birimlerimiz tarafından yapılması,</p>
+        <p>• Platformumuz eğitim stratejilerinin belirlenmesi ve uygulanması,</p>
+        <p>• Destek faaliyet ortaklarımızla yürütülen işlerin planlanması,</p>
+        <p>• Destek alan ve veren kişilere sunulan hizmetten memnuniyetlerini ölçmek amaçlı olan anketler de dahil olmak üzere araştırma çalışmaları ve analizinin yürütülmesi,</p>
+        <p>• Destek alan kişilere sunulan hizmete ilişkin şikâyetlerinin çözülmesi ve veri erişim veya düzeltme taleplerinin işleme alınması,</p>
+        <br />
         <br />
         <b>İŞLENEN KİŞİSEL VERİLERİN AKTARIMI</b>
         <br />
         <br />
-        <p>
-          Kişisel verileriniz; Kanun’un kişisel verilerin aktarılması ve
-          yurtdışına aktarılmasına ilişkin hükümleri kapsamında işbu Aydınlatma
-          Metni’nde yer alan amaçlarla; yurt içindeki kanunen yetkili kamu kurum
-          ve kuruluşları ile paylaşılabilecektir.
-        </p>
+        <p>Kişisel verileriniz; Kanun’un kişisel verilerin aktarılması ve yurtdışına aktarılmasına ilişkin hükümleri kapsamında işbu Aydınlatma Metni’nde yer alan amaçlarla; yurt içindeki kanunen yetkili kamu kurum ve kuruluşları ile paylaşılabilecektir.</p>
         <br />
         <br />
         <b>KİŞİSEL VERİLERİN TOPLANMA YÖNTEMLERİ VE HUKUKİ SEBEPLERİ</b>
         <br />
         <br />
-        <p>
-          Kişisel verileriniz katıldığınız eğitimlerde tarafınızca doldurulan
-          eğitim katılım formları ile toplanmakta ve Veri Sorumlusu adına
-          işlenmektedir.
-          <br />
-          Kişisel verileriniz T.C. İçişleri Bakanlığı Afet ve Acil Durum
-          Yönetimi Başkanlığı tarafından; KVKK ve ilgili mevzuat tarafından
-          öngörülen esas ve usuller doğrultusunda işbu Aydınlatma Metni’nde
-          belirtilen amaçların sağlanması ve hukuki yükümlülüklerimizi yerine
-          getirmeye yönelik olarak hukuki sebeplerle işlenmektedir.
-        </p>
+        <p>Kişisel verileriniz T.C. Ulaştırma ve Altyapı Bakanlığı Bilgi Teknolojileri ve İletişim Kurumu tarafından; KVKK ve ilgili mevzuat tarafından öngörülen esas ve usuller doğrultusunda işbu Aydınlatma Metni’nde belirtilen amaçların sağlanması ve hukuki yükümlülüklerimizi yerine getirmeye yönelik olarak hukuki sebeplerle işlenmektedir.</p>
+        <br />
         <br />
         <b>KİŞİSEL VERİSİ İŞLENEN İLGİLİ KİŞİNİN HAKLARI</b>
         <br />
         <br />
-        <p>
-          Kişisel verilerinize ilişkin olarak aşağıdaki haklarınız
-          bulunmaktadır:
-          <br />
-          • Kişisel verinin işlenip işlenmediğini öğrenme, <br />
-          • Kişisel verileri işlenmişse; buna ilişkin bilgi talep etme, <br />
-          • Kişisel verilerin işlenme amacını ve bunların amacına uygun
-          kullanılıp kullanılmadığını öğrenme, <br />
-          • Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü
-          kişileri bilme, <br />
-          • Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların
-          düzeltilmesini isteme <br />
-          • Kişisel verilerin silinmesini veya yok edilmesini isteme, <br />
-          • Kişisel verilerin düzeltilmesi, silinmesi ya da yok edilmesi halinde
-          bu işlemlerin kişisel verilerin aktarıldığı üçüncü kişilere
-          bildirilmesini isteme, <br />
-          • İşlenen kişisel verilerin münhasıran otomatik sistemler vasıtasıyla
-          analiz edilmesi suretiyle veri sahibinin aleyhine bir sonucun ortaya
-          çıkmasına itiraz etme, <br />
-          • Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara
-          uğraması hâlinde zararın giderilmesini talep etme. <br />
-        </p>
+        <p>Kişisel verilerinize ilişkin olarak aşağıdaki haklarınız bulunmaktadır:</p>
+        <br />
+        <br />
+        <p>• Kişisel verinin işlenip işlenmediğini öğrenme,</p>
+        <p>• Kişisel verileri işlenmişse; buna ilişkin bilgi talep etme,</p>
+        <p>• Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,</p>
+        <p>• Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü kişileri bilme,</p>
+        <p>• Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme</p>
+        <p>• Kişisel verilerin silinmesini veya yok edilmesini isteme,</p>
+        <p>• Kişisel verilerin düzeltilmesi, silinmesi ya da yok edilmesi halinde bu işlemlerin kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</p>
+        <p>• İşlenen kişisel verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle veri sahibinin aleyhine bir sonucun ortaya çıkmasına itiraz etme,</p>
+        <p>• Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması hâlinde zararın giderilmesini talep etme.</p>
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   </div>
 </template>
-  
+
   <script>
 export default {
   name: 'KvkkModal',
@@ -152,7 +96,7 @@ export default {
   },
 }
 </script>
-  
+
   <style lang="scss">
 .kvkk-modal-wrapper {
   position: fixed;
@@ -175,7 +119,6 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
     overflow-y: auto;
     overflow-x: hidden;
     &::-webkit-scrollbar {
@@ -211,7 +154,7 @@ export default {
     .modal-body {
       height: calc(100% - 3rem);
       width: 100%;
-      padding: 1rem 0;
+      padding: 1.2rem!important;
       font-size: 0.825rem;
       b {
         font-weight: 600;

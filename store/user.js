@@ -61,7 +61,19 @@ const actions = {
         context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
         this.$router.push({ path: '/kayit-tamamla' })
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.code)
+      if(error?.code) {
+        if(error.code === "auth/email-already-in-use") {
+          context.commit('SET_USER', { loading: false, error: 'Bu email adresi ile bir hesap bulunmaktadır. Lütfen başka bir email adresi deneyiniz.' })
+        } else if(error.code === "auth/weak-password") {
+          context.commit('SET_USER', { loading: false, error: 'Lütfen en az 8 karakterli bir şifre giriniz.' })
+        }
+        else {
+          context.commit('SET_USER', { loading: false, error: 'Geçici süre için kayıt olamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.' })
+        }
+      }
+    }
   },
 
   // Async login action

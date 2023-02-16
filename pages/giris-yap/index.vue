@@ -73,11 +73,11 @@ export default {
     user() {
       return this.$store.state.user.user
     },
-    areFieldsFilled() {
+    fieldsFilled() {
       return this.email && this.password
     },
     error() {
-      if(!this.email && !this.password) return 'Lütfen tüm alanları doldurunuz!'
+      if (!this.fieldsFilled) return 'Lütfen tüm alanları doldurunuz!'
       return this.user.error
     },
     isLoading() {
@@ -90,8 +90,8 @@ export default {
     },
     login() {
       this.submitted = false
-      if (this.areFieldsFilled)
-      this.$store.dispatch('user/login', { email: this.email, password: this.password })
+      if (this.fieldsFilled)
+        this.$store.dispatch('user/login', { email: this.email, password: this.password })
       this.submitted = true
     }
   }
@@ -224,7 +224,7 @@ export default {
       }
 
       .primary-button {
-        background-color: $primary-color!important;
+        background-color: $primary-color !important;
         width: 100%;
       }
 
@@ -282,21 +282,22 @@ export default {
       }
     }
   }
-  .error-messages {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        margin: 0.5rem 0;
 
-        .error-message {
-          color: #ff0000;
-          font-size: 1.1rem;
-          font-weight: 500;
-          text-align: center;
-        }
-      }
+  .error-messages {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0.5rem 0;
+
+    .error-message {
+      color: #ff0000;
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-align: center;
+    }
+  }
 
 }
 </style>
