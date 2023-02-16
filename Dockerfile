@@ -19,6 +19,6 @@ EXPOSE 80
 ENV NUXT_HOST="0"
 ENV NUXT_PORT=80
 
-CMD [ "/bin/bash", "-c", "echo 'api.birlikte.org.tr 20.105.232.5' >> /etc/hosts";
-      "/bin/bash", "-c", "echo 'socket.birlikte.org.tr 20.105.232.5' >> /etc/hosts";
+CMD [ "/bin/sh", "-c", "echo 'api.birlikte.org.tr 20.105.232.5' >> /etc/hosts";
+      "/bin/sh", "-c", "echo 'socket.birlikte.org.tr 20.105.232.5' >> /etc/hosts";
       "npm", "start" ]
