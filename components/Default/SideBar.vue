@@ -26,8 +26,8 @@
         <i class="afet-icons afet-bars"></i>
         <span class="more-setting">Daha Fazla</span>
         <div class="more-dropdown">
-          <span class="more-dropdown-item">Hakkında</span>
-          <span class="more-dropdown-item">İletişim</span>
+          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkında</span>
+          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">İletişim</span>
           <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
           <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
         </div>
