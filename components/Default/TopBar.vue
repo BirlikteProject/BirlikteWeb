@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar-wrapper">
     <div class="content top-bar-content">
-      <div class="logo-section">
+      <div class="top-bar-logo-section">
         <img
           :src="require('~/assets/img/logo-white.png')"
           alt=""
@@ -65,6 +65,8 @@ export default {
   display: flex;
   justify-content: center;
   z-index: 100;
+  position: fixed;
+  top: 0;
   @include media(xs, sm) {
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
     background-color: #fff;
@@ -77,7 +79,11 @@ export default {
     justify-content: space-between;
     align-items: center;
     font-size: 0.825rem;
-    .logo-section {
+    .top-bar-logo-section {
+      width: 50%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       .mobile {
         display:none;
       }
@@ -97,6 +103,9 @@ export default {
     }
     .auth-section {
       font-weight: 600;
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
       button {
         border: none;
         cursor: pointer;

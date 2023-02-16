@@ -1,12 +1,21 @@
 <template>
   <div class="sidebar-wrapper">
-    <div v-for="(link, i) in links" :key="i" class="links" @click="changeSelected(i)">
-      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
+    <div
+      v-for="(link, i) in links"
+      :key="i"
+      class="links"
+      @click="changeSelected(i)"
+    >
+      <nuxt-link
+        :to="link.to"
+        class="link-item"
+        :class="{ 'selected-link': selected === i }"
+      >
         <i class="afet-icons" :class="`afet-${link.icon}`"></i>
         <span class="link-title">{{ link.title }}</span>
       </nuxt-link>
     </div>
-    <div @click="changeSelected(-1)">
+    <div class="links" @click="changeSelected(-1)">
       <nuxt-link to="/olustur" class="link-item create-link">
         <i class="afet-icons afet-plus"></i>
         <span class="link-name">Oluştur</span>
@@ -70,11 +79,18 @@ export default {
   justify-content: flex-start;
   padding: 1rem;
   height: 100%;
+  @include media(md, lg, xl) {
+    position: fixed;
+    padding-top: 6rem;
+    top: 0;
+    
+  }
 
   @include media(xs, sm) {
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
 
     .link-title {
       display: none;
@@ -87,10 +103,12 @@ export default {
 
   .afet-icons {
     margin-right: 10px;
+    font-weight: 500;
+    font-size: 1.5rem;
 
     @include media(xs, sm) {
       margin-right: 0;
-      font-size: 1.25rem;
+      font-size: 1.5rem;
     }
   }
 
@@ -139,11 +157,14 @@ export default {
 
       &:nth-child(4) {
         order: 5;
-
       }
 
       &:nth-child(5) {
         order: 2;
+      }
+      &:nth-child(6) {
+        order: 6;
+        display: none !important;
       }
     }
   }
@@ -158,12 +179,22 @@ export default {
     align-items: center;
     padding: 0 1rem;
     height: 3rem;
+    @include media(xs, sm) {
+      padding: 0;
+      height: 2rem;
+      width: auto;
+      justify-content: center;
+    }
 
     .link-name {
       display: flex;
       align-items: center;
       margin-left: 0.5rem;
-      padding-top: 3px;
+      padding-top: 5px;
+    }
+    .link-title {
+      margin-left: 0.5rem;
+      padding-top: 5px;
     }
   }
 }

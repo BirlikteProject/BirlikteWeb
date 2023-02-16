@@ -3,12 +3,12 @@
     <div class="image-side">
       <div class="image-side-main-title">
         <div class="main-title">
-          Hep <b>Birlik<i>te</i></b>
+          Hep <b>Birlik</b><i>te</i>
         </div>
         <div class="main-title"><b>Türkiye!</b></div>
       </div>
       <div class="title-long">
-        <b>Birlik<i>te</i></b> bağımsız bir kuruluştur!
+        <b>Birlik</b><i>te</i> bağımsız bir kuruluştur!
       </div>
     </div>
   </div>

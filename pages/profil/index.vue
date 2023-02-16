@@ -155,6 +155,7 @@ export default {
 
           @include media(sm, xs) {
             font-size: 0.825rem;
+            text-align: right;
           }
 
           span {

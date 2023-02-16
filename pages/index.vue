@@ -2,7 +2,7 @@
   <div class="index-page">
     <div class="greeting-title">
       <span>Neye <b>İhtiyacın</b> Var?</span>
-      <span><b>Birlik<em>te</em></b> Bulalım</span>
+      <span><b>Birlik</b><em>te</em> Bulalım</span>
     </div>
     <div class="category-buttons">
       <div v-for="(category, i) in categories" :key="category.name" @click="filterAdverts(category._id, i)">
@@ -13,7 +13,12 @@
       <div v-if="adverts" class="content">
         <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
       </div>
-      <button class="primary-button next-page-button" @click="fetchNextPage()">Daha Fazla İlan</button>
+      <div class="next-button-wrapper">
+        <button class="primary-button" @click="fetchNextPage()">
+          <i class="afet-icons afet-plus"></i>
+        </button>
+        <span class="more-advert">Daha fazla ilan için tıklayın</span>
+      </div>
     </div>
     <login-modal v-if="loginModal" />
     <app-warning-modal v-if="appWarningModal" />
@@ -110,12 +115,20 @@ html {
   }
 }
 
-.next-page-button {
-  margin: 1rem auto!important;
-  padding: 0.5rem 1rem !important;
-  font-size: 1.5rem;
-  border-radius: 10px;
-  display: block;
+.next-button-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-top: 3rem;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  .more-advert {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #828282;
+    margin-top: 1rem;
+  }
 }
 
 .index-page {
@@ -123,6 +136,7 @@ html {
   height: 100%;
   position: relative;
   background-color: #fff;
+  padding-top: 4rem;
 
 
   .greeting-title {
@@ -140,7 +154,7 @@ html {
     }
 
     span {
-      font-weight: 300;
+      font-weight: 400;
     }
   }
 
