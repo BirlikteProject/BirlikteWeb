@@ -36,6 +36,7 @@ const actions = {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
           context.commit('SET_USER', response.data.user)
+          this.$router.push({ path: '/' })
         }
       } catch (error) {
         const _response = await this.$api.authServices.register({

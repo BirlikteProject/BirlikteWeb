@@ -62,7 +62,7 @@ export default {
         text = " ay önce"
       }
       if(time >= 12){
-        time /= 12;// ay bilgisi alınıyor
+        time /= 12;// yil bilgisi alınıyor
         text = " yıl önce"
       }
 
