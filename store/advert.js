@@ -36,6 +36,7 @@ const actions = {
     if (advResponse.status) {
       context.commit('SET_ADVERT_LIST', [...context.state.advertList, ...advResponse.data])
     }
+    context.dispatch('fetchDemands')
     context.dispatch('fetchCategories')
     context.dispatch('fetchCities')
   },

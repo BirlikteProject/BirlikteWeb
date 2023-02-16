@@ -2,7 +2,7 @@ export default {
   ssr: true,
 
   head: {
-    title: 'AFET',
+    title: 'Birlikte',
     htmlAttrs: {
       lang: 'tr',
     },
