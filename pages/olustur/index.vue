@@ -5,7 +5,7 @@
       <div class="create-section">
         <div class="category-selection">
           <div class="selection-button">
-            <span>{{ selectedCategory }}</span>
+            <b>Kategori Seçiniz</b>
           </div>
           <div class="category-selection-dropdown">
             <span
@@ -193,7 +193,7 @@ export default {
         margin-bottom: 1rem;
         width: 100%;
         .selection-button {
-          padding: 1rem;
+          padding: 1rem 1rem 1rem .5rem;
           font-size: 1rem;
           font-weight: 500;
           color: #828282;
@@ -201,8 +201,7 @@ export default {
           display: flex;
           justify-content: space-between;
           width: 100%;
-          cursor: pointer;
-          background-color: #f2f5f9;
+          background-color: #ffffff;
         }
         .category-selection-dropdown {
           width: 100%;

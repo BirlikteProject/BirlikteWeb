@@ -79,9 +79,9 @@ export default {
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
     },
-    async fetchNextPage() {
+    fetchNextPage() {
       this.currentPage++
-      await this.$store.dispatch('advert/fetchAdverts', {
+      this.$store.dispatch('advert/fetchAdverts', {
         page: this.currentPage,
       })
     }

@@ -128,5 +128,9 @@ export default {
       color: #ccc;
     }
   }
+  .afet-icons {
+    font-size: 1.35rem!important;
+    margin-right: 1rem;
+  }
 }
 </style>

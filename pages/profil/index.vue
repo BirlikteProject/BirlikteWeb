@@ -34,8 +34,9 @@
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="user.description" placeholder="Hakkında bir şeyler yaz...">
-              </textarea>
+            <textarea v-model="userInput.description" placeholder="Hakkında bir şeyler yaz...">
+                  </textarea>
+            <button class="primary-button submit-button" @click="updateProfile()">Kaydet</button>
           </div>
         </div>
       </div>
@@ -57,6 +58,7 @@ export default {
     return {
       activeTab: 0,
       types,
+      userInput: {}
     }
   },
   computed: {
@@ -70,6 +72,13 @@ export default {
   async mounted() {
     await this.$store.dispatch('user/fetchAdverts')
   },
+  methods: {
+    updateProfile() {
+      // this.$store.dispatch('user/updateProfile', {
+      //   ...this.userInput
+      // })
+    }
+  }
 }
 </script>
 
@@ -196,6 +205,13 @@ export default {
         .content {
           &.about {
             padding: 1rem;
+          }
+          text-align: center;
+          .submit-button {
+            font-family: 'Campton';
+            width: 55%;
+            margin: 2rem auto !important;
+            font-size: 1.2rem;
           }
 
           textarea {

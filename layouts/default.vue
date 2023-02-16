@@ -10,7 +10,6 @@
         <nuxt />
       </div>
     </div>
-    <ffooter />
   </div>
 </template>
 
@@ -18,14 +17,12 @@
 import ScrollTop from '~/components/Default/ScrollTop.vue'
 import TopBar from '~/components/Default/TopBar.vue'
 import SideBar from '~/components/Default/SideBar.vue'
-import Footer from '~/components/Default/Footer.vue'
 export default {
   name: 'DefaultLayout',
   components: {
     TopBar,
     ScrollTop,
     SideBar,
-    Ffooter: Footer
   },
   computed: {
     token() {
