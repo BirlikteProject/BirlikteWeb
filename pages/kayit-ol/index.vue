@@ -1,6 +1,10 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="register-page-container">
+    <span class="back-button" @click="$router.push('/')">
+      <i class="afet-icons afet-caret"></i>
+      <span>Geri</span>
+    </span>
     <KVKK v-if="kvkkModal" />
     <PrivacyPolicy v-if="privacyPolicyModal" />
     <div class="image-side-section">
@@ -13,12 +17,18 @@
         </div>
         <span class="form-name">Kayıt Ol</span>
         <div class="register-types">
-          <div class="register-type" :class="registerType == types.DEMANDER ? 'selected' : ''"
-            @click="registerType = types.DEMANDER">
+          <div
+            class="register-type"
+            :class="registerType == types.DEMANDER ? 'selected' : ''"
+            @click="registerType = types.DEMANDER"
+          >
             Afetzede
           </div>
-          <div class="register-type" :class="registerType == types.SUPPORTER ? 'selected' : ''"
-            @click="registerType = types.SUPPORTER">
+          <div
+            class="register-type"
+            :class="registerType == types.SUPPORTER ? 'selected' : ''"
+            @click="registerType = types.SUPPORTER"
+          >
             Destekçi
           </div>
         </div>
@@ -34,15 +44,22 @@
               <input v-model="password" type="password" placeholder="Şifre" />
             </div>
             <div class="confirm-checkbox">
-              <span class="custom-checkbox" :class="isKvkkAccepted ? 'checked' : ''"
-                @click="isKvkkAccepted = !isKvkkAccepted">
+              <span
+                class="custom-checkbox"
+                :class="isKvkkAccepted ? 'checked' : ''"
+                @click="isKvkkAccepted = !isKvkkAccepted"
+              >
                 <span />
               </span>
               <input v-model="isKvkkAccepted" type="checkbox" />
               <span class="kvkk-accept-text">
-                <span class="underline" @click="setKvkkModal()">KVKK Metni'ni</span>
+                <span class="underline" @click="setKvkkModal()"
+                  >KVKK Metni'ni</span
+                >
                 ve
-                <span class="underline" @click="setPrivacyPolicy()">Gizlilik Sözleşmesi'ni</span>
+                <span class="underline" @click="setPrivacyPolicy()"
+                  >Gizlilik Sözleşmesi'ni</span
+                >
                 okudum ve kabul ediyorum.
               </span>
             </div>
@@ -55,19 +72,30 @@
           <div class="or-sign-with-google">
             <span class="google-text">veya Google ile devam et</span>
           </div>
-          <button class="primary-button google-button" @click="signWithGoogle()">
+          <button
+            class="primary-button google-button"
+            @click="signWithGoogle()"
+          >
             <i class="afet-icons afet-google"></i>
             <span>Google ile devam et</span>
           </button>
           <div class="no-account">
             <span>Zaten hesabın var mı?</span>
-            <span class="register-link" @click="$router.push({ path: '/giris-yap', query: { type: registerType } })">Giriş
-              Yap</span>
+            <span
+              class="register-link"
+              @click="
+                $router.push({
+                  path: '/giris-yap',
+                  query: { type: registerType },
+                })
+              "
+              >Giriş Yap</span
+            >
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -84,7 +112,9 @@ export default {
   data() {
     return {
       types,
-      registerType: this.$route.query.type ? this.$route.query.type : types.DEMANDER,
+      registerType: this.$route.query.type
+        ? this.$route.query.type
+        : types.DEMANDER,
       isKvkkAccepted: false,
       fullName: '',
       email: '',
@@ -136,7 +166,7 @@ export default {
     signWithGoogle() {
       console.log(this.submitted)
       this.$store.dispatch('user/signWithGoogle', { type: this.registerType })
-    }
+    },
   },
 }
 </script>
@@ -146,6 +176,34 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+  position: relative;
+  .back-button {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    font-weight: 600;
+    span {
+      padding-top: 4px;
+    }
+    i {
+      font-size: 2rem;
+      transform: rotate(180deg);
+    }
+    color: #fff;
+    @include media (xs, sm) {
+      color: $primary-color;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 1rem;
+      i {
+        font-size: 1.5rem;
+      }
+    }
+    cursor: pointer;
+  }
 
   .image-side-section {
     width: 50%;

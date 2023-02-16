@@ -1,6 +1,10 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="login-page-container">
+    <span class="back-button" @click="$router.push('/')">
+      <i class="afet-icons afet-caret"></i>
+      <span>Geri</span>
+    </span>
     <div class="image-side-section">
       <image-side />
     </div>
@@ -116,6 +120,35 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
+  position: relative;
+  overflow-x: hidden;
+  .back-button {
+    position: absolute;
+    top: 2.5rem;
+    left: 2.5rem;
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    font-weight: 600;
+    span {
+      padding-top: 4px;
+    }
+    i {
+      font-size: 2rem;
+      transform: rotate(180deg);
+    }
+    color: #fff;
+    @include media (xs, sm) {
+      color: $primary-color;
+      top: 1.5rem;
+      left: 1.5rem;
+      font-size: 1rem;
+      i {
+        font-size: 1.5rem;
+      }
+    }
+    cursor: pointer;
+  }
 
   .image-side-section {
     width: 50%;
@@ -147,6 +180,7 @@ export default {
 
       @include media(xs, sm) {
         padding: 1rem;
+        width: 100%;
       }
     }
 
@@ -178,6 +212,10 @@ export default {
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
+
+        @include media(xs, sm) {
+          width: 50%;
+        }
 
         &.selected {
           background-color: $primary-color;

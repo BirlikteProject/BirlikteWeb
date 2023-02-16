@@ -78,6 +78,9 @@ export default {
     align-items: center;
     font-size: 0.825rem;
     .logo-section {
+      width: 50%;
+      display: flex;
+      justify-content: flex-start;
       .mobile {
         display:none;
       }
@@ -97,6 +100,9 @@ export default {
     }
     .auth-section {
       font-weight: 600;
+      width: 50%;
+      display: flex;
+      justify-content: flex-end;
       button {
         border: none;
         cursor: pointer;
