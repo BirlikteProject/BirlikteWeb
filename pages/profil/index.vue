@@ -34,7 +34,7 @@
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
-            <textarea v-model="userInput.description" placeholder="Hakkında bir şeyler yaz...">
+            <textarea v-model="userInput.about" placeholder="Hakkında bir şeyler yaz...">
                   </textarea>
             <button class="primary-button submit-button" @click="updateProfile()">Kaydet</button>
           </div>
@@ -59,7 +59,7 @@ export default {
       activeTab: 0,
       types,
       userInput: {
-        description: ''
+        about: ''
       }
     }
   },
