@@ -115,7 +115,7 @@ export default {
   },
   methods: {
     async filterAdverts() {
-      if (this.searchTerm.length > 0) {
+      if (this.searchTerm.length > 0 || this.location.name) {
         try {
           this.loading = true
           const data = await this.$store.dispatch('advert/searchAdverts', {
