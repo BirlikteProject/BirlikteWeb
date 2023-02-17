@@ -46,9 +46,6 @@
             <div class="message-send-button" @click="sendMessage()">
               <i class="afet-icons afet-send"></i>
             </div>
-            <div class="finish-conversation-button message-send-button" @click="finishConversation(true)">
-              <i class="afet-icons afet-send"></i>
-            </div>
           </div>
         </div>
       </div>

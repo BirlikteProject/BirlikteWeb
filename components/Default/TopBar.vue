@@ -79,6 +79,12 @@ export default {
     setDisplay(modal, value) {
       this.$store.dispatch(`modal/set${modal}Modal`, value)
     },
+    setKvkkModal() {
+      this.$store.dispatch('modal/setKvkkModal', true)
+    },
+    setPrivacyPolicy() {
+      this.$store.dispatch('modal/setPrivacyPolicy', true)
+    },
     async logout() {
       await this.$store.dispatch('user/logout')
     },
@@ -148,7 +154,7 @@ export default {
         @include media(xs,sm) {
           display: flex;
         }
-        
+
       }
       .top-bar-hamburger-menu {
           display: flex;
