@@ -132,12 +132,18 @@ export default {
   flex-direction: row;
 
   .image-side-section {
+    @include media(xs, sm) {
+    display: none;
+    }
     width: 50%;
     height: 100vh;
   }
 
   .complete-register-form-seciton {
     width: 50%;
+    @include media(xs, sm) {
+    width:100%;
+    }
     height: 100vh;
     display: flex;
     flex-direction: column;

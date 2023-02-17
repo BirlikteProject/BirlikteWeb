@@ -70,7 +70,7 @@ export default {
       return this.adverts.length % (this.advertLimit * this.currentPage) === 0 && this.adverts.length / (this.advertLimit * this.currentPage) >= 1
     },
     adverts() {
-      if (this.filteredAdverts.length) {
+      if (this.selectedCategory !== -1) {
         return this.filteredAdverts
       }
       return this.$store.state.advert.advertList
