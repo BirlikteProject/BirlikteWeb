@@ -31,7 +31,7 @@
         >
           Çıkış Yap
         </button>
-        <div v-if="isAuthenticated" class="top-bar-hamburger-menu-wrapper">
+        <div v-if="isAuthenticated && $route.path == '/profil'" class="top-bar-hamburger-menu-wrapper">
           <div class="top-bar-hamburger-menu" @click="openDropdown = !openDropdown">
             <i class="afet-icons afet-bars" ></i>
             <div class="top-bar-more-dropdown" :class="openDropdown ? 'displayed' :'hide'">
@@ -146,7 +146,6 @@ export default {
         
       }
       .top-bar-hamburger-menu {
-          padding: 0 1.5rem;
           display: flex;
           align-items: center;
           justify-content: flex-end;
@@ -220,7 +219,7 @@ export default {
         border-radius: 5px;
         &.exit-button {
           @include media(xs, sm) {
-            display: none;
+            display: flex;
           }
         }
         @include media(xs, sm) {
