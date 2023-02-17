@@ -47,7 +47,8 @@
             </div>
           </div>
         </div>
-        <nuxt-link v-if="isAuthenticated" to="/olustur" class="create-button">
+        <nuxt-link v-if="isAuthenticated && $route.path !== '/profil'" to="/olustur" class="create-button">
+          <i class="afet-icons afet-plus"></i>
         </nuxt-link>
       </div>
     </div>
