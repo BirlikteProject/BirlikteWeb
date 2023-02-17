@@ -19,7 +19,7 @@ export default {
     host: '0',
   },
 
-  css: ['./assets/font/afet-font.css', '~/assets/scss/global.scss'],
+  css: ['~/assets/scss/global.scss'],
   styleResources: {
     scss: [
       '~/assets/scss/global.scss',
