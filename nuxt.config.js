@@ -19,7 +19,7 @@ export default {
     host: '0',
   },
 
-  css: ['~/assets/scss/global.scss'],
+  css: ['~/assets/scss/global.scss', '~/assets/font/afet-font.css'],
   styleResources: {
     scss: [
       '~/assets/scss/global.scss',
@@ -49,14 +49,13 @@ export default {
   },
 
   buildModules: [
-    'nuxt-fontagon',
     '@nuxtjs/eslint-module',
     '@nuxtjs/style-resources',
+    'nuxt-fontagon',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     ['cookie-universal-nuxt', { alias: 'cookiz' }],
   ],
