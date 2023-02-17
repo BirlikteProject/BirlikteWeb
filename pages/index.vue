@@ -20,15 +20,17 @@
         <span class="more-advert">Daha fazla ilan için tıklayın</span>
       </div>
     </div>
-    <div v-if="!nextPageAvailable">
-      <p class="result-message">
-        Şimdilik daha fazla destek ilanı yok.<br /><span class="refresh-adverts" @click="fetchAdverts()">Yenilemek için dokunun.</span>
+    <div class="result-message" v-if="!nextPageAvailable">
+      <p>
+        Şimdilik daha fazla destek ilanı yok.<br /><span class="refresh-adverts" @click="fetchAdverts()">Yenilemek için
+          dokunun.</span>
       </p>
+    </div>
+    <login-modal v-if="loginModal" />
+    <app-warning-modal v-if="appWarningModal" />
+    <app-info-modal v-if="appInfoModal" />
   </div>
-  <login-modal v-if="loginModal" />
-  <app-warning-modal v-if="appWarningModal" />
-  <app-info-modal v-if="appInfoModal" />
-</div></template>
+</template>
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
 import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
@@ -119,6 +121,17 @@ html {
   font-family: 'Campton', sans-serif;
 }
 
+.category-button-wrapper {
+  &:hover {
+    .category-button-component {
+      background-color: rgb(62, 110, 254);
+    }
+    .category-name {
+      color: rgb(62, 110, 254);
+    }
+  }
+}
+
 .selected-category {
   .category-button-component {
     background-color: rgb(62, 110, 254);
@@ -128,19 +141,24 @@ html {
     color: rgb(62, 110, 254);
   }
 }
+
 .result-message {
   text-align: center;
-  color: #4a4a4a!important;
+  color: #4a4a4a !important;
   font-size: 1.3rem;
   font-weight: 500;
-  margin-top: 1rem!important;
+  margin-top: 1rem !important;
+  margin-bottom: 4rem !important;
+
   .refresh-adverts {
-    cursor:pointer;
+    cursor: pointer;
+
     &:hover {
       color: $primary-color;
     }
   }
 }
+
 .next-button-wrapper {
   display: flex;
   width: 100%;

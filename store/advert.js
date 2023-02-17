@@ -53,6 +53,8 @@ const actions = {
     if (response.status) {
       context.commit('SET_DEMAND_LIST', response.data)
     }
+    context.dispatch('fetchCategories')
+    context.dispatch('fetchCities')
   },
 
   async getAdvertsByCategory(context, payload) {
