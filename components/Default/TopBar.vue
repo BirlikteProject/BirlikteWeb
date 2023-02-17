@@ -24,6 +24,13 @@
         >
           Kayıt Ol
         </nuxt-link>
+        <button
+          v-if="isAuthenticated"
+          class="register-button exit-button"
+          @click="logout()"
+        >
+          Çıkış Yap
+        </button>
         <div v-if="isAuthenticated && $route.path == '/profil'" class="top-bar-hamburger-menu-wrapper">
           <div class="top-bar-hamburger-menu" @click="openDropdown = !openDropdown">
             <i class="afet-icons afet-bars" ></i>
@@ -47,7 +54,8 @@
             </div>
           </div>
         </div>
-        <nuxt-link v-if="isAuthenticated" to="/olustur" class="create-button">
+        <nuxt-link v-if="isAuthenticated && $route.path !== '/profil'" to="/olustur" class="create-button">
+          <i class="afet-icons afet-plus"></i>
         </nuxt-link>
       </div>
     </div>
@@ -133,10 +141,13 @@ export default {
       }
       .top-bar-hamburger-menu-wrapper {
         width: 100%;
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: flex-end;
         position: relative;
+        @include media(xs,sm) {
+          display: flex;
+        }
         
       }
       .top-bar-hamburger-menu {
@@ -211,7 +222,11 @@ export default {
         color: $primary-color;
         padding: 0.5rem;
         border-radius: 5px;
-
+        &.exit-button {
+          @include media(xs, sm) {
+            display: none;
+          }
+        }
         @include media(xs, sm) {
           background-color: $primary-color;
           color: #fff;
