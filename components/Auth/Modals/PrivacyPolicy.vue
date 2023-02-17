@@ -113,6 +113,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  @include media(xs,sm) {
+    padding: 1rem;
+  }
 
   .kvkk-modal {
     width: 40rem;
@@ -125,8 +128,9 @@ export default {
     align-items: center;
     padding: 1rem;
     overflow-y: auto;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
+    @include media(xs,sm) {
+      max-height: 80%;
+      width: 100%;
     }
     &::-webkit-scrollbar-thumb {
       color: $primary-color;
@@ -145,9 +149,9 @@ export default {
         width: 2rem;
         height: 2rem;
         position: absolute;
-        right: -1.5rem;
+        left: -1rem;
         cursor: pointer;
-        top: -1.5rem;
+        top: -1rem;
         background-color: #fff;
         border-radius: 50%;
         display: flex;

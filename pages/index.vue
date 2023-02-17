@@ -136,7 +136,6 @@ html {
   height: 100%;
   position: relative;
   background-color: #fff;
-  padding-top: 4rem;
 
 
   .greeting-title {
