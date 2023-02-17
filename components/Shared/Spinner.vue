@@ -10,6 +10,7 @@ export default {
 
 <style lang="scss">
 .loader {
+  margin: 0 auto!important;
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid $primary-color; /* Blue */
   border-radius: 50%;

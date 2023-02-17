@@ -66,7 +66,7 @@
             <input type="submit" value="Kayıt Ol" class="primary-button" />
           </form>
           <spinner v-if="isLoading" class="spinner" />
-          <div v-if="submitted && error" class="error-messages">
+          <div v-if="submitted && error && !isLoading" class="error-messages">
             <span class="error-message">{{ error }}</span>
           </div>
           <div class="or-sign-with-google">
@@ -136,12 +136,12 @@ export default {
       return this.$store.state.user.user
     },
     isLoading() {
-      return this.user.loading
+      return this.$store.state.user.loading
     },
     error() {
       if (!this.fieldsFilled) return 'Lütfen tüm alanları doldurunuz!'
       if (!this.isKvkkAccepted) return 'Lütfen aydınlatma metnini onaylayınız!'
-      return this.user.error
+      return this.$store.state.user.error
     },
   },
   methods: {
@@ -347,7 +347,7 @@ export default {
         font-weight: 600;
         cursor: pointer;
 
-        
+
 
         &.selected {
           background-color: $primary-color;

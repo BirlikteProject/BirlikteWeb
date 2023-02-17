@@ -44,9 +44,6 @@ export default {
       return this.$store.state.modal.privacyPolicy
     },
   },
-  async mounted() {
-    await this.$store.dispatch('advert/fetchAdverts')
-  },
 }
 </script>
 

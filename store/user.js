@@ -1,19 +1,18 @@
 import { auth, googleProvider } from '~/plugins/firebase'
 const state = () => ({
   token: '',
-  user: {
-    loading: false,
-    error: ''
-  },
+  user: {},
+  loading: false,
+  error: '',
   advertList: [],
-  isAuthenticated: false,
 })
 
 const actions = {
   async signWithGoogle(context, payload) {
-    const firebaseResponse = await auth.signInWithPopup(googleProvider)
-    if (firebaseResponse.additionalUserInfo.isNewUser) {
-      try {
+    try {
+      context.commit('SET_LOADING', true)
+      const firebaseResponse = await auth.signInWithPopup(googleProvider)
+      if (firebaseResponse.additionalUserInfo.isNewUser) {
         const response = await this.$api.authServices.register({
           firebase_token: firebaseResponse.user._delegate.accessToken,
           type: payload.type,
@@ -23,30 +22,59 @@ const actions = {
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
+          context.commit('SET_USER', response.data.user)
+          context.commit('SET_ERROR', '')
           this.$router.push({ path: '/kayit-tamamla' })
         }
-      } catch (error) {
-        // user could not be registered
-      }
-    } else {
-      try {
-        const response = await this.$api.authServices.login({
-          firebase_token: firebaseResponse.user._delegate.accessToken,
-        })
-        if (response.status) {
-          this.$cookiz.set('token', response.data.token, { exp: '7d' })
-          context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
-          this.$router.push({ path: '/' })
+      } else {
+        try {
+          const response = await this.$api.authServices.login({
+            firebase_token: firebaseResponse.user._delegate.accessToken,
+          })
+          if (response.status) {
+            this.$cookiz.set('token', response.data.token, { exp: '7d' })
+            context.commit('SET_TOKEN', response.data.token)
+            context.commit('SET_USER', response.data.user)
+            context.commit('SET_ERROR', '')
+            this.$router.push({ path: '/' })
+          }
+        } catch (error) {
+          try {
+            const _response = await this.$api.authServices.register({
+              firebase_token: firebaseResponse.user._delegate.accessToken,
+              type: payload.type,
+              fullName: firebaseResponse.user.displayName,
+              image_url: firebaseResponse.user.photoURL,
+            })
+            if (_response.status) {
+              this.$cookiz.set('token', _response.data.token, { exp: '7d' })
+              context.commit('SET_TOKEN', _response.data.token)
+              context.commit('SET_USER', _response.data.user)
+              context.commit('SET_ERROR', '')
+              this.$router.push({ path: '/kayit-tamamla' })
+            }
+          } catch (error) {
+            context.commit(
+              'SET_ERROR',
+              'Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz'
+            )
+          }
         }
-      } catch (error) {}
+      }
+    } catch (error) {
+      // user could not be registered
+      context.commit(
+        'SET_ERROR',
+        'Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz'
+      )
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
 
   async registerWithEmail(context, payload) {
     try {
-      context.commit('SET_USER', { loading: true, error: '' })
+      context.commit('SET_LOADING', true)
       const firebaseResponse = await auth // response from firebase
         .createUserWithEmailAndPassword(payload.email, payload.password)
       const response = await this.$api.authServices.register({
@@ -57,28 +85,36 @@ const actions = {
       if (response.status) {
         this.$cookiz.set('token', response.data.token, { exp: '7d' })
         context.commit('SET_TOKEN', response.data.token)
-        context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
+        context.commit('SET_USER', response.data.user)
+        context.commit('SET_ERROR', '')
         this.$router.push({ path: '/kayit-tamamla' })
       }
     } catch (error) {
-      console.log(error.code)
-      if(error?.code) {
-        if(error.code === "auth/email-already-in-use") {
-          context.commit('SET_USER', { loading: false, error: 'Bu email adresi ile bir hesap bulunmaktadır. Lütfen başka bir email adresi deneyiniz.' })
-        } else if(error.code === "auth/weak-password") {
-          context.commit('SET_USER', { loading: false, error: 'Lütfen en az 8 karakterli bir şifre giriniz.' })
-        }
-        else {
-          context.commit('SET_USER', { loading: false, error: 'Geçici süre için kayıt olamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.' })
-        }
+      if (error.code === 'auth/email-already-in-use') {
+        context.commit(
+          'SET_ERROR',
+          'Bu email adresi ile bir hesap bulunmaktadır. Lütfen başka bir email adresi deneyiniz.'
+        )
+      } else if (error.code === 'auth/weak-password') {
+        context.commit(
+          'SET_ERROR',
+          'Lütfen en az 8 karakterli bir şifre giriniz.'
+        )
+      } else {
+        context.commit(
+          'SET_ERROR',
+          'Geçici süre için kayıt olamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.'
+        )
       }
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
 
   // Async login action
   async login(context, payload) {
     try {
-      context.commit('SET_USER', { loading: true, error: '' })
+      context.commit('SET_LOADING', true)
       const firebaseResponse = await auth // response from firebase
         .signInWithEmailAndPassword(payload.email, payload.password)
       if (firebaseResponse.user._delegate.accessToken) {
@@ -88,23 +124,35 @@ const actions = {
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
           context.commit('SET_TOKEN', response.data.token)
-          context.commit('SET_USER', { ...response.data.user, loading: false, error: '' })
+          context.commit('SET_USER', response.data.user)
+          context.commit('SET_ERROR', '')
           this.$router.push({ path: '/' })
         }
       }
     } catch (error) {
-      console.log(error.code)
-      if(error.code === 'auth/user-not-found') {
-        context.commit('SET_USER', { loading: false, error: 'Email adresinizi veya şifrenizi yanlış girdiniz.' })
-      }
-      else if(error.code === 'auth/wrong-password') {
-        context.commit('SET_USER', { loading: false, error: 'Email adresinizi veya şifrenizi yanlış girdiniz.' })
-      }
-      else if(error.code === 'auth/too-many-requests') {
-        context.commit('SET_USER', { loading: false, error: 'Çok fazla yanlış deneme yaptınız, tekrar denemeden önce lütfen bekleyiniz.' })
+      if (error.code === 'auth/user-not-found') {
+        context.commit(
+          'SET_ERROR',
+          'Email adresinizi veya şifrenizi yanlış girdiniz.'
+        )
+      } else if (error.code === 'auth/wrong-password') {
+        context.commit(
+          'SET_ERROR',
+          'Email adresinizi veya şifrenizi yanlış girdiniz.'
+        )
+      } else if (error.code === 'auth/too-many-requests') {
+        context.commit(
+          'SET_ERROR',
+          'Çok fazla yanlış deneme yaptınız, tekrar denemeden önce lütfen bekleyiniz.'
+        )
       } else {
-        context.commit('SET_USER', { loading: false, error: 'Geçici süre için giriş yapamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.' })
+        context.commit(
+          'SET_ERROR',
+          'Geçici süre için giriş yapamıyorsunuz. Lütfen daha sonra tekrar deneyiniz.'
+        )
       }
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
 
@@ -114,41 +162,57 @@ const actions = {
       !Object.keys(context.state.user).includes('fullName')
     ) {
       try {
-        context.commit('SET_USER', {loading: true, error: '' })
+        context.commit('SET_LOADING', true)
         const response = await this.$api.profileServices.getOwnProfile()
-        context.commit('SET_USER', {...response.data, loading: false, error: '' })
+        context.commit('SET_USER', response.data)
       } catch (error) {
-        context.commit('SET_USER', { loading: false, error: '' })
+      } finally {
+        context.commit('SET_LOADING', false)
       }
     }
   },
 
   async fetchAdverts(context) {
     try {
+      context.commit('SET_LOADING', true)
       const response = await this.$api.advertServices.getAdvertsByUserId(
         context.state.user._id
       )
-      context.commit('SET_ADVERT_LIST', response.data)
+      if (response.status) {
+        context.commit('SET_ADVERT_LIST', response.data)
+      }
     } catch (error) {
-      // console.error(error)
+      context.commit(
+        'SET_ERROR',
+        'İlanlarınızı getirirken bir problem yaşadık. Lütfen daha sonra tekrar deneyiniz.'
+      )
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
 
   async updateUser(context, payload) {
     if (context.state.token) {
       try {
+        context.commit('SET_LOADING', true)
         const response = await this.$api.profileServices.updateOwnProfile(
           payload
         )
         if (response.status) {
           context.commit('SET_USER', response.data)
+          context.commit('SET_ERROR', '')
           context.dispatch('modal/setAdvertSuccessModal', true, { root: true })
-          return true
         }
       } catch (error) {
-        this.$store.dispatch('modal/setAdvertErrorModal', true)
+        context.dispatch('modal/setAdvertErrorModal', true)
+        if(!error.response.data.status) {
+          context.commit('SET_ERROR', 'Lütfen girdiğiniz bilgilerin doğru olduğuna emin olunuz.')
+        } else {
+          context.commit('SET_ERROR', 'Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.')
+        }
+      } finally {
+        context.commit('SET_LOADING', false)
       }
-      return false
     }
   },
 
@@ -167,10 +231,6 @@ const actions = {
   setUser(context, payload) {
     context.commit('SET_USER', payload)
   },
-
-  isAuthenticated(context) {
-    return !!context.state.user.fullName
-  },
 }
 
 const mutations = {
@@ -182,17 +242,22 @@ const mutations = {
   },
   SET_USER(state, payload) {
     state.user = payload
-    state.isAuthenticated = !!payload.fullName
+  },
+  SET_ERROR(state, payload) {
+    state.error = payload
+  },
+  SET_LOADING(state, payload) {
+    state.loading = payload
   },
 }
 
 const getters = {
   isAuthenticated(state) {
-    return !!state.user.fullName
+    return !!state.user.email
   },
   getToken(state) {
     return state.token
-  }
+  },
 }
 
 export default {

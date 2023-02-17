@@ -26,7 +26,13 @@
           <input v-model="tckn" type="text" placeholder="T.C Kimlik Numarası" />
         </div>
         <div>
-          <button class="primary-button" @click="completeRegister()">Onayla</button>
+          <button class="primary-button" @click.prevent="completeRegister()">Onayla</button>
+        </div>
+        <p v-show="error && !isLoading" class="error-text">
+          {{ error }}
+        </p>
+        <div v-show="isLoading" class="spinner">
+          <spinner />
         </div>
       </div>
     </div>
@@ -35,10 +41,11 @@
 
 <script>
 import ImageSide from '~/components/Auth/ImageSide.vue'
+import Spinner from '~/components/Shared/Spinner.vue'
 import types from '~/data/types.json'
 export default {
   name: 'RegisterCompletePage',
-  components: { ImageSide },
+  components: { ImageSide, Spinner },
   layout: 'empty',
   middleware: ['auth'],
   data() {
@@ -50,15 +57,20 @@ export default {
   computed: {
     user() {
       return this.$store.state.user.user
-    }
+    },
+    isLoading() {
+      return this.$store.state.user.loading
+    },
+    error() {
+      return this.$store.state.user.error
+    },
   },
   methods: {
     async completeRegister() {
       try {
         await this.$store.dispatch('user/updateUser', { tckn: this.tckn })
-        this.$router.push('/')
+        if(!this.error) this.$router.push('/')
       } catch (error) {
-
       }
     }
   }
@@ -76,8 +88,21 @@ export default {
   margin: 0 auto;
 }
 
+.error-text {
+  text-align: start;
+  font-size: 1.1rem;
+  width: 100%;
+  color: red;
+  margin: 0 auto;
+}
+
 .tckno-wrapper {
   width: 50%;
+  .spinner {
+    text-align: center;
+    margin: 0 auto!important;
+    width: 100%;
+  }
 }
 
 .input-wrapper {

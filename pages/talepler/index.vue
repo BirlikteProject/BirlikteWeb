@@ -22,9 +22,11 @@ export default {
   computed: {
     demands() {
       return this.$store.state.advert.demandList
-      // return []
     },
   },
+  mounted() {
+    this.$store.dispatch('advert/fetchDemands')
+  }
 }
 </script>
 

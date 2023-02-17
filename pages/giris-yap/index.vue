@@ -33,8 +33,8 @@
           </div>
           <div class="forgot-password">Şifreni mi unuttun?</div>
           <input type="submit" value="Giriş Yap" class="primary-button" />
-          <div v-if="submitted" class="error-messages">
-            <span v-if="error" class="error-message">{{ error }}</span>
+          <div v-if="submitted && error && !isLoading" class="error-messages">
+            <span class="error-message">{{ error }}</span>
           </div>
           <spinner v-if="isLoading" class="spinner" />
           <div class="or-sign-with-google">
@@ -82,21 +82,21 @@ export default {
     },
     error() {
       if (!this.fieldsFilled) return 'Lütfen tüm alanları doldurunuz!'
-      return this.user.error
+      return this.$store.state.user.error
     },
     isLoading() {
-      return this.user.loading
+      return this.$store.state.user.loading
     }
   },
   methods: {
     signWithGoogle() {
+      this.submitted = false
       this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
     },
     login() {
-      this.submitted = false
+      this.submitted = true
       if (this.fieldsFilled)
         this.$store.dispatch('user/login', { email: this.email, password: this.password })
-      this.submitted = true
     }
   }
 }

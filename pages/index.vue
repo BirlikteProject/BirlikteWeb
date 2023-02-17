@@ -13,18 +13,22 @@
       <div v-if="adverts" class="content">
         <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
       </div>
-      <div class="next-button-wrapper">
+      <div v-if="nextPageAvailable" class="next-button-wrapper">
         <button class="primary-button" @click="fetchNextPage()">
           <i class="afet-icons afet-plus"></i>
         </button>
         <span class="more-advert">Daha fazla ilan için tıklayın</span>
       </div>
     </div>
-    <login-modal v-if="loginModal" />
-    <app-warning-modal v-if="appWarningModal" />
-    <app-info-modal v-if="appInfoModal" />
-</div>
-</template>
+    <div v-if="!nextPageAvailable">
+      <p class="result-message">
+        Şimdilik daha fazla destek ilanı yok.<br /><span class="refresh-adverts" @click="fetchAdverts()">Yenilemek için dokunun.</span>
+      </p>
+  </div>
+  <login-modal v-if="loginModal" />
+  <app-warning-modal v-if="appWarningModal" />
+  <app-info-modal v-if="appInfoModal" />
+</div></template>
 <script>
 import LoginModal from '~/components/Main/Modals/LoginModal.vue'
 import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
@@ -45,6 +49,7 @@ export default {
   data() {
     return {
       currentPage: 1,
+      advertLimit: 20,
       categories,
       selectedCategory: -1,
       highlightedAdvert: -1,
@@ -61,8 +66,11 @@ export default {
     appWarningModal() {
       return this.$store.state.modal.appWarningModal
     },
+    nextPageAvailable() {
+      return this.adverts.length % (this.advertLimit * this.currentPage) === 0 && this.adverts.length / (this.advertLimit * this.currentPage) >= 1
+    },
     adverts() {
-      if(this.filteredAdverts.length) {
+      if (this.filteredAdverts.length) {
         return this.filteredAdverts
       }
       return this.$store.state.advert.advertList
@@ -72,10 +80,11 @@ export default {
     if (!JSON.parse(localStorage.getItem('isAppInfoModalDisplayed'))) {
       this.$store.dispatch('modal/setAppInfoModal', true)
     }
+    this.$store.dispatch('advert/fetchAdverts')
   },
   methods: {
     async filterAdverts(categoryId, categoryIdx) {
-      if(this.selectedCategory === categoryIdx) {
+      if (this.selectedCategory === categoryIdx) {
         this.filteredAdverts = []
         this.selectedCategory = -1
         return
@@ -83,6 +92,11 @@ export default {
       const data = await this.$store.dispatch('advert/getAdvertsByCategory', { categoryId })
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
+    },
+    fetchAdverts() {
+      this.$store.dispatch('advert/fetchAdverts', {
+        page: 1,
+      })
     },
     fetchNextPage() {
       this.currentPage++
@@ -114,7 +128,19 @@ html {
     color: rgb(62, 110, 254);
   }
 }
-
+.result-message {
+  text-align: center;
+  color: #4a4a4a!important;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 1rem!important;
+  .refresh-adverts {
+    cursor:pointer;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
 .next-button-wrapper {
   display: flex;
   width: 100%;
@@ -123,6 +149,7 @@ html {
   flex-direction: column;
   align-items: center;
   margin-bottom: 3rem;
+
   .more-advert {
     font-size: 1rem;
     font-weight: 400;
