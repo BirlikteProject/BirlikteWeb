@@ -72,6 +72,7 @@ export default {
     },
   },
   async mounted() {
+    this.userInput.about = this.user.about
     await this.$store.dispatch('user/fetchAdverts')
   },
   methods: {
