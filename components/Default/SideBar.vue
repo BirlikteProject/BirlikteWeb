@@ -1,16 +1,7 @@
 <template>
   <div class="sidebar-wrapper">
-    <div
-      v-for="(link, i) in links"
-      :key="i"
-      class="links"
-      @click="changeSelected(i)"
-    >
-      <nuxt-link
-        :to="link.to"
-        class="link-item"
-        :class="{ 'selected-link': selected === i }"
-      >
+    <div v-for="(link, i) in links" :key="i" class="links" @click="changeSelected(i)">
+      <nuxt-link :to="link.to" class="link-item" :class="{ 'selected-link': selected === i }">
         <i class="afet-icons" :class="`afet-${link.icon}`"></i>
         <span class="link-title">{{ link.title }}</span>
       </nuxt-link>
@@ -20,6 +11,17 @@
         <i class="afet-icons afet-plus"></i>
         <span class="link-name">Oluştur</span>
       </nuxt-link>
+    </div>
+    <div class="hamburger-mobile links">
+      <div class="hamburger-menu link-item">
+        <i class="afet-icons afet-bars"></i>
+        <div class="more-dropdown">
+          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkında</span>
+          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">İletişim</span>
+          <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
+          <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
+        </div>
+      </div>
     </div>
     <div class="hamburger-menu-wrapper">
       <div class="hamburger-menu">
@@ -98,6 +100,7 @@ export default {
   padding: 1rem;
   height: 100%;
   position: relative;
+
   @include media(md, lg, xl) {
     position: fixed;
     padding-top: 6rem;
@@ -114,6 +117,38 @@ export default {
       display: none;
     }
   }
+
+  .hamburger-mobile {
+    height: 100%;
+    @include media(md, lg, xl) {
+      display: none !important;
+    }
+    @include media(xs, sm) {
+      display: block!important;
+      position: static!important;
+    }
+    .hamburger-menu {
+      vertical-align: middle!important;
+      margin: auto;
+    }
+    &:hover {
+      color: #fff;
+
+      .more-dropdown {
+        display: flex;
+      }
+
+      .more-setting {
+        font-weight: 600;
+        color: $primary-color;
+      }
+    }
+    .more-dropdown {
+      background-color: white;
+      margin-left: 2rem;
+    }
+  }
+
   .hamburger-menu-wrapper {
     position: absolute;
     bottom: 2rem;
@@ -122,20 +157,25 @@ export default {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+
     @include media(xs, sm) {
       display: none;
     }
+
     &:hover {
       color: #fff;
+
       .more-dropdown {
         display: flex;
       }
+
       .more-setting {
         font-weight: 600;
         color: $primary-color;
       }
     }
   }
+
   .hamburger-menu {
     padding: 0 1.5rem;
     display: flex;
@@ -145,13 +185,14 @@ export default {
     cursor: pointer;
     position: relative;
     width: 100%;
-    
+
     i {
       color: #4a4a4a;
       margin: 0 !important;
       font-size: 1.5rem;
       font-weight: 500;
     }
+
     .more-setting {
       margin-left: 1rem;
       font-size: 1.25rem;
@@ -159,6 +200,7 @@ export default {
       padding-top: 3px;
       color: #4a4a4a;
     }
+
     .more-dropdown {
       position: absolute;
       bottom: calc(100% + 1rem);
@@ -168,11 +210,13 @@ export default {
       border-radius: 10px;
       overflow: hidden;
       padding: 0.5rem 0;
+
       .more-dropdown-item {
         padding: 0.5rem 1rem;
         font-size: 1rem;
         font-weight: 500;
         color: #4a4a4a;
+
         &:hover {
           background-color: $primary-color;
           color: #fff;
@@ -248,6 +292,7 @@ export default {
       &:nth-child(5) {
         order: 2;
       }
+
       &:nth-child(6) {
         order: 6;
         display: none !important;
@@ -265,6 +310,7 @@ export default {
     align-items: center;
     padding: 0 1rem;
     height: 3rem;
+
     @include media(xs, sm) {
       padding: 0;
       height: 2rem;
@@ -279,9 +325,11 @@ export default {
       padding-top: 5px;
 
     }
+
     .link-title {
       margin-left: 0.5rem;
       padding-top: 5px;
+
       &:hover {
         font-weight: 600;
         color: $primary-color;
