@@ -31,7 +31,7 @@
         >
           Çıkış Yap
         </button>
-        <div class="top-bar-hamburger-menu-wrapper" >
+        <div v-if="isAuthenticated" class="top-bar-hamburger-menu-wrapper">
           <div class="top-bar-hamburger-menu" @click="openDropdown = !openDropdown">
             <i class="afet-icons afet-bars" ></i>
             <div class="top-bar-more-dropdown" :class="openDropdown ? 'displayed' :'hide'">
@@ -46,8 +46,8 @@
                 @click="$router.push('/hakkimizda')"
                 >İletişim</span
               >
-              <span class="top-bar-more-dropdown-item" @click="setKvkkModal">KVKK</span>
-              <span class="top-bar-more-dropdown-item" @click="setPrivacyPolicy"
+              <span class="top-bar-more-dropdown-item" @click="setKvkkModal()">KVKK</span>
+              <span class="top-bar-more-dropdown-item" @click="setPrivacyPolicy()"
                 >Gizlilik Sözleşmesi</span
               >
             </div>

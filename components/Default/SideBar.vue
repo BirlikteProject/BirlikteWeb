@@ -19,8 +19,8 @@
         <div class="more-dropdown">
           <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkımızda</span>
           <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">İletişim</span>
-          <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
-          <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
+          <span class="more-dropdown-item" @click="setKvkkModal()">KVKK</span>
+          <span class="more-dropdown-item" @click="setPrivacyPolicy()">Gizlilik Sözleşmesi</span>
         </div>
       </div>
     </div>
