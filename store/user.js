@@ -19,7 +19,6 @@ const actions = {
           type: payload.type,
           fullName: firebaseResponse.user.displayName,
           image_url: firebaseResponse.user.photoURL,
-          username: firebaseResponse.user.email.split('@')[0],
         })
         if (response.status) {
           this.$cookiz.set('token', response.data.token, { exp: '7d' })
