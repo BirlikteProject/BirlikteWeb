@@ -64,7 +64,7 @@
       </div>
     </div> -->
     <Advert :advert="advert"/>
-    <div class="contact-button-wrapper">
+    <div v-if="user.type !== types.SUPPORTER && user._id !== advert.user_id._id" class="contact-button-wrapper">
       <button class="primary-button contact-button" @click="contact()">İletişime Geç</button>
     </div>
   </div>
@@ -72,6 +72,7 @@
 
 <script>
 import cities from '~/data/location.json'
+import types from '~/data/types.json'
 import Advert from '~/components/Shared/Advert.vue'
 export default {
   name: 'AdvertPage',
@@ -85,6 +86,7 @@ export default {
       citiesList: {},
       highlighted: false,
       cities,
+      types
     }
   },
   computed: {
@@ -93,6 +95,9 @@ export default {
     },
     advert() {
       return this.$store.state.advert.selectedAdvert
+    },
+    user() {
+      return this.$store.state.user.user
     }
   },
   async mounted() {
