@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.$store.state.user.isAuthenticated
+      return this.$store.getters['user/isAuthenticated']
     },
   },
   methods: {

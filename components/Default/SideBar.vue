@@ -12,23 +12,12 @@
         <span class="link-name">Oluştur</span>
       </nuxt-link>
     </div>
-    <div class="hamburger-mobile links">
-      <div class="hamburger-menu link-item">
-        <i class="afet-icons afet-bars"></i>
-        <div class="more-dropdown">
-          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkında</span>
-          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">İletişim</span>
-          <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
-          <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
-        </div>
-      </div>
-    </div>
     <div class="hamburger-menu-wrapper">
       <div class="hamburger-menu">
         <i class="afet-icons afet-bars"></i>
         <span class="more-setting">Daha Fazla</span>
         <div class="more-dropdown">
-          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkında</span>
+          <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">Hakkımızda</span>
           <span class="more-dropdown-item" @click="$router.push('/hakkimizda')">İletişim</span>
           <span class="more-dropdown-item" @click="setKvkkModal">KVKK</span>
           <span class="more-dropdown-item" @click="setPrivacyPolicy">Gizlilik Sözleşmesi</span>
@@ -75,7 +64,7 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.$store.state.user.isAuthenticated
+      return this.$store.getters['user/isAuthenticated']
     },
   },
   methods: {
@@ -118,36 +107,6 @@ export default {
     }
   }
 
-  .hamburger-mobile {
-    height: 100%;
-    @include media(md, lg, xl) {
-      display: none !important;
-    }
-    @include media(xs, sm) {
-      display: block!important;
-      position: static!important;
-    }
-    .hamburger-menu {
-      vertical-align: middle!important;
-      margin: auto;
-    }
-    &:hover {
-      color: #fff;
-
-      .more-dropdown {
-        display: flex;
-      }
-
-      .more-setting {
-        font-weight: 600;
-        color: $primary-color;
-      }
-    }
-    .more-dropdown {
-      background-color: white;
-      margin-left: 2rem;
-    }
-  }
 
   .hamburger-menu-wrapper {
     position: absolute;

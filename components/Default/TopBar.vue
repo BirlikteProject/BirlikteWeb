@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.$store.state.user.isAuthenticated
+      return this.$store.getters['user/isAuthenticated']
     },
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
         .mobile {
           display: block;
             width: 75px;
-          
+
         }
       }
       img {

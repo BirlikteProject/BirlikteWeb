@@ -1,3 +1,3 @@
 export default function ({ store, redirect, route }) {
-  if (store.state.user.isAuthenticated) return redirect("/")
+  if (store.getters['user/isAuthenticated']) return redirect("/")
 }
