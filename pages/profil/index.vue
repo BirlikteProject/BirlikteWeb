@@ -58,7 +58,9 @@ export default {
     return {
       activeTab: 0,
       types,
-      userInput: {}
+      userInput: {
+        description: ''
+      }
     }
   },
   computed: {
@@ -74,9 +76,9 @@ export default {
   },
   methods: {
     updateProfile() {
-      // this.$store.dispatch('user/updateProfile', {
-      //   ...this.userInput
-      // })
+      this.$store.dispatch('user/updateUser', {
+        ...this.userInput
+      })
     }
   }
 }

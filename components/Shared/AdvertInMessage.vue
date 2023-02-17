@@ -10,7 +10,7 @@
           <span class="middot"></span>
           <span>{{ advert.city_id.name }}</span>
         </div>
-        <div class="advert-in-message-title">{{ advert.description }}</div>
+        <div class="advert-in-message-title">{{ advert.title }}</div>
         <div class="go-to-advert" @click="$router.push(`/ilanlar/${advert._id}`)">İçeriğe Git</div>
       </div>
     </div>

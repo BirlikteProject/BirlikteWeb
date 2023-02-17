@@ -10,7 +10,7 @@ export default async function ({ app, store }) {
     } else {
       store.dispatch('user/setToken', token)
       // await store.dispatch('user/fetchUser')
-      if (store.state.user.isAuthenticated) return
+      if (store.getters['user/isAuthenticated']) return
       const response = await app.$axios({
         method: 'GET',
         url: `${process.env.API_BASE_URL}/api/v1/profile`,
