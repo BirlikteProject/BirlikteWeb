@@ -90,13 +90,13 @@ export default {
   },
   methods: {
     signWithGoogle() {
+      this.submitted = false
       this.$store.dispatch('user/signWithGoogle', { type: this.loginType })
     },
     login() {
-      this.submitted = false
+      this.submitted = true
       if (this.fieldsFilled)
         this.$store.dispatch('user/login', { email: this.email, password: this.password })
-      this.submitted = true
     }
   }
 }

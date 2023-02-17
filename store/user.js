@@ -39,10 +39,26 @@ const actions = {
             this.$router.push({ path: '/' })
           }
         } catch (error) {
-          context.commit(
-            'SET_ERROR',
-            'Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz'
-          )
+          try {
+            const _response = await this.$api.authServices.register({
+              firebase_token: firebaseResponse.user._delegate.accessToken,
+              type: payload.type,
+              fullName: firebaseResponse.user.displayName,
+              image_url: firebaseResponse.user.photoURL,
+            })
+            if (_response.status) {
+              this.$cookiz.set('token', _response.data.token, { exp: '7d' })
+              context.commit('SET_TOKEN', _response.data.token)
+              context.commit('SET_USER', _response.data.user)
+              context.commit('SET_ERROR', '')
+              this.$router.push({ path: '/kayit-tamamla' })
+            }
+          } catch (error) {
+            context.commit(
+              'SET_ERROR',
+              'Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz'
+            )
+          }
         }
       }
     } catch (error) {
