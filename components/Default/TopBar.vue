@@ -24,13 +24,6 @@
         >
           Kayıt Ol
         </nuxt-link>
-        <button
-          v-if="isAuthenticated"
-          class="register-button exit-button"
-          @click="logout"
-        >
-          Çıkış Yap
-        </button>
         <div v-if="isAuthenticated && $route.path == '/profil'" class="top-bar-hamburger-menu-wrapper">
           <div class="top-bar-hamburger-menu" @click="openDropdown = !openDropdown">
             <i class="afet-icons afet-bars" ></i>
@@ -50,6 +43,7 @@
               <span class="top-bar-more-dropdown-item" @click="setPrivacyPolicy()"
                 >Gizlilik Sözleşmesi</span
               >
+              <span class="top-bar-more-dropdown-item" @click="logout()">Çıkış Yap</span>
             </div>
           </div>
         </div>
@@ -217,11 +211,7 @@ export default {
         color: $primary-color;
         padding: 0.5rem;
         border-radius: 5px;
-        &.exit-button {
-          @include media(xs, sm) {
-            display: flex;
-          }
-        }
+
         @include media(xs, sm) {
           background-color: $primary-color;
           color: #fff;
