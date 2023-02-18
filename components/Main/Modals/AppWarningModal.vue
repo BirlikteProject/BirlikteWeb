@@ -17,7 +17,7 @@
           Destekçiler tarafından afetzedelere emek ve hizmet sunulmaktadır.
           <br />
           <strong>
-            Lütfen nakdi ya da ayni yardım talebi oluşturmayınız.
+            Lütfen nakdi ya da ayni yardım {{ user.type === types.SUPPORTER ? 'ilanı' :'talebi' }} oluşturmayınız.
           </strong>
         </p>
       </div>
@@ -26,8 +26,13 @@
 </template>
 
 <script>
+import types from '~/data/types.json'
 export default {
   name: 'AppWarningModal',
+  computed: {
+    user() { return this.$store.state.user.user },
+    types() { return types }
+  },
   mounted() {
     window.addEventListener('keydown', this.onKeyDown)
     this.$refs.modalOverlay.addEventListener('click', this.onModalOverlayClick)
@@ -71,6 +76,7 @@ export default {
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 1rem;
+
     .modal-header {
       width: 100%;
       display: flex;
@@ -80,6 +86,7 @@ export default {
       font-weight: 500;
       color: $primary-color;
       position: relative;
+
       .close-icon {
         width: 2rem;
         height: 2rem;
@@ -95,6 +102,7 @@ export default {
       }
     }
   }
+
   .modal-body {
     display: flex;
     flex-direction: column;
@@ -107,6 +115,7 @@ export default {
     color: white;
     font-size: 1.5rem;
     text-align: center;
+
     .img-container {
       display: flex;
       justify-content: center;
@@ -132,5 +141,4 @@ export default {
       gap: 1rem;
     }
   }
-}
-</style>
+}</style>
