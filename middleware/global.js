@@ -9,7 +9,6 @@ export default async function ({ app, store }) {
       store.dispatch('user/setToken', '')
     } else {
       store.dispatch('user/setToken', token)
-      // await store.dispatch('user/fetchUser')
       if (store.getters['user/isAuthenticated']) return
       const response = await app.$axios({
         method: 'GET',
