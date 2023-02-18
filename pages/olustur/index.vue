@@ -67,7 +67,6 @@ import AdvertSuccessModal from '~/components/Main/Modals/AdvertSuccessModal.vue'
 import AdvertErrorModal from '~/components/Main/Modals/AdvertErrorModal.vue'
 import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import types from '~/data/types.json'
-import locations from '~/data/location.json'
 
 export default {
   name: 'CreateAdvertPage',
@@ -77,7 +76,6 @@ export default {
   data() {
     return {
       types,
-      locations,
       categorySelection: false,
       locationKeyword: '',
       selectedCategory: '* Kategori Seçiniz',
@@ -92,6 +90,9 @@ export default {
     }
   },
   computed: {
+    locations() {
+      return this.$store.state.advert.cityList
+    },
     isAdvertSuccessModalOpen() {
       return this.$store.state.modal.advertSuccessModal
     },

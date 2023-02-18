@@ -15,33 +15,29 @@
           </div>
         </div>
         <div class="messages">
-          <MessageUserItem
-            v-for="conversation in conversations"
-            :key="conversation.id" :conversation="conversation"
+          <spinner v-if="isLoading" />
+          <div v-if="!isLoading && !conversations.length" class="no-content-message">
+            Şuanda hiç kimse ile mesajlaşmıyorsunuz.
+          </div>
+          <MessageUserItem v-for="conversation in conversations" :key="conversation.id" :conversation="conversation"
             :class="{
               'finished': conversation.ended_conversation,
               'accepted': conversation.ended_conversation && conversation.deal,
               'rejected': conversation.ended_conversation && !conversation.deal
-            }"
-            :active="selectedConversation?._id == conversation._id ? true : false"
-             @focusBottom="scrollBottom"
-             />
+            }" :active="selectedConversation?._id == conversation._id ? true : false" @focusBottom="scrollBottom" />
         </div>
       </div>
-      <div
-        ref="contactSection" class="contact-section section"
+      <div ref="contactSection" class="contact-section section"
         :class="selectedConversation ? 'mobile-active' : 'mobile-disable'">
         <div v-if="selectedConversation" class="selected-conversation">
           <AdvertInMessage :advert="selectedConversation.advert_id" />
-          <MessageItem
-            v-for="_message in messages" :key="_message._id" :is-mine="
+          <MessageItem v-for="_message in messages" :key="_message._id" :is-mine="
             (_message.sender_id?._id ?? _message.sender_id) == userId
               ? true
               : false
           " :message="_message" />
           <div class="message-box">
-            <textarea
-              ref="messageBox" class="message-input" placeholder="Mesajınızı buraya yazınız..." :value="message"
+            <textarea ref="messageBox" class="message-input" placeholder="Mesajınızı buraya yazınız..." :value="message"
               @input="(event) => (message = event.target.value)" @keydown="autosize"></textarea>
             <div class="message-send-button" @click="sendMessage()">
               <i class="afet-icons afet-send"></i>
@@ -50,7 +46,7 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -58,6 +54,7 @@ import { io } from 'socket.io-client'
 import MessageItem from '~/components/Message/MessageItem.vue'
 import MessageUserItem from '~/components/Message/MessageUserItem.vue'
 import AdvertInMessage from '~/components/Shared/AdvertInMessage.vue'
+import Spinner from '~/components/Shared/Spinner.vue'
 
 const socket = io(process.env.SOCKET_URL, {
   path: '',
@@ -68,7 +65,7 @@ const socket = io(process.env.SOCKET_URL, {
 
 export default {
   name: 'MessagesPage',
-  components: { MessageUserItem, AdvertInMessage, MessageItem },
+  components: { MessageUserItem, AdvertInMessage, MessageItem, Spinner },
   middleware: ['auth'],
 
   data() {
@@ -78,9 +75,11 @@ export default {
     }
   },
   computed: {
+    isLoading() {
+      return this.$store.state.conversations.loading
+    },
     conversations() {
-      if(this.activeCategory === 0) return this.$store.state.conversations.conversationList.filter((c) => !c.ended_conversation)
-      return this.$store.state.conversations.conversationList.filter((c) => c.ended_conversation)
+      return this.$store.state.conversations.conversationList
     },
     selectedConversation() {
       return this.$store.state.conversations.selectedConversation
@@ -139,17 +138,19 @@ export default {
     toggleCategory(category) {
       this.activeCategory = category
       this.$store.dispatch('conversations/selectConversation', null)
+      this.refresh()
     },
     scrollBottom() {
       const el = this.$refs.contactSection
       if (this.selectedConversation && el) {
         el.scroll({ scrollTop: el.scrollHeight, behavior: 'smooth' })
+        console.log('scrolled bottom')
       }
     },
     refresh() {
       this.$store.dispatch('conversations/fetchConversations', {
         page: 1,
-        limit: 10,
+        limit: 20,
         deal: 0,
       })
     },
@@ -186,7 +187,7 @@ export default {
   max-height: calc(100vh - 10rem);
 
   .finished {
-    display:block;
+    display: block;
   }
 
   .accepted {
@@ -348,5 +349,13 @@ export default {
 
   .messages {
     width: 100%;
+    height: 100%;
   }
-}</style>
+
+  .no-content-message {
+    margin-left: 1rem;
+    font-weight: 450;
+    font-size: 1.1rem;
+  }
+}
+</style>

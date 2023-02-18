@@ -43,7 +43,9 @@
       </div>
     </div>
     <div class="search-results">
-      <spinner v-if="loading" class="spinner" />
+      <div v-if="loading" class="spinner">
+        <spinner />
+      </div>
       <div v-else-if="advertList?.length && userType === types.DEMANDER">
         <advert
           v-for="advert in advertList"
@@ -81,7 +83,6 @@
 <script>
 import Advert from '~/components/Shared/Advert.vue'
 import RequestItem from '~/components/Request/RequestItem.vue'
-import cities from '~/data/location.json'
 import types from '~/data/types.json'
 
 export default {
@@ -104,7 +105,7 @@ export default {
   },
   computed: {
     cities() {
-      return cities
+      return this.$store.state.advert.cityList
     },
     user() {
       return this.$store.state.user.user
@@ -140,7 +141,7 @@ export default {
 
 <style lang="scss">
 .spinner {
-  margin: auto;
+  margin: 3rem auto 0 auto!important;
 }
 
 .search-page-container {

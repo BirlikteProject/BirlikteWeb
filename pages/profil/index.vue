@@ -26,32 +26,40 @@
         </div>
         <div class="tab-contents">
           <div v-if="activeTab == 0" class="content">
-            <div v-if="user.type === types.DEMANDER">
+            <div v-if="isLoading" class="spinner">
+              <spinner />
+            </div>
+            <div class="advert-list" v-if="!isLoading && user.type === types.DEMANDER">
               <RequestItem v-for="request in adverts" :key="request._id" :advert="request" />
             </div>
-            <div v-if="user.type === types.SUPPORTER">
+            <div class="advert-list" v-else-if="!isLoading && user.type === types.SUPPORTER">
               <Advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
             </div>
           </div>
           <div v-if="activeTab == 1" class="content about">
+            <div v-if="isLoading" class="spinner">
+              <spinner />
+            </div>
             <textarea v-model="userInput.about" placeholder="Hakkında bir şeyler yaz...">
-                  </textarea>
-            <button class="primary-button submit-button" @click="updateProfile()">Kaydet</button>
+                </textarea>
+            <button class="primary-button submit-button" :class="{ 'btn-disable': user.about === userInput.about }"
+              @click="updateProfile()">Kaydet</button>
           </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import RequestItem from '~/components/Request/RequestItem.vue'
 import Advert from '~/components/Shared/Advert.vue'
+import Spinner from '~/components/Shared/Spinner.vue'
 import types from '~/data/types.json'
 
 export default {
   name: 'ProfilePage',
-  components: { RequestItem, Advert },
+  components: { RequestItem, Advert, Spinner },
   layout: 'default',
   middleware: ['auth'],
   data() {
@@ -67,13 +75,16 @@ export default {
     user() {
       return this.$store.state.user.user
     },
+    isLoading() {
+      return this.$store.state.user.loading
+    },
     adverts() {
       return this.$store.state.user.advertList
     },
   },
-  async mounted() {
+  mounted() {
     this.userInput.about = this.user.about
-    await this.$store.dispatch('user/fetchAdverts')
+    this.$store.dispatch('user/fetchAdverts')
   },
   methods: {
     updateProfile() {
@@ -198,6 +209,7 @@ export default {
       }
 
       .tab-contents {
+
         .no-content {
           font-size: 1rem;
           font-weight: 400;
@@ -207,15 +219,24 @@ export default {
         }
 
         .content {
+
           &.about {
             padding: 1rem;
+            text-align: center;
           }
-          text-align: center;
+
           .submit-button {
             font-family: 'Campton';
-            width: 55%;
-            margin: 2rem auto !important;
+            width: 60%;
+            margin: 1rem !important;
             font-size: 1.2rem;
+          }
+
+          .btn-disable {
+            cursor: not-allowed !important;
+            pointer-events: none;
+            color: #202020;
+            background-color: #c0c0c0;
           }
 
           textarea {
@@ -237,5 +258,9 @@ export default {
       }
     }
   }
-}
-</style>
+
+  .spinner {
+    margin: auto !important;
+    padding: 1rem 1rem !important;
+  }
+}</style>

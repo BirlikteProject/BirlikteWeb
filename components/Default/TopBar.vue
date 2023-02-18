@@ -2,11 +2,13 @@
   <div class="top-bar-wrapper">
     <div class="content top-bar-content">
       <div class="top-bar-logo-section">
-        <img
+        <a href="/">
+          <img
           :src="require('~/assets/img/logo-white.png')"
           alt=""
           class="desktop"
         />
+        </a>
         <img
           :src="require('~/assets/img/logo-main.png')"
           alt=""

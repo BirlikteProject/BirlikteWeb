@@ -1,10 +1,10 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="register-page-container">
-    <span class="back-button" @click="$router.push('/')">
+    <a href="/" class="back-button">
       <i class="afet-icons afet-caret"></i>
       <span>Geri</span>
-    </span>
+    </a>
     <KVKK v-if="kvkkModal" />
     <PrivacyPolicy v-if="privacyPolicyModal" />
     <div class="image-side-section">
@@ -164,7 +164,6 @@ export default {
       }
     },
     signWithGoogle() {
-      console.log(this.submitted)
       this.$store.dispatch('user/signWithGoogle', { type: this.registerType })
     },
   },

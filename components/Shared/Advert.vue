@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import cities from '~/data/location.json'
 export default {
   name: 'Advert',
   props: {
@@ -79,16 +78,14 @@ export default {
   data() {
     return {
       dropdown: false,
-      cities,
       highlighted: false,
       copied: false,
     }
   },
-
   computed: {
-    image_url() {
-      return `~/assets/img/${this.advert.category_id._id}.png`
-    },
+    cities() {
+      return this.$store.state.advert.cityList
+    }
   },
   methods: {
     copyClipBoard () {

@@ -69,7 +69,11 @@ export default {
   },
   methods: {
     changeSelected(i) {
+      console.log(this.selected)
       this.selected = i
+      if(this.selected === 0) {
+        this.$store.dispatch('advert/fetchAdverts')
+      }
     },
     setKvkkModal() {
       this.$store.dispatch('modal/setKvkkModal', true)

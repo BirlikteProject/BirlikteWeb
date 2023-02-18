@@ -10,6 +10,9 @@
       </div>
     </div>
     <div class="advert-grid">
+      <div v-show="isLoading" class="spinner">
+        <spinner />
+      </div>
       <div v-if="adverts" class="content">
         <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
       </div>
@@ -19,12 +22,13 @@
         </button>
         <span class="more-advert">Daha fazla ilan için tıklayın</span>
       </div>
-    </div>
-    <div class="result-message" v-if="!nextPageAvailable">
-      <p>
-        Şimdilik daha fazla destek ilanı yok.<br /><span class="refresh-adverts" @click="fetchAdverts()">Yenilemek için
-          dokunun.</span>
-      </p>
+
+      <div class="result-message" v-if="!isLoading && !nextPageAvailable">
+        <p>
+          Şimdilik daha fazla destek ilanı yok.<br /><span class="refresh-adverts" @click="refresh()">Yenilemek için
+            dokunun.</span>
+        </p>
+      </div>
     </div>
     <login-modal v-if="loginModal" />
     <app-warning-modal v-if="appWarningModal" />
@@ -37,7 +41,6 @@ import AppInfoModal from '~/components/Main/Modals/AppInfoModal.vue'
 import AppWarningModal from '~/components/Main/Modals/AppWarningModal.vue'
 import CategoryButton from '~/components/Main/CategoryButton.vue'
 import Advert from '~/components/Shared/Advert.vue'
-import categories from '~/data/categories.json'
 
 export default {
   name: 'IndexPage',
@@ -52,13 +55,24 @@ export default {
     return {
       currentPage: 1,
       advertLimit: 20,
-      categories,
       selectedCategory: -1,
       highlightedAdvert: -1,
       filteredAdverts: []
     }
   },
   computed: {
+    categories() {
+      return this.$store.state.advert.categoryList
+    },
+    isLoading() {
+      return this.$store.state.advert.loading
+    },
+    adverts() {
+      if (this.selectedCategory !== -1) {
+        return this.filteredAdverts
+      }
+      return this.$store.state.advert.advertList
+    },
     loginModal() {
       return this.$store.state.modal.loginModal
     },
@@ -71,18 +85,12 @@ export default {
     nextPageAvailable() {
       return this.adverts.length % (this.advertLimit * this.currentPage) === 0 && this.adverts.length / (this.advertLimit * this.currentPage) >= 1
     },
-    adverts() {
-      if (this.selectedCategory !== -1) {
-        return this.filteredAdverts
-      }
-      return this.$store.state.advert.advertList
-    },
   },
   mounted() {
     if (!JSON.parse(localStorage.getItem('isAppInfoModalDisplayed'))) {
       this.$store.dispatch('modal/setAppInfoModal', true)
     }
-    this.$store.dispatch('advert/fetchAdverts')
+    this.refresh()
   },
   methods: {
     async filterAdverts(categoryId, categoryIdx) {
@@ -95,9 +103,12 @@ export default {
       this.filteredAdverts = data
       this.selectedCategory = categoryIdx
     },
-    fetchAdverts() {
-      this.$store.dispatch('advert/fetchAdverts', {
-        page: 1,
+    refresh() {
+      this.currentPage = 1
+      this.$store.dispatch('advert/fetchAdverts')
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       })
     },
     fetchNextPage() {
@@ -124,10 +135,11 @@ html {
 .category-button-wrapper {
   &:hover {
     .category-button-component {
-      background-color: rgb(62, 110, 254);
+      background-color: rgb(80, 130, 254);
     }
+
     .category-name {
-      color: rgb(62, 110, 254);
+      color: rgb(80, 130, 254);
     }
   }
 }
@@ -140,6 +152,9 @@ html {
   .category-name {
     color: rgb(62, 110, 254);
   }
+}
+.spinner {
+  margin: 1rem 0 !important;
 }
 
 .result-message {
@@ -230,5 +245,4 @@ html {
       display: flex;
     }
   }
-}
-</style>
+}</style>

@@ -2,11 +2,15 @@ const state = () => ({
   conversationList: [],
   messagesList: [],
   selectedConversation: null,
+  loading: false,
 })
 
 const mutations = {
   SET_MESSAGES_LIST(state, payload) {
     state.messagesList = payload
+  },
+  SET_LOADING(state, payload) {
+    state.loading = payload
   },
   APPEND_MESSAGE(state, payload) {
     state.messagesList = [...state.messagesList, payload]
@@ -27,36 +31,54 @@ const mutations = {
 
 const actions = {
   async fetchConversations(context, payload) {
-    const convResponse = await this.$api.conversationsServices.getConversations(
-      payload
-    )
-    if (convResponse.status) {
-      context.commit('SET_CONVERSATIONS_LIST', convResponse.data)
+    try {
+      context.commit('SET_LOADING', true)
+      const convResponse =
+        await this.$api.conversationsServices.getConversations(payload)
+      if (convResponse.status) {
+        context.commit('SET_CONVERSATIONS_LIST', convResponse.data)
+      }
+    } catch (error) {
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
+
   async createConversation(context, payload) {
-    const convResponse =
-      await this.$api.conversationsServices.createConversation(payload)
-    if (convResponse.status) {
-      context.dispatch('fetchConversations')
+    try {
+      context.commit('SET_LOADING', false)
+      const convResponse =
+        await this.$api.conversationsServices.createConversation(payload)
+      if (convResponse.status) {
+        context.dispatch('fetchConversations')
+      }
+    } catch (error) {
+    } finally {
+      context.commit('SET_LOADING', true)
     }
   },
   async fetchMessages(context, payload) {
-    const messagesRes = await this.$api.conversationsServices.getMessages(
-      payload
-    )
-    if (messagesRes.status) {
-      context.commit('SET_MESSAGES_LIST', messagesRes.data)
+    try {
+      const messagesRes = await this.$api.conversationsServices.getMessages(
+        payload
+      )
+      if (messagesRes.status) {
+        context.commit('SET_MESSAGES_LIST', messagesRes.data)
+      }
+    } catch (error) {
+      context.commit('SET_ERROR', 'Mesajlarınızı görüntüleyemiyoruz. Lütfen daha sonra tekrar deneyiniz.')
     }
   },
-  selectConversation(context, payload) {
+  async selectConversation(context, payload) {
     context.commit(
       'SELECT_CONVERSATION',
       payload // context.state.conversationList.first((c) => c._id === payload)
     )
 
     if (payload) {
-      context.dispatch('fetchMessages', payload._id)
+      context.commit('SET_LOADING', true)
+      await context.dispatch('fetchMessages', payload._id)
+      context.commit('SET_LOADING', false)
     }
     // const convResponse =
     //   await this.$api.conversationsServices.createConversation(payload)
@@ -66,25 +88,36 @@ const actions = {
   },
 
   async finishConversation(context, payload) {
-    const response = await this.$api.conversationsServices.updateConversation(
-      context.state.selectedConversation._id,
-      payload
-    )
-    if (response.status) {
-      context.commit('APPEND_MESSAGE', response.data)
+    try {
+      context.commit('SET_LOADING', true)
+      const response = await this.$api.conversationsServices.updateConversation(
+        context.state.selectedConversation._id,
+        payload
+      )
+      if (response.status) {
+        context.commit('APPEND_MESSAGE', response.data)
+      }
+    } catch (error) {
+      context.commit('SET_ERROR', 'Bir şeyler ters gitti. Lütfen daha sonra tekrar deneyiniz.')
+    } finally {
+      context.commit('SET_LOADING', false)
     }
   },
 
   async sendMessage(context, payload) {
-    const message = {
-      message: payload,
-    }
-    const response = await this.$api.conversationsServices.sendMessage(
-      context.state.selectedConversation._id,
-      message
-    )
-    if (response.status) {
-      context.commit('APPEND_MESSAGE', response.data)
+    try {
+      const message = {
+        message: payload,
+      }
+      const response = await this.$api.conversationsServices.sendMessage(
+        context.state.selectedConversation._id,
+        message
+      )
+      if (response.status) {
+        context.commit('APPEND_MESSAGE', response.data)
+      }
+    } catch (error) {
+      context.commit('SET_ERROR', 'Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyiniz.')
     }
   },
 }

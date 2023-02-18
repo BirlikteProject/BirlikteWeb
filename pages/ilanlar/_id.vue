@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import cities from '~/data/location.json'
 import types from '~/data/types.json'
 import Advert from '~/components/Shared/Advert.vue'
 export default {
@@ -83,13 +82,14 @@ export default {
   data() {
     return {
       dropdown: false,
-      citiesList: {},
       highlighted: false,
-      cities,
       types
     }
   },
   computed: {
+    cities() {
+      return this.$store.state.advert.cityList
+    },
     advertId() {
       return this.$route.params.id
     },

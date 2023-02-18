@@ -1,10 +1,10 @@
 <!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div class="login-page-container">
-    <span class="back-button" @click="$router.push('/')">
+    <a href="/" class="back-button">
       <i class="afet-icons afet-caret"></i>
       <span>Geri</span>
-    </span>
+    </a>
     <div class="image-side-section">
       <image-side />
     </div>
@@ -15,11 +15,13 @@
         </div>
         <span class="form-name">Giriş Yap</span>
         <div class="login-types">
-          <div class="login-type" :class="loginType == types.DEMANDER ? 'selected' : ''"
+          <div
+            class="login-type" :class="loginType == types.DEMANDER ? 'selected' : ''"
             @click="loginType = types.DEMANDER">
             Afetzede
           </div>
-          <div class="login-type" :class="loginType == types.SUPPORTER ? 'selected' : ''"
+          <div
+            class="login-type" :class="loginType == types.SUPPORTER ? 'selected' : ''"
             @click="loginType = types.SUPPORTER">
             Destekçi
           </div>
