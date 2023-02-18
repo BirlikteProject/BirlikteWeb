@@ -16,6 +16,9 @@
       <div v-if="adverts" class="content">
         <advert v-for="advert in adverts" :key="advert._id" :advert="advert" />
       </div>
+      <div v-show="adverts.length && isLoading" class="spinner">
+        <spinner />
+      </div>
       <div v-if="nextPageAvailable" class="next-button-wrapper">
         <button class="primary-button" @click="fetchNextPage()">
           <i class="afet-icons afet-plus"></i>
@@ -153,9 +156,6 @@ html {
     color: rgb(62, 110, 254);
   }
 }
-.spinner {
-  margin: 1rem 0 !important;
-}
 
 .result-message {
   text-align: center;
@@ -245,4 +245,11 @@ html {
       display: flex;
     }
   }
-}</style>
+
+  .advert-grid {
+    .spinner {
+      padding: 0 0 4rem 0 !important;
+    }
+  }
+}
+</style>

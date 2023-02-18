@@ -37,9 +37,12 @@
               : false
           " :message="_message" />
           <div class="message-box">
+            <form @submit="sendMessage()">
+
+            </form>
             <textarea ref="messageBox" class="message-input" placeholder="Mesajınızı buraya yazınız..." :value="message"
-              @input="(event) => (message = event.target.value)" @keydown="autosize"></textarea>
-            <div class="message-send-button" @click="sendMessage()">
+              @keypress="submitter" @input="(event) => (message = event.target.value)" @keydown="autosize"></textarea>
+            <div class="message-send-button" @click="()=>{}">
               <i class="afet-icons afet-send"></i>
             </div>
           </div>
@@ -125,6 +128,11 @@ export default {
   },
 
   methods: {
+    submitter(e) {
+      if(e.key === 'Enter'){
+        this.sendMessage()
+      }
+    },
     autosize() {
       const el = this.$refs.messageBox
       setTimeout(function () {
@@ -144,7 +152,6 @@ export default {
       const el = this.$refs.contactSection
       if (this.selectedConversation && el) {
         el.scroll({ scrollTop: el.scrollHeight, behavior: 'smooth' })
-        console.log('scrolled bottom')
       }
     },
     refresh() {
