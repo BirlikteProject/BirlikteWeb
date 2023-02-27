@@ -77,6 +77,7 @@ const actions = {
       context.commit('SET_LOADING', true)
       const firebaseResponse = await auth // response from firebase
         .createUserWithEmailAndPassword(payload.email, payload.password)
+
       const response = await this.$api.authServices.register({
         firebase_token: firebaseResponse.user._delegate.accessToken,
         type: payload.type,
@@ -205,10 +206,16 @@ const actions = {
         }
       } catch (error) {
         context.dispatch('modal/setAdvertErrorModal', true)
-        if(!error.response.data.status) {
-          context.commit('SET_ERROR', 'Lütfen girdiğiniz bilgilerin doğru olduğuna emin olunuz.')
+        if (!error.response.data.status) {
+          context.commit(
+            'SET_ERROR',
+            'Lütfen girdiğiniz bilgilerin doğru olduğuna emin olunuz.'
+          )
         } else {
-          context.commit('SET_ERROR', 'Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.')
+          context.commit(
+            'SET_ERROR',
+            'Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.'
+          )
         }
       } finally {
         context.commit('SET_LOADING', false)

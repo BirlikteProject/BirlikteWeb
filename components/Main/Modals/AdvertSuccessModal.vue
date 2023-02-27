@@ -23,7 +23,7 @@ export default {
   },
   destroyed() {
     clearTimeout(this.timeout)
-    document.removeEventListener('keydown', this.onKeyDown)
+    window.removeEventListener('keydown', this.onKeyDown)
     document
       .getElementById('advert-success-modal-overlay')
       .removeEventListener('click', this.onModalOverlayClick)

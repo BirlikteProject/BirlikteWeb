@@ -1,6 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### environment variables
 .env
+yarn.lock
+package-lock.json
 ### Node template
 # Logs
 /logs
