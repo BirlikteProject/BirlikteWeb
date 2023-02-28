@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  frontend
+  namespace: default
+  labels:
+    app:  frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  frontend
+    spec:
+      containers:
+      - name:  frontend
+        image:  birlikte.azurecr.io/birlikte-frontend:v1
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  selector:
+    app: frontend
+  type: ClusterIP
+  ports:
+  - name: frontend
+    protocol: TCP
+    port: 80
+    targetPort: 80
