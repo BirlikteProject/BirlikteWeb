@@ -12,7 +12,7 @@ export default async function ({ app, store }) {
       if (store.getters['user/isAuthenticated']) return
       const response = await app.$axios({
         method: 'GET',
-        url: `${process.env.API_BASE_URL}/api/v1/profile`,
+        url: `${process.env.API_BASE_URL}/profile`,
         headers: {
           Authorization: 'Bearer ' + token,
         },

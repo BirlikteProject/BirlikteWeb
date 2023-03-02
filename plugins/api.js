@@ -6,7 +6,7 @@ import ConversationsServices from '~/services/Conversations/conversationsService
 
 export default function ({ $axios, app, store }, inject) {
   const api = $axios.create({
-    baseURL: `${process.env.API_BASE_URL}/api/v1`,
+    baseURL: `${process.env.API_BASE_URL}`,
   })
   const url = ''
 
